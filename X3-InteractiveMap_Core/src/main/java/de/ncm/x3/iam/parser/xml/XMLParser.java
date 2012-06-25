@@ -1,4 +1,6 @@
+
 package de.ncm.x3.iam.parser.xml;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -14,10 +16,10 @@ import org.xml.sax.SAXException;
 
 public abstract class XMLParser<E> {
 	
-	private DocumentBuilder dBuilder;
-	private DocumentBuilderFactory dbFactory;
-	private long lastModified = -1;
-	private File f;
+	private DocumentBuilder	       dBuilder;
+	private DocumentBuilderFactory	dbFactory;
+	private long	               lastModified	= -1;
+	private File	               f;
 	
 	public XMLParser(String file) {
 		this.f = new File(file);

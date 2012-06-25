@@ -1,4 +1,6 @@
+
 package de.ncm.x3.iam.start;
+
 
 import java.awt.EventQueue;
 import java.lang.reflect.InvocationTargetException;
@@ -29,6 +31,7 @@ public class X3InteractiveMapStarter {
 		
 		try {
 			EventQueue.invokeAndWait(new Runnable() {
+				
 				@Override
 				public void run() {
 					try {
