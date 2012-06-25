@@ -11,10 +11,6 @@ public class SwingLocaleChangedListener implements LocaleChangedListener {
 	
 	private ArrayList<AbstractButton>	abstractButtons;
 	
-	public SwingLocaleChangedListener() {
-		// TODO Auto-generated constructor stub
-	}
-	
 	@Override
 	public void localeChanged(ResourceBundle rb) {
 		for (AbstractButton b : abstractButtons) {

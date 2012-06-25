@@ -27,7 +27,6 @@ public abstract class XMLParser<E> {
 		try {
 			dBuilder = dbFactory.newDocumentBuilder();
 		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -65,10 +64,8 @@ public abstract class XMLParser<E> {
 			Element rootNode = doc.getDocumentElement();
 			ret = parseXML(rootNode);
 		} catch (SAXException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

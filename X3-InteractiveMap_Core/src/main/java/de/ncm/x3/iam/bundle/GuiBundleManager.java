@@ -19,9 +19,6 @@ public class GuiBundleManager {
 	private GuiBundleManager() { // no one except own class is allowed to
 		                         // instantiate
 		setLocale(Locale.getDefault());
-		for (Locale l : getAvailableLocales()) {
-			System.out.println("AvailableLocale: " + l);
-		}
 	}
 	
 	public String getString(String key) {

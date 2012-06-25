@@ -56,6 +56,14 @@ public class Mainframe extends JFrame {
 		chckbxmntmParsing.setName("mainframe.menu.data.parsing");
 		localeChangedListener.add(chckbxmntmParsing);
 		chckbxmntmParsing.setSelected(true);
+		chckbxmntmParsing.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO En-/Disable Parsing
+				
+			}
+		});
 		menuData.add(chckbxmntmParsing);
 		
 		menuData.addSeparator();
@@ -80,6 +88,14 @@ public class Mainframe extends JFrame {
 		JMenuItem mntmChooseLogpath = new JMenuItem("Choose Logpath");
 		mntmChooseLogpath.setName("mainframe.menu.edit.choose_logpath");
 		localeChangedListener.add(mntmChooseLogpath);
+		mntmChooseLogpath.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Choose and save Logpath
+				
+			}
+		});
 		menuEdit.add(mntmChooseLogpath);
 		
 		JMenu menuView = new JMenu("View");
@@ -91,11 +107,27 @@ public class Mainframe extends JFrame {
 		checkBoxMenuItemCenterViewOnActualSector.setName("mainframe.menu.view.ceter_map_on_sector.automatic");
 		localeChangedListener.add(checkBoxMenuItemCenterViewOnActualSector);
 		checkBoxMenuItemCenterViewOnActualSector.setSelected(true);
+		chckbxmntmParsing.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Implement automatic center on sector
+				
+			}
+		});
 		menuView.add(checkBoxMenuItemCenterViewOnActualSector);
 		
-		JMenuItem menuItemCenterMap = new JMenuItem("Center map automatically on current sector");
+		JMenuItem menuItemCenterMap = new JMenuItem("Center map on current sector");
 		menuItemCenterMap.setName("mainframe.menu.view.ceter_map_on_sector");
 		localeChangedListener.add(menuItemCenterMap);
+		menuItemCenterMap.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Implement center on sector
+				
+			}
+		});
 		menuView.add(menuItemCenterMap);
 		
 		JMenu menuHelp = new JMenu("Help");
@@ -110,8 +142,8 @@ public class Mainframe extends JFrame {
 		
 		for (final Locale l : GuiBundleManager.get().getAvailableLocales()) {
 			
-			final JRadioButtonMenuItem rdbtnmntmLanguage = new JRadioButtonMenuItem(l.getDisplayLanguage());
-			System.out.println(l.toLanguageTag() + "\t<======>\t" + Locale.getDefault().toLanguageTag());
+			final JRadioButtonMenuItem rdbtnmntmLanguage = new JRadioButtonMenuItem(l.getDisplayLanguage(l));
+			
 			if (l.toLanguageTag().equalsIgnoreCase(Locale.getDefault().toLanguageTag())) {
 				rdbtnmntmLanguage.setSelected(true);
 				actualrdbtnmntmLanguage = rdbtnmntmLanguage;
