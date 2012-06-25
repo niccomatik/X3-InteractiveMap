@@ -3,20 +3,16 @@ package de.ncm.x3.iam.bundle;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class BundleManager {
+public class GuiBundleManager {
 	
-	private String filePrefix = "/ressources/language/lang";
+	private String filePrefix = "language.lang";
 	private ResourceBundle rb = null;
 	private LocaleChangedListener listener = null;
-	private static BundleManager instance = null;
+	private static GuiBundleManager instance = null;
 	
-	private BundleManager() { // no one except own class is allowed to
-								// instantiate
-		System.out
-				.println(filePrefix
-						+ "_de.properties : "
-						+ getClass().getResourceAsStream(
-								filePrefix + "_de.properties"));
+	private GuiBundleManager() { // no one except own class is allowed to
+									// instantiate
+		
 		setLocale(Locale.getDefault());
 	}
 	
@@ -40,9 +36,9 @@ public class BundleManager {
 		
 	}
 	
-	public static BundleManager get() {
+	public static GuiBundleManager get() {
 		if (instance == null) {
-			instance = new BundleManager();
+			instance = new GuiBundleManager();
 		}
 		return instance;
 	}

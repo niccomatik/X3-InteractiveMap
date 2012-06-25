@@ -11,10 +11,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-import de.ncm.x3.iam.bundle.BundleManager;
+import de.ncm.x3.iam.bundle.GuiBundleManager;
 
 public class Mainframe extends JFrame {
-	private static BundleManager bm = BundleManager.get();
+	private static GuiBundleManager bm = GuiBundleManager.get();
 	private JPanel contentPane;
 	
 	/**
