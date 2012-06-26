@@ -17,7 +17,6 @@ public abstract class JRenderPanel extends JPanel {
 	                         
 	public JRenderPanel() {
 		this(null);
-		
 	}
 	
 	public JRenderPanel(LayoutManager layout) {

@@ -61,7 +61,6 @@ public class Mainframe extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO En-/Disable Parsing
-				
 			}
 		});
 		menuData.add(chckbxmntmParsing);

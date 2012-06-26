@@ -40,19 +40,16 @@ public class UniverseLayout implements LayoutManager2 {
 	
 	@Override
 	public Dimension preferredLayoutSize(Container parent) {
-		// TODO Auto-generated method stub
 		return parent.getSize();
 	}
 	
 	@Override
 	public Dimension minimumLayoutSize(Container parent) {
-		// TODO Auto-generated method stub
 		return parent.getSize();
 	}
 	
 	@Override
 	public Dimension maximumLayoutSize(Container target) {
-		// TODO Auto-generated method stub
 		return target.getSize();
 	}
 	
