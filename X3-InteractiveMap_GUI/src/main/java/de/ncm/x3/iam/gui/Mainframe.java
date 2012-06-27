@@ -15,11 +15,14 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 
+import org.apache.log4j.Logger;
+
 import de.ncm.x3.iam.bundle.GuiBundleManager;
 import de.ncm.x3.iam.bundle.SwingLocaleChangedListener;
 
 public class Mainframe extends JFrame {
 	
+	private Logger	                   LOGGER	= Logger.getLogger(Mainframe.class);
 	private JPanel	                   contentPane;
 	private SwingLocaleChangedListener	localeChangedListener;
 	private JRadioButtonMenuItem	   actualrdbtnmntmLanguage;

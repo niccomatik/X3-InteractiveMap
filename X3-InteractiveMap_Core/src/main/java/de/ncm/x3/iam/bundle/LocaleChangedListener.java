@@ -6,6 +6,6 @@ import java.util.ResourceBundle;
 
 public interface LocaleChangedListener {
 	
-	void localeChanged(ResourceBundle rb);
+	public void localeChanged(ResourceBundle rb);
 	
 }

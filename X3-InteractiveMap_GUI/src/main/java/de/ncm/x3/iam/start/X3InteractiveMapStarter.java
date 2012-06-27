@@ -31,7 +31,8 @@ public class X3InteractiveMapStarter {
 			e.printStackTrace();
 		}
 		
-		PropertyConfigurator.configure("log4j.properties");
+		ClassLoader classLoader = X3InteractiveMapStarter.class.getClassLoader();
+		PropertyConfigurator.configure(classLoader.getResource("log4j.properties"));
 		
 		try {
 			EventQueue.invokeAndWait(new Runnable() {
@@ -56,5 +57,4 @@ public class X3InteractiveMapStarter {
 		}
 		
 	}
-	
 }
