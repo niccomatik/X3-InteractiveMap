@@ -8,6 +8,8 @@ import java.lang.reflect.InvocationTargetException;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import org.apache.log4j.PropertyConfigurator;
+
 import de.ncm.x3.iam.gui.Mainframe;
 
 public class X3InteractiveMapStarter {
@@ -28,6 +30,8 @@ public class X3InteractiveMapStarter {
 		} catch (UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
+		
+		PropertyConfigurator.configure("log4j.properties");
 		
 		try {
 			EventQueue.invokeAndWait(new Runnable() {
