@@ -2,7 +2,7 @@
 package de.ncm.x3.iam.data.universe;
 
 
-public class WarpGate {
+public class WarpGate implements WarpGateConstants {
 	
 	private final GridPos	targetGridPos;
 	

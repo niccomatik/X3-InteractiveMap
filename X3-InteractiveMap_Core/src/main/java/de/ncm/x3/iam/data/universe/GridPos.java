@@ -4,8 +4,8 @@ package de.ncm.x3.iam.data.universe;
 
 public class GridPos {
 	
-	public final int	gridX;
-	public final int	gridY;
+	public int	gridX;
+	public int	gridY;
 	
 	public GridPos(int gridX, int gridY) {
 		this.gridX = gridX;
@@ -53,6 +53,14 @@ public class GridPos {
 	@Override
 	public String toString() {
 		return "GridPos [gridX=" + gridX + ", gridY=" + gridY + "]";
+	}
+	
+	public void setGridX(int gridX) {
+		this.gridX = gridX;
+	}
+	
+	public void setGridY(int gridY) {
+		this.gridY = gridY;
 	}
 	
 }

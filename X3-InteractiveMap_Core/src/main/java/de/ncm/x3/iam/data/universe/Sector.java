@@ -2,22 +2,21 @@
 package de.ncm.x3.iam.data.universe;
 
 
-public class Sector {
+public class Sector implements WarpGateConstants {
 	
-	public static final byte	WARPGATE_NORTH	= 0;
-	public static final byte	WARPGATE_SOUTH	= 1;
-	public static final byte	WARPGATE_EAST	= 2;
-	public static final byte	WARPGATE_WEST	= 3;
-	
-	private String	         name	           = "";
-	private Integer	         raceID	           = -1;
-	private WarpGate[]	     warpGates	       = new WarpGate[4];
+	private String	   name	      = "";
+	private Integer	   raceID	  = -1;
+	private WarpGate[]	warpGates	= new WarpGate[4];
 	
 	public Sector(String name, Integer raceID, WarpGate[] warpGates) {
 		super();
 		this.name = name;
 		this.raceID = raceID;
 		this.warpGates = warpGates;
+	}
+	
+	public Sector() {
+		// TODO Auto-generated constructor stub
 	}
 	
 	public String getName() {

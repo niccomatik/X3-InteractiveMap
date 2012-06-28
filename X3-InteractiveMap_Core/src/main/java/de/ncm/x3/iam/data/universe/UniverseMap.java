@@ -10,6 +10,7 @@ public class UniverseMap {
 	
 	private static Logger	         LOGGER	    = Logger.getLogger(UniverseMap.class);
 	private HashMap<GridPos, Sector>	sectors	= new HashMap<GridPos, Sector>();
+	private HashMap<Integer, String>	races;
 	
 	public UniverseMap() {}
 	
@@ -22,6 +23,15 @@ public class UniverseMap {
 	
 	public HashMap<GridPos, Sector> getSectors() {
 		return sectors;
+	}
+	
+	public void setRaces(HashMap<Integer, String> raceMap) {
+		this.races = raceMap;
+		
+	}
+	
+	public HashMap<Integer, String> getRaces() {
+		return races;
 	}
 	
 }
