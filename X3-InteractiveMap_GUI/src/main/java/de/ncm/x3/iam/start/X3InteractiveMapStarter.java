@@ -32,7 +32,7 @@ public class X3InteractiveMapStarter {
 		}
 		
 		ClassLoader classLoader = X3InteractiveMapStarter.class.getClassLoader();
-		PropertyConfigurator.configure(classLoader.getResource("log4j.properties"));
+		PropertyConfigurator.configure(classLoader.getResource("log4j.xml"));
 		
 		try {
 			EventQueue.invokeAndWait(new Runnable() {

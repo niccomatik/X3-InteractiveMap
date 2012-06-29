@@ -2,6 +2,7 @@
 package de.ncm.x3.iam.parser.xml;
 
 
+import java.io.File;
 import java.util.HashMap;
 
 import org.w3c.dom.Element;
@@ -16,12 +17,11 @@ import de.ncm.x3.iam.data.universe.WarpGateConstants;
 
 public class UniverseMapParser extends XMLParser<UniverseMap> {
 	
-	private Node	            mapNode;
-	private Node	            racesNode;
-	private final static String	filename	= "log00903.txt";
+	private Node	mapNode;
+	private Node	racesNode;
 	
-	public UniverseMapParser(String path) {
-		super(path + filename);
+	public UniverseMapParser(File logFile) {
+		super(logFile);
 	}
 	
 	@Override

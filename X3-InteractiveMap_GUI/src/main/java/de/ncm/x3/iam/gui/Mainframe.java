@@ -19,6 +19,7 @@ import org.apache.log4j.Logger;
 
 import de.ncm.x3.iam.bundle.GuiBundleManager;
 import de.ncm.x3.iam.bundle.SwingLocaleChangedListener;
+import de.ncm.x3.iam.settings.PropertyManager;
 
 public class Mainframe extends JFrame {
 	
@@ -44,6 +45,8 @@ public class Mainframe extends JFrame {
 		setContentPane(contentPane);
 		
 		GuiBundleManager.get().setLocaleChangedListener(localeChangedListener);
+		
+		PropertyManager.get(); // TODO remove this test Line
 	}
 	
 	private void setupMenu() {

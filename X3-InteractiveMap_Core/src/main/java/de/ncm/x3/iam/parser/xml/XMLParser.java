@@ -19,10 +19,10 @@ public abstract class XMLParser<E> {
 	private DocumentBuilder	       dBuilder;
 	private DocumentBuilderFactory	dbFactory;
 	private long	               lastModified	= -1;
-	private File	               f;
+	private File	               file;
 	
-	public XMLParser(String file) {
-		this.f = new File(file);
+	public XMLParser(File logFile) {
+		this.file = logFile;
 		dbFactory = DocumentBuilderFactory.newInstance();
 		try {
 			dBuilder = dbFactory.newDocumentBuilder();
@@ -56,10 +56,10 @@ public abstract class XMLParser<E> {
 	}
 	
 	public final E parse() {
-		long lastModified = f.lastModified();
+		long lastModified = file.lastModified();
 		E ret = null;
 		try {
-			Document doc = dBuilder.parse(f);
+			Document doc = dBuilder.parse(file);
 			doc.getDocumentElement().normalize();
 			Element rootNode = doc.getDocumentElement();
 			ret = parseXML(rootNode);
@@ -74,7 +74,7 @@ public abstract class XMLParser<E> {
 	}
 	
 	public boolean isModified() {
-		long lastModified = f.lastModified();
+		long lastModified = file.lastModified();
 		if (lastModified != this.lastModified) {
 			return true;
 		}
@@ -87,15 +87,15 @@ public abstract class XMLParser<E> {
 	 * @return the f
 	 */
 	public File getFile() {
-		return f;
+		return file;
 	}
 	
 	/**
 	 * @param f
 	 *            the f to set
 	 */
-	protected void setFile(File f) {
-		this.f = f;
+	protected void setFile(File file) {
+		this.file = file;
 	}
 	
 }
