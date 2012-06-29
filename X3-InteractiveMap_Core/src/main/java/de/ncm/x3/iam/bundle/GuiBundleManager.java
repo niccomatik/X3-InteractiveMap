@@ -3,13 +3,19 @@ package de.ncm.x3.iam.bundle;
 
 
 import java.io.File;
-import java.net.URISyntaxException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+
+import org.apache.log4j.Logger;
 
 public class GuiBundleManager {
 	
+	private static Logger	        logger	   = Logger.getLogger(GuiBundleManager.class);
 	private String	                filePrefix	= "language.lang";
 	private ResourceBundle	        rb	       = null;
 	private LocaleChangedListener	listener	= null;
@@ -60,18 +66,39 @@ public class GuiBundleManager {
 	}
 	
 	public Locale[] getAvailableLocales() {
+		
 		ArrayList<Locale> out = new ArrayList<Locale>();
-		try {
-			String[] split = filePrefix.split("\\.");
-			File folder = new File(getClass().getResource("/" + filePrefix.replace("." + split[split.length - 1], "")).toURI());
-			
+		
+		String[] split = filePrefix.split("\\.");
+		
+		String folderPath = getClass().getResource("/" + filePrefix.replace("." + split[split.length - 1], "")).getFile();
+		File folder = new File(folderPath);
+		
+		if (folder.canRead()) { // True: Normal FileSystem (= eclipse run mode)
+			logger.info("Using Dev-Mode Locale listing");
 			for (File f : folder.listFiles()) {
+				logger.debug("Locale found: " + f);
 				if (f.isFile()) {
 					out.add(parseLocaleString(f.getName()));
 				}
 			}
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
+		} else { // False: Packed in jar file
+		
+			try {
+				JarFile jar = new JarFile(getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
+				Enumeration<JarEntry> jarRootContent = jar.entries();
+				while (jarRootContent.hasMoreElements()) {
+					JarEntry entry = jarRootContent.nextElement();
+					String[] fileEntry = entry.getName().split("/");
+					if (!entry.isDirectory() && fileEntry.length == 2 && fileEntry[0].equals(split[0])) {
+						logger.debug("Locale found: " + fileEntry[1]);
+						out.add(parseLocaleString(fileEntry[1]));
+					}
+				}
+			} catch (IOException e) {
+				logger.error("Opening JarFile '" + folderPath.split("!")[0] + "':", e);
+			}
+			
 		}
 		return out.toArray(new Locale[out.size()]);
 	}
