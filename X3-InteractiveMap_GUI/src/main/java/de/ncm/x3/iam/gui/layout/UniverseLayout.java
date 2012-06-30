@@ -8,10 +8,13 @@ import java.awt.Dimension;
 import java.awt.LayoutManager2;
 import java.util.HashMap;
 
+import org.apache.log4j.Logger;
+
 import de.ncm.x3.iam.data.universe.GridPos;
 
 public class UniverseLayout implements LayoutManager2 {
 	
+	private static final Logger	          logger	 = Logger.getLogger(UniverseLayout.class);
 	protected HashMap<GridPos, Component>	sectors	 = new HashMap<GridPos, Component>();
 	private double	                      scale	     = 1.0;
 	private Dimension	                  sectorSize	= new Dimension(100, 100);

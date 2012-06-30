@@ -5,6 +5,7 @@ package de.ncm.x3.iam.parser.xml;
 import java.io.File;
 import java.util.HashMap;
 
+import org.apache.log4j.Logger;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -15,17 +16,19 @@ import de.ncm.x3.iam.data.universe.UniverseMap;
 import de.ncm.x3.iam.data.universe.WarpGate;
 import de.ncm.x3.iam.data.universe.WarpGateConstants;
 
-public class UniverseMapParser extends XMLParser<UniverseMap> {
+public class UniverseMapParser extends XMLParser {
 	
-	private Node	mapNode;
-	private Node	racesNode;
+	private static Logger	logger	= Logger.getLogger(UniverseMapParser.class);
+	private Node	      mapNode;
+	private Node	      racesNode;
 	
 	public UniverseMapParser(File logFile) {
 		super(logFile);
+		logger.info("LogFile: " + logFile);
 	}
 	
 	@Override
-	public UniverseMap parseXML(Element rootElement) {
+	public void parseXML(Element rootElement) {
 		NodeList children = rootElement.getChildNodes();
 		for (int i = 0; i < children.getLength(); i++) {
 			if (children.item(i).getNodeName().equalsIgnoreCase("Map")) {
@@ -36,7 +39,6 @@ public class UniverseMapParser extends XMLParser<UniverseMap> {
 		}
 		
 		HashMap<Integer, String> raceMap = parseRaces(racesNode);
-		return parseMap(raceMap, mapNode);
 	}
 	
 	private HashMap<Integer, String> parseRaces(Node item) {

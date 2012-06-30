@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 
 public class UniverseMap {
 	
-	private static Logger	         LOGGER	    = Logger.getLogger(UniverseMap.class);
+	private static Logger	         logger	    = Logger.getLogger(UniverseMap.class);
 	private HashMap<GridPos, Sector>	sectors	= new HashMap<GridPos, Sector>();
 	private HashMap<Integer, String>	races;
 	
@@ -17,7 +17,7 @@ public class UniverseMap {
 	public void putSector(GridPos gridPos, Sector sec) {
 		Sector ret = sectors.put(gridPos, sec);
 		if (ret != null) {
-			LOGGER.warn("Map value at " + gridPos + " has been replaced");
+			logger.warn("Map value at " + gridPos + " has been replaced");
 		}
 	}
 	

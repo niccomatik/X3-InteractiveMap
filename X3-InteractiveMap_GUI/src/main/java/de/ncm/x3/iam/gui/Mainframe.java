@@ -19,17 +19,18 @@ import org.apache.log4j.Logger;
 
 import de.ncm.x3.iam.bundle.GuiBundleManager;
 import de.ncm.x3.iam.bundle.SwingLocaleChangedListener;
-import de.ncm.x3.iam.settings.PropertyManager;
+import de.ncm.x3.iam.parser.ParserManager;
 
 public class Mainframe extends JFrame {
 	
-	private Logger	                   LOGGER	= Logger.getLogger(Mainframe.class);
+	private Logger	                   logger	= Logger.getLogger(Mainframe.class);
 	private JPanel	                   contentPane;
 	private SwingLocaleChangedListener	localeChangedListener;
 	private JRadioButtonMenuItem	   actualrdbtnmntmLanguage;
+	private ParserManager	           parseManager;
 	
 	/**
-	 * Create the frame.
+	 * Create the frame
 	 */
 	
 	public Mainframe() {
@@ -46,7 +47,7 @@ public class Mainframe extends JFrame {
 		
 		GuiBundleManager.get().setLocaleChangedListener(localeChangedListener);
 		
-		PropertyManager.get(); // TODO remove this test Line
+		this.parseManager = new ParserManager(); // TODO remove this test Line
 	}
 	
 	private void setupMenu() {
@@ -58,15 +59,19 @@ public class Mainframe extends JFrame {
 		localeChangedListener.add(menuData);
 		menuBar.add(menuData);
 		
-		JCheckBoxMenuItem chckbxmntmParsing = new JCheckBoxMenuItem("Parsing");
+		final JCheckBoxMenuItem chckbxmntmParsing = new JCheckBoxMenuItem("Parsing");
 		chckbxmntmParsing.setName("mainframe.menu.data.parsing");
 		localeChangedListener.add(chckbxmntmParsing);
-		chckbxmntmParsing.setSelected(true);
+		chckbxmntmParsing.setSelected(false);
 		chckbxmntmParsing.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO En-/Disable Parsing
+				if (chckbxmntmParsing.isSelected()) {
+					parseManager.startParsing();
+				} else {
+					parseManager.stopParsing();
+				}
 			}
 		});
 		menuData.add(chckbxmntmParsing);

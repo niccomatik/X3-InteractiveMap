@@ -14,7 +14,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
-public abstract class XMLParser<E> {
+import de.ncm.x3.iam.parser.Parser;
+
+public abstract class XMLParser implements Parser {
 	
 	private DocumentBuilder	       dBuilder;
 	private DocumentBuilderFactory	dbFactory;
@@ -55,14 +57,14 @@ public abstract class XMLParser<E> {
 		return Boolean.parseBoolean(getStringValueOf(n));
 	}
 	
-	public final E parse() {
+	@Override
+	public final void parse() {
 		long lastModified = file.lastModified();
-		E ret = null;
 		try {
 			Document doc = dBuilder.parse(file);
 			doc.getDocumentElement().normalize();
 			Element rootNode = doc.getDocumentElement();
-			ret = parseXML(rootNode);
+			parseXML(rootNode);
 		} catch (SAXException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -70,7 +72,6 @@ public abstract class XMLParser<E> {
 		}
 		
 		this.lastModified = lastModified;
-		return ret;
 	}
 	
 	public boolean isModified() {
@@ -81,21 +82,21 @@ public abstract class XMLParser<E> {
 		return false;
 	}
 	
-	protected abstract E parseXML(Element rootElement);
+	protected abstract void parseXML(Element rootElement);
 	
-	/**
-	 * @return the f
-	 */
 	public File getFile() {
 		return file;
 	}
 	
-	/**
-	 * @param f
-	 *            the f to set
-	 */
 	protected void setFile(File file) {
 		this.file = file;
 	}
 	
+	@Override
+	public boolean needUpdate(long timeGone) {
+		if (!file.exists()) {
+			return false;
+		}
+		return isModified();
+	}
 }

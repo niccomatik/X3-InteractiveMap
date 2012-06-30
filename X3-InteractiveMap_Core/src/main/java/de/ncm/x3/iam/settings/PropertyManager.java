@@ -2,6 +2,8 @@
 package de.ncm.x3.iam.settings;
 
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -13,9 +15,9 @@ public class PropertyManager {
 	private static Logger	       logger	       = Logger.getLogger(PropertyManager.class);
 	private Properties	           userProperties	= null;
 	private static PropertyManager	instance	   = null;
-	private static final String	   defaultProbFile	= "default.properties";
-	private static final String	   userProbFile	   = "user.properties";
-	
+	private static final String	   defaultProbFile	= "default.properties";	              // In jar file
+	private static final String	   userProbFile	   = "user.properties";	                  // At program directory
+	                                                                                          
 	private PropertyManager() {
 		logger.info("Loading Properties");
 		
@@ -28,14 +30,14 @@ public class PropertyManager {
 	private Properties getUserProperties(Properties defaultProperties) {
 		
 		Properties userProperties = new Properties(defaultProperties);
-		InputStream stream = getClass().getClassLoader().getResourceAsStream(userProbFile);
-		if (stream == null) {
+		File userProp = new File(userProbFile);
+		if (!userProp.exists()) {
 			String message = "File '" + userProbFile + "' does not exist - using Default";
 			logger.error(message);
 		} else {
 			
 			try {
-				userProperties.load(stream);
+				userProperties.load(new FileInputStream(userProp));
 			} catch (IOException e) {
 				logger.error("", e);
 			}
