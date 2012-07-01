@@ -20,6 +20,8 @@ public class UniverseLayout implements LayoutManager2 {
 	private Dimension	                  sectorSize	= new Dimension(100, 100);
 	private int	                          xSpace	 = 30;
 	private int	                          ySpace	 = 30;
+	private int	                          maxX	     = 0;
+	private int	                          maxY	     = 0;
 	
 	public UniverseLayout() {
 		super();
@@ -41,19 +43,23 @@ public class UniverseLayout implements LayoutManager2 {
 		
 	}
 	
+	public Dimension getSize() {
+		return new Dimension(maxX + 2 * getSectorWidth(), maxY + 2 * getSectorHeight());
+	}
+	
 	@Override
 	public Dimension preferredLayoutSize(Container parent) {
-		return parent.getSize();
+		return getSize();
 	}
 	
 	@Override
 	public Dimension minimumLayoutSize(Container parent) {
-		return parent.getSize();
+		return getSize();
 	}
 	
 	@Override
 	public Dimension maximumLayoutSize(Container target) {
-		return target.getSize();
+		return getSize();
 	}
 	
 	@Override
@@ -82,17 +88,32 @@ public class UniverseLayout implements LayoutManager2 {
 	public void layoutContainer(Container parent) {
 		for (GridPos gridPos : sectors.keySet()) {
 			Component comp = sectors.get(gridPos);
-			comp.setLocation((int) (getPixelX(gridPos.gridX) * scale), (int) (getPixelY(gridPos.gridY) * scale));
-			comp.setSize((int) (sectorSize.width * scale), (int) (sectorSize.height * scale));
+			int x = getPixelX(gridPos.gridX);
+			int y = getPixelY(gridPos.gridY);
+			
+			this.maxX = Math.max(maxX, x);
+			this.maxY = Math.max(maxY, y);
+			
+			comp.setLocation(x, y);
+			// logger.debug("Location of Component '" + comp + "'\t:" + comp.getLocation());
+			comp.setSize(getSectorWidth(), getSectorHeight());
 		}
 	}
 	
 	public int getPixelX(int gridX) {
-		return (int) (((gridX + 1) * xSpace + gridX * sectorSize.width) * scale * scale);
+		return (int) (((gridX + 1) * xSpace + gridX * getSectorWidth()) * scale);
 	}
 	
 	public int getPixelY(int gridY) {
-		return (int) (((gridY + 1) * ySpace + gridY * sectorSize.height) * scale * scale);
+		return (int) (((gridY + 1) * ySpace + gridY * getSectorHeight()) * scale);
+	}
+	
+	private int getSectorWidth() {
+		return (int) (sectorSize.width * scale);
+	}
+	
+	private int getSectorHeight() {
+		return (int) (sectorSize.height * scale);
 	}
 	
 }

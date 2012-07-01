@@ -10,6 +10,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import de.ncm.x3.iam.data.RaceFactory;
 import de.ncm.x3.iam.data.universe.GridPos;
 import de.ncm.x3.iam.data.universe.Sector;
 import de.ncm.x3.iam.data.universe.UniverseMap;
@@ -97,7 +98,7 @@ public class UniverseMapParser extends XMLParser<UniverseMap> {
 			} else if (children.item(i).getNodeName().equalsIgnoreCase("Y")) {
 				gc.setGridY(getIntValueOf(children.item(i)));
 			} else if (children.item(i).getNodeName().equalsIgnoreCase("RaceID")) {
-				sector.setRaceID(getIntValueOf(children.item(i)));
+				sector.setRace(RaceFactory.get(getStringValueOf(children.item(i))));
 			} else if (children.item(i).getNodeName().equalsIgnoreCase("GateConnections")) {
 				parseGateConnections(sector, children.item(i));
 			}

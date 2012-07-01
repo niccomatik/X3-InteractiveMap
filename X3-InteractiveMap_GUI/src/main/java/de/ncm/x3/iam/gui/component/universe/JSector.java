@@ -3,19 +3,17 @@ package de.ncm.x3.iam.gui.component.universe;
 
 
 import java.awt.Graphics2D;
-import java.awt.LayoutManager;
 
+import de.ncm.x3.iam.data.universe.Sector;
 import de.ncm.x3.iam.gui.component.JRenderPanel;
 
 public class JSector extends JRenderPanel {
 	
-	public JSector() {
-		// TODO Auto-generated constructor stub
-	}
+	private Sector	sector;
 	
-	public JSector(LayoutManager layout) {
-		super(layout);
-		// TODO Auto-generated constructor stub
+	public JSector(Sector s) {
+		super();
+		this.setSector(s);
 	}
 	
 	@Override
@@ -24,6 +22,14 @@ public class JSector extends JRenderPanel {
 		g.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, getWidth() / 3, getHeight() / 3);
 		g.setColor(getForeground());
 		g.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, getWidth() / 3, getHeight() / 3);
+	}
+	
+	private void setSector(Sector s) {
+		this.sector = s;
+	}
+	
+	public Sector getSector() {
+		return sector;
 	}
 	
 }

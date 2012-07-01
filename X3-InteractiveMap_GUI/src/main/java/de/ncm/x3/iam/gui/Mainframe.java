@@ -52,8 +52,8 @@ public class Mainframe extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
-		JUniverseMap universeMap = new JUniverseMap();
-		contentPane.add(universeMap, BorderLayout.CENTER);
+		JUniverseMap jUniverseMap = new JUniverseMap();
+		contentPane.add(jUniverseMap.getScrollableVersion(), BorderLayout.CENTER);
 		
 		GuiBundleManager.get().setLocaleChangedListener(localeChangedListener);
 		

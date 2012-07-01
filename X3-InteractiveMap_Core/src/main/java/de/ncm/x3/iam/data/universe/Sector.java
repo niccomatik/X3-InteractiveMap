@@ -5,13 +5,13 @@ package de.ncm.x3.iam.data.universe;
 public class Sector implements WarpGateConstants {
 	
 	private String	   name	      = "";
-	private Integer	   raceID	  = -1;
+	private Race	   race	      = null;
 	private WarpGate[]	warpGates	= new WarpGate[4];
 	
-	public Sector(String name, Integer raceID, WarpGate[] warpGates) {
+	public Sector(String name, Race race, WarpGate[] warpGates) {
 		super();
 		this.name = name;
-		this.raceID = raceID;
+		this.race = race;
 		this.warpGates = warpGates;
 	}
 	
@@ -27,12 +27,12 @@ public class Sector implements WarpGateConstants {
 		this.name = name;
 	}
 	
-	public Integer getRaceID() {
-		return raceID;
+	public Race getRace() {
+		return race;
 	}
 	
-	public void setRaceID(Integer raceID) {
-		this.raceID = raceID;
+	public void setRace(Race race) {
+		this.race = race;
 	}
 	
 	public WarpGate[] getWarpGates() {
