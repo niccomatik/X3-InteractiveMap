@@ -14,9 +14,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
+import de.ncm.x3.iam.parser.ParseEvent;
 import de.ncm.x3.iam.parser.Parser;
 
-public abstract class XMLParser implements Parser {
+public abstract class XMLParser<E> extends Parser {
 	
 	private DocumentBuilder	       dBuilder;
 	private DocumentBuilderFactory	dbFactory;
@@ -60,17 +61,19 @@ public abstract class XMLParser implements Parser {
 	@Override
 	public final void parse() {
 		long lastModified = file.lastModified();
+		fireParseStartEvent(new ParseEvent(this, null));
+		E ret = null;
 		try {
 			Document doc = dBuilder.parse(file);
 			doc.getDocumentElement().normalize();
 			Element rootNode = doc.getDocumentElement();
-			parseXML(rootNode);
+			ret = parseXML(rootNode);
 		} catch (SAXException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+		fireParseEndEvent(new ParseEvent(this, ret));
 		this.lastModified = lastModified;
 	}
 	
@@ -82,7 +85,7 @@ public abstract class XMLParser implements Parser {
 		return false;
 	}
 	
-	protected abstract void parseXML(Element rootElement);
+	protected abstract E parseXML(Element rootElement);
 	
 	public File getFile() {
 		return file;

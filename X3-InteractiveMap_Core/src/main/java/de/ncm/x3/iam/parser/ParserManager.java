@@ -23,7 +23,7 @@ public class ParserManager {
 		
 	}
 	
-	public void reparse() {
+	public void reParse() {
 		long actualTime = System.currentTimeMillis();
 		for (Parser p : parserMap.keySet()) {
 			if (p.needUpdate(actualTime - parserMap.get(p))) {
@@ -61,7 +61,7 @@ public class ParserManager {
 			@Override
 			public void run() {
 				while (active) {
-					reparse();
+					reParse();
 					try {
 						Thread.sleep(waitTime);
 					} catch (InterruptedException e) {

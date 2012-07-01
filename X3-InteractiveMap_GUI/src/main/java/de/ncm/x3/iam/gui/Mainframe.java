@@ -3,8 +3,11 @@ package de.ncm.x3.iam.gui;
 
 
 import java.awt.BorderLayout;
+import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.Locale;
 
 import javax.swing.JCheckBoxMenuItem;
@@ -19,7 +22,9 @@ import org.apache.log4j.Logger;
 
 import de.ncm.x3.iam.bundle.GuiBundleManager;
 import de.ncm.x3.iam.bundle.SwingLocaleChangedListener;
+import de.ncm.x3.iam.gui.component.universe.JUniverseMap;
 import de.ncm.x3.iam.parser.ParserManager;
+import de.ncm.x3.iam.settings.PropertyManager;
 
 public class Mainframe extends JFrame {
 	
@@ -35,7 +40,9 @@ public class Mainframe extends JFrame {
 	
 	public Mainframe() {
 		super();
+		logger.info("Creating the GUI");
 		this.localeChangedListener = new SwingLocaleChangedListener();
+		setLocationByPlatform(true);
 		setTitle("X - InteractiveMap");
 		setSize(1024, 768);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,9 +52,13 @@ public class Mainframe extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
+		JUniverseMap universeMap = new JUniverseMap();
+		contentPane.add(universeMap, BorderLayout.CENTER);
+		
 		GuiBundleManager.get().setLocaleChangedListener(localeChangedListener);
 		
-		this.parseManager = new ParserManager(); // TODO remove this test Line
+		this.parseManager = new ParserManager();
+		logger.info("GUI created");
 	}
 	
 	private void setupMenu() {
@@ -62,11 +73,11 @@ public class Mainframe extends JFrame {
 		final JCheckBoxMenuItem chckbxmntmParsing = new JCheckBoxMenuItem("Parsing");
 		chckbxmntmParsing.setName("mainframe.menu.data.parsing");
 		localeChangedListener.add(chckbxmntmParsing);
-		chckbxmntmParsing.setSelected(false);
-		chckbxmntmParsing.addActionListener(new ActionListener() {
+		
+		chckbxmntmParsing.addItemListener(new ItemListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void itemStateChanged(ItemEvent e) {
 				if (chckbxmntmParsing.isSelected()) {
 					parseManager.startParsing();
 				} else {
@@ -74,6 +85,23 @@ public class Mainframe extends JFrame {
 				}
 			}
 		});
+		
+		EventQueue.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				logger.info("JCheckBoxMenuItemParsing: Set Value from properties");
+				boolean enabled = false;
+				String prop = PropertyManager.get().getProperty("parser.continuousparsing.enabled");
+				if (prop != null) {
+					if (prop.trim().equals("true") || prop.trim().equals("1")) {
+						enabled = true;
+					}
+				}
+				chckbxmntmParsing.setSelected(enabled);
+			}
+		});
+		
 		menuData.add(chckbxmntmParsing);
 		
 		menuData.addSeparator();
@@ -177,6 +205,7 @@ public class Mainframe extends JFrame {
 			mnLanguage.add(rdbtnmntmLanguage);
 			
 		}
+		
 	}
 	
 	protected void quit() {

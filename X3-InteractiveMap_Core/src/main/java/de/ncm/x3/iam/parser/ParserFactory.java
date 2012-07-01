@@ -9,9 +9,14 @@ import de.ncm.x3.iam.settings.PropertyManager;
 
 public abstract class ParserFactory {
 	
+	private static Parser	universeMapParser	= null;
+	
 	public static Parser getUniverseMapParser() {
-		String file = PropertyManager.get().getProperty("log.parser.xml.path") + PropertyManager.get().getProperty("log.parser.xml.universemap.file");
-		return new UniverseMapParser(new File(file));
+		if (universeMapParser == null) {
+			String file = PropertyManager.get().getProperty("log.parser.xml.path") + PropertyManager.get().getProperty("log.parser.xml.universemap.file");
+			universeMapParser = new UniverseMapParser(new File(file));
+		}
+		return universeMapParser;
 		
 	}
 	

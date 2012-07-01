@@ -16,7 +16,7 @@ import de.ncm.x3.iam.data.universe.UniverseMap;
 import de.ncm.x3.iam.data.universe.WarpGate;
 import de.ncm.x3.iam.data.universe.WarpGateConstants;
 
-public class UniverseMapParser extends XMLParser {
+public class UniverseMapParser extends XMLParser<UniverseMap> {
 	
 	private static Logger	logger	= Logger.getLogger(UniverseMapParser.class);
 	private Node	      mapNode;
@@ -28,17 +28,18 @@ public class UniverseMapParser extends XMLParser {
 	}
 	
 	@Override
-	public void parseXML(Element rootElement) {
+	public UniverseMap parseXML(Element rootElement) {
 		NodeList children = rootElement.getChildNodes();
 		for (int i = 0; i < children.getLength(); i++) {
 			if (children.item(i).getNodeName().equalsIgnoreCase("Map")) {
 				this.mapNode = children.item(i);
 			} else if (children.item(i).getNodeName().equalsIgnoreCase("Races")) {
-				racesNode = children.item(i);
+				this.racesNode = children.item(i);
 			}
 		}
 		
 		HashMap<Integer, String> raceMap = parseRaces(racesNode);
+		return parseMap(raceMap, mapNode);
 	}
 	
 	private HashMap<Integer, String> parseRaces(Node item) {
@@ -53,8 +54,8 @@ public class UniverseMapParser extends XMLParser {
 		return raceMap;
 	}
 	
-	private void parseRace(HashMap<Integer, String> raceMap, Node item) {
-		NodeList children = item.getChildNodes();
+	private void parseRace(HashMap<Integer, String> raceMap, Node mapNode) {
+		NodeList children = mapNode.getChildNodes();
 		
 		Integer id = 0;
 		String name = "";
