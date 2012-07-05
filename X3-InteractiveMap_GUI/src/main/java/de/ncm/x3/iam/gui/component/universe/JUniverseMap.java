@@ -3,7 +3,6 @@ package de.ncm.x3.iam.gui.component.universe;
 
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Graphics2D;
 
@@ -20,23 +19,32 @@ import de.ncm.x3.iam.parser.ParseEvent;
 import de.ncm.x3.iam.parser.ParseListener;
 import de.ncm.x3.iam.parser.ParserFactory;
 
-public class JUniverseMap extends JRenderPanel {
+public class JUniverseMap extends JScrollPane {
 	
-	private static final Logger	logger	= Logger.getLogger(JUniverseMap.class);
-	private Component	        scrollPane;
+	private static final Logger logger = Logger.getLogger(JUniverseMap.class);
+	private ViewPanel viewPanel;
 	
 	public JUniverseMap() {
-		super(new UniverseLayout());
-		setBackground(Color.BLACK);
+		super();
 		ParserFactory.getUniverseMapParser().addParseListener(new PListener());
+		viewPanel = new ViewPanel();
+		setViewportView(viewPanel);
 		
-		scrollPane = new JScrollPane(this);
 	}
 	
-	@Override
-	public void paintView(Graphics2D g) {
-		g.setColor(getBackground());
-		g.fillRect(0, 0, getWidth(), getHeight());
+	private class ViewPanel extends JRenderPanel {
+		
+		public ViewPanel() {
+			super(new UniverseLayout());
+			setBackground(Color.BLACK);
+			
+		}
+		
+		@Override
+		public void paintView(Graphics2D g) {
+			g.setColor(getBackground());
+			g.fillRect(0, 0, getWidth(), getHeight());
+		}
 	}
 	
 	private class PListener implements ParseListener {
@@ -65,23 +73,16 @@ public class JUniverseMap extends JRenderPanel {
 					for (GridPos gridPos : map.getSectors().keySet()) {
 						Sector sector = map.getSectors().get(gridPos);
 						// logger.debug("Pos: " + gridPos + "\tSector: " + sector.getName());
-						add(new JSector(sector), gridPos);
+						viewPanel.add(new JSector(sector), gridPos);
 					}
-					validate();
-					repaint();
-					if (scrollPane != null) {
-						scrollPane.validate();
-					}
+					viewPanel.validate();
+					viewPanel.repaint();
+					JUniverseMap.this.validate();
 					logger.info("New Sectors added");
 				}
 			});
 			
 		}
-	}
-	
-	public Component getScrollableVersion() {
-		return this.scrollPane;
-		
 	}
 	
 }

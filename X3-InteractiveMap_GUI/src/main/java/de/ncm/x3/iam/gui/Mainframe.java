@@ -12,29 +12,29 @@ import java.util.Locale;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.UIManager;
 
 import org.apache.log4j.Logger;
 
 import de.ncm.x3.iam.bundle.GuiBundleManager;
-import de.ncm.x3.iam.bundle.SwingLocaleChangedListener;
 import de.ncm.x3.iam.gui.component.ComponentFactory;
 import de.ncm.x3.iam.gui.component.universe.JUniverseMap;
+import de.ncm.x3.iam.gui.util.ComponentUtils;
 import de.ncm.x3.iam.parser.ParserManager;
 import de.ncm.x3.iam.settings.PropertyManager;
 
 public class Mainframe extends JFrame {
 	
-	private Logger	                   logger	= Logger.getLogger(Mainframe.class);
-	private JPanel	                   contentPane;
-	private SwingLocaleChangedListener	localeChangedListener;
-	private JRadioButtonMenuItem	   actualrdbtnmntmLanguage;
-	private ParserManager	           parseManager;
+	private Logger logger = Logger.getLogger(Mainframe.class);
+	private JPanel contentPane;
+	private JRadioButtonMenuItem actualrdbtnmntmLanguage;
+	private ParserManager parseManager;
+	protected ComponentFactory componentFactory = ComponentFactory.get();
 	
 	/**
 	 * Create the frame
@@ -42,8 +42,9 @@ public class Mainframe extends JFrame {
 	
 	public Mainframe() {
 		super();
+		UIManager.getDefaults().addResourceBundle("language.lang");
 		logger.info("Creating the GUI");
-		this.localeChangedListener = new SwingLocaleChangedListener();
+		
 		setLocationByPlatform(true);
 		setTitle("X - InteractiveMap");
 		setSize(1024, 768);
@@ -55,29 +56,21 @@ public class Mainframe extends JFrame {
 		setContentPane(contentPane);
 		
 		JUniverseMap jUniverseMap = new JUniverseMap();
-		contentPane.add(jUniverseMap.getScrollableVersion(), BorderLayout.CENTER);
-		
-		GuiBundleManager.get().setLocaleChangedListener(localeChangedListener);
+		contentPane.add(jUniverseMap, BorderLayout.CENTER);
 		
 		this.parseManager = new ParserManager();
 		logger.info("GUI created");
 		
-		JLabel label = ComponentFactory.get().createLocalisedComponent("abc", JLabel.class);
-		// label.setText(text)
 	}
 	
 	private void setupMenu() {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
-		JMenu menuData = new JMenu("Data");
-		menuData.setName("mainframe.menu.data");
-		localeChangedListener.add(menuData);
+		JMenu menuData = componentFactory.createLocalisedComponent("mainframe.menu.data", JMenu.class);
 		menuBar.add(menuData);
 		
-		final JCheckBoxMenuItem chckbxmntmParsing = new JCheckBoxMenuItem("Parsing");
-		chckbxmntmParsing.setName("mainframe.menu.data.parsing");
-		localeChangedListener.add(chckbxmntmParsing);
+		final JCheckBoxMenuItem chckbxmntmParsing = componentFactory.createLocalisedComponent("mainframe.menu.data.parsing", JCheckBoxMenuItem.class);
 		
 		chckbxmntmParsing.addItemListener(new ItemListener() {
 			
@@ -111,9 +104,7 @@ public class Mainframe extends JFrame {
 		
 		menuData.addSeparator();
 		
-		JMenuItem mntmClose = new JMenuItem("Close");
-		mntmClose.setName("mainframe.menu.data.close");
-		localeChangedListener.add(mntmClose);
+		JMenuItem mntmClose = componentFactory.createLocalisedComponent("mainframe.menu.data.close", JMenuItem.class);
 		mntmClose.addActionListener(new ActionListener() {
 			
 			@Override
@@ -123,14 +114,10 @@ public class Mainframe extends JFrame {
 		});
 		menuData.add(mntmClose);
 		
-		JMenu menuEdit = new JMenu("Edit");
-		menuEdit.setName("mainframe.menu.edit");
-		localeChangedListener.add(menuEdit);
+		JMenu menuEdit = componentFactory.createLocalisedComponent("mainframe.menu.edit", JMenu.class);
 		menuBar.add(menuEdit);
 		
-		JMenuItem mntmChooseLogpath = new JMenuItem("Choose Logpath");
-		mntmChooseLogpath.setName("mainframe.menu.edit.choose_logpath");
-		localeChangedListener.add(mntmChooseLogpath);
+		JMenuItem mntmChooseLogpath = componentFactory.createLocalisedComponent("mainframe.menu.edit.choose_logpath", JMenuItem.class);
 		mntmChooseLogpath.addActionListener(new ActionListener() {
 			
 			@Override
@@ -141,14 +128,12 @@ public class Mainframe extends JFrame {
 		});
 		menuEdit.add(mntmChooseLogpath);
 		
-		JMenu menuView = new JMenu("View");
-		menuView.setName("mainframe.menu.view");
-		localeChangedListener.add(menuView);
+		JMenu menuView = componentFactory.createLocalisedComponent("mainframe.menu.view", JMenu.class);
 		menuBar.add(menuView);
 		
-		JCheckBoxMenuItem checkBoxMenuItemCenterViewOnActualSector = new JCheckBoxMenuItem("Center map automatically on current sector");
-		checkBoxMenuItemCenterViewOnActualSector.setName("mainframe.menu.view.ceter_map_on_sector.automatic");
-		localeChangedListener.add(checkBoxMenuItemCenterViewOnActualSector);
+		JCheckBoxMenuItem checkBoxMenuItemCenterViewOnActualSector = componentFactory.createLocalisedComponent(
+				"mainframe.menu.view.ceter_map_on_sector.automatic", JCheckBoxMenuItem.class);
+		
 		checkBoxMenuItemCenterViewOnActualSector.setSelected(true);
 		chckbxmntmParsing.addActionListener(new ActionListener() {
 			
@@ -160,9 +145,7 @@ public class Mainframe extends JFrame {
 		});
 		menuView.add(checkBoxMenuItemCenterViewOnActualSector);
 		
-		JMenuItem menuItemCenterMap = new JMenuItem("Center map on current sector");
-		menuItemCenterMap.setName("mainframe.menu.view.ceter_map_on_sector");
-		localeChangedListener.add(menuItemCenterMap);
+		JMenuItem menuItemCenterMap = componentFactory.createLocalisedComponent("mainframe.menu.view.ceter_map_on_sector", JMenuItem.class);
 		menuItemCenterMap.addActionListener(new ActionListener() {
 			
 			@Override
@@ -173,21 +156,17 @@ public class Mainframe extends JFrame {
 		});
 		menuView.add(menuItemCenterMap);
 		
-		JMenu menuHelp = new JMenu("Help");
-		menuHelp.setName("mainframe.menu.help");
-		localeChangedListener.add(menuHelp);
+		JMenu menuHelp = componentFactory.createLocalisedComponent("mainframe.menu.help", JMenu.class);
 		menuBar.add(menuHelp);
 		
-		JMenu mnLanguage = new JMenu("Language");
-		mnLanguage.setName("mainframe.menu.help.language");
-		localeChangedListener.add(mnLanguage);
+		JMenu mnLanguage = componentFactory.createLocalisedComponent("mainframe.menu.help.language", JMenu.class);
 		menuHelp.add(mnLanguage);
 		
 		for (final Locale l : GuiBundleManager.get().getAvailableLocales()) {
 			
 			final JRadioButtonMenuItem rdbtnmntmLanguage = new JRadioButtonMenuItem(l.getDisplayLanguage(l));
 			
-			if (l.toLanguageTag().equalsIgnoreCase(Locale.getDefault().toLanguageTag())) {
+			if (l.getDisplayLanguage(l).equalsIgnoreCase(rdbtnmntmLanguage.getLocale().getDisplayLanguage(l))) {
 				rdbtnmntmLanguage.setSelected(true);
 				actualrdbtnmntmLanguage = rdbtnmntmLanguage;
 			} else {
@@ -202,8 +181,7 @@ public class Mainframe extends JFrame {
 					}
 					actualrdbtnmntmLanguage = rdbtnmntmLanguage;
 					actualrdbtnmntmLanguage.setSelected(true);
-					GuiBundleManager.get().setLocale(l);
-					
+					ComponentUtils.setLocaleRecursively(Mainframe.this, l);
 				}
 			});
 			

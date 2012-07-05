@@ -15,15 +15,15 @@ import org.apache.log4j.Logger;
 
 public class GuiBundleManager {
 	
-	private static Logger	        logger	   = Logger.getLogger(GuiBundleManager.class);
-	private String	                filePrefix	= "language.lang";
-	private ResourceBundle	        rb	       = null;
-	private LocaleChangedListener	listener	= null;
+	private static Logger logger = Logger.getLogger(GuiBundleManager.class);
+	private String filePrefix = "language.lang";
+	private ResourceBundle rb = null;
+	private LocaleChangedListener listener = null;
 	
-	private static GuiBundleManager	instance	= null;
+	private static GuiBundleManager instance = null;
 	
 	private GuiBundleManager() { // no one except own class is allowed to
-		                         // instantiate
+									// instantiate
 		setLocale(Locale.getDefault());
 	}
 	
@@ -71,17 +71,21 @@ public class GuiBundleManager {
 		
 		String[] split = filePrefix.split("\\.");
 		
-		String folderPath = getClass().getResource("/" + filePrefix.replace("." + split[split.length - 1], "")).getFile();
-		File folder = new File(folderPath);
-		
-		if (folder.canRead()) { // True: Normal FileSystem (= eclipse run mode)
-			logger.info("Using Dev-Mode Locale listing");
-			for (File f : folder.listFiles()) {
-				logger.debug("Locale found: " + f);
-				if (f.isFile()) {
-					out.add(parseLocaleString(f.getName()));
+		if (new Boolean(System.getProperty("isEclipseRunMode"))) {
+			
+			String folderPath = getClass().getResource("/" + filePrefix.replace("." + split[split.length - 1], "")).getFile();
+			File folder = new File(folderPath);
+			
+			if (folder.canRead()) { // True: Normal FileSystem (= eclipse run mode)
+				logger.info("Using Dev-Mode Locale listing");
+				for (File f : folder.listFiles()) {
+					logger.debug("Locale found: " + f);
+					if (f.isFile()) {
+						out.add(parseLocaleString(f.getName()));
+					}
 				}
 			}
+			
 		} else { // False: Packed in jar file
 		
 			try {
@@ -96,7 +100,7 @@ public class GuiBundleManager {
 					}
 				}
 			} catch (IOException e) {
-				logger.error("Opening JarFile '" + folderPath.split("!")[0] + "':", e);
+				// logger.error("Opening JarFile '" + folderPath.split("!")[0] + "':", e);
 			}
 			
 		}

@@ -19,6 +19,15 @@ public class X3InteractiveMapStarter {
 	 */
 	public static void main(String[] args) {
 		
+		for (String arg : args) {
+			if (arg.startsWith("-")) {
+				arg = arg.substring(1);
+			}
+			if (arg.trim().equalsIgnoreCase("EclipseRunMode")) {
+				System.setProperty("isEclipseRunMode", "true");
+			}
+		}
+		
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException e) {

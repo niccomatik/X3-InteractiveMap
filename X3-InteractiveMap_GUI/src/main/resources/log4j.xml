@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
-	  
+
 <log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
-	  
-  	<appender name="screen_stdout" class="org.apache.log4j.ConsoleAppender">
 
-	    <param name="Target" value="System.out"/>
+	<appender name="screen_stdout" class="org.apache.log4j.ConsoleAppender">
 
-	    <layout class="org.apache.log4j.PatternLayout">
-    		<param name="ConversionPattern" value="%d [%t] %-5p %c#%M -\t %m%n"/>
-    	</layout>	                 
+		<param name="Target" value="System.out" />
 
-	    <filter class="org.apache.log4j.varia.LevelRangeFilter">
-	      	<param name="LevelMin" value="debug" />
-	      	<param name="LevelMax" value="info" />
-	      	<param name="AcceptOnMatch" value="true" />
-	    </filter>  
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d [%t] %-5p %c#%M -\t %m%n" />
+		</layout>
 
-  	</appender>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="debug" />
+			<param name="LevelMax" value="info" />
+			<param name="AcceptOnMatch" value="true" />
+		</filter>
 
-  	<appender name="screen_stderr" class="org.apache.log4j.ConsoleAppender">
-	    
-	    <param name="Target" value="System.err"/>
-	    <param name="Threshold" value="warn"/>
+	</appender>
 
-	    <layout class="org.apache.log4j.PatternLayout">
-    		<param name="ConversionPattern" value="%d [%t] %-5p %c#%M -\t %m%n"/>
-    	</layout>	                 
+	<appender name="screen_stderr" class="org.apache.log4j.ConsoleAppender">
 
-  	</appender>
+		<param name="Target" value="System.err" />
+		<param name="Threshold" value="warn" />
+
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d [%t] %-5p %c#%M -\t %m%n" />
+		</layout>
+
+	</appender>
 
 
 	<root>
@@ -36,5 +36,5 @@
 		<appender-ref ref="screen_stdout" />
 		<appender-ref ref="screen_stderr" />
 	</root>
-  
+
 </log4j:configuration>
