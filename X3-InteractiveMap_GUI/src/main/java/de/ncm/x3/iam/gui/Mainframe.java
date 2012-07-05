@@ -12,6 +12,7 @@ import java.util.Locale;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -22,6 +23,7 @@ import org.apache.log4j.Logger;
 
 import de.ncm.x3.iam.bundle.GuiBundleManager;
 import de.ncm.x3.iam.bundle.SwingLocaleChangedListener;
+import de.ncm.x3.iam.gui.component.ComponentFactory;
 import de.ncm.x3.iam.gui.component.universe.JUniverseMap;
 import de.ncm.x3.iam.parser.ParserManager;
 import de.ncm.x3.iam.settings.PropertyManager;
@@ -59,6 +61,9 @@ public class Mainframe extends JFrame {
 		
 		this.parseManager = new ParserManager();
 		logger.info("GUI created");
+		
+		JLabel label = ComponentFactory.get().createLocalisedComponent("abc", JLabel.class);
+		// label.setText(text)
 	}
 	
 	private void setupMenu() {

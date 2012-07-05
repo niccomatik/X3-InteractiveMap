@@ -2,6 +2,7 @@
 package de.ncm.x3.iam.bundle;
 
 
+import java.awt.ComponentOrientation;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -19,6 +20,7 @@ public class SwingLocaleChangedListener implements LocaleChangedListener {
 		logger.info("Locale changed to '" + rb.getLocale() + "'");
 		for (AbstractButton b : abstractButtons) {
 			b.setText(rb.getString(b.getName()));
+			b.setComponentOrientation(ComponentOrientation.getOrientation(rb.getLocale()));
 		}
 		
 	}
