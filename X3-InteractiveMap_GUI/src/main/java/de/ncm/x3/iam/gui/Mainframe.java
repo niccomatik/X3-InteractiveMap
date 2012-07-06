@@ -4,6 +4,7 @@ package de.ncm.x3.iam.gui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -24,6 +25,7 @@ import org.apache.log4j.Logger;
 import de.ncm.x3.iam.bundle.GuiBundleManager;
 import de.ncm.x3.iam.gui.component.ComponentFactory;
 import de.ncm.x3.iam.gui.component.universe.JUniverseMap;
+import de.ncm.x3.iam.gui.component.universe.JUniverseMapScrollContainer;
 import de.ncm.x3.iam.gui.util.ComponentUtils;
 import de.ncm.x3.iam.parser.ParserManager;
 import de.ncm.x3.iam.settings.PropertyManager;
@@ -35,6 +37,7 @@ public class Mainframe extends JFrame {
 	private JRadioButtonMenuItem actualrdbtnmntmLanguage;
 	private ParserManager parseManager;
 	protected ComponentFactory componentFactory = ComponentFactory.get();
+	private JUniverseMapScrollContainer jUniverseMapScrollContainer;
 	
 	/**
 	 * Create the frame
@@ -56,7 +59,8 @@ public class Mainframe extends JFrame {
 		setContentPane(contentPane);
 		
 		JUniverseMap jUniverseMap = new JUniverseMap();
-		contentPane.add(jUniverseMap, BorderLayout.CENTER);
+		jUniverseMapScrollContainer = new JUniverseMapScrollContainer(jUniverseMap);
+		contentPane.add(jUniverseMapScrollContainer, BorderLayout.CENTER);
 		
 		this.parseManager = new ParserManager();
 		logger.info("GUI created");
@@ -151,6 +155,11 @@ public class Mainframe extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Implement center on sector
+				Rectangle rect = getBounds();
+				rect.x = 500;
+				rect.y = 500;
+				
+				jUniverseMapScrollContainer.getViewport().scrollRectToVisible(rect);
 				
 			}
 		});

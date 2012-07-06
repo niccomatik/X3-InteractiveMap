@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -16,47 +15,11 @@ import org.apache.log4j.Logger;
 public class GuiBundleManager {
 	
 	private static Logger logger = Logger.getLogger(GuiBundleManager.class);
-	private String filePrefix = "language.lang";
-	private ResourceBundle rb = null;
-	private LocaleChangedListener listener = null;
+	private String path = "language.lang";
 	
 	private static GuiBundleManager instance = null;
 	
-	private GuiBundleManager() { // no one except own class is allowed to
-									// instantiate
-		setLocale(Locale.getDefault());
-	}
-	
-	public String getString(String key) {
-		return rb.getString(key);
-	}
-	
-	public String[] getStringArray(String key) {
-		return rb.getStringArray(key);
-	}
-	
-	public Locale getLocale() {
-		return rb.getLocale();
-	}
-	
-	public void setLocale(Locale l) {
-		rb = ResourceBundle.getBundle(filePrefix, l);
-		if (listener != null) {
-			listener.localeChanged(rb);
-		}
-		
-	}
-	
-	public LocaleChangedListener getLocaleChangedListener() {
-		return listener;
-	}
-	
-	public void setLocaleChangedListener(LocaleChangedListener listener) {
-		this.listener = listener;
-		if (listener != null) {
-			listener.localeChanged(rb);
-		}
-	}
+	private GuiBundleManager() {}
 	
 	public static GuiBundleManager get() {
 		if (instance == null) {
@@ -69,11 +32,11 @@ public class GuiBundleManager {
 		
 		ArrayList<Locale> out = new ArrayList<Locale>();
 		
-		String[] split = filePrefix.split("\\.");
+		String[] split = path.split("\\.");
 		
 		if (new Boolean(System.getProperty("isEclipseRunMode"))) {
 			
-			String folderPath = getClass().getResource("/" + filePrefix.replace("." + split[split.length - 1], "")).getFile();
+			String folderPath = getClass().getResource("/" + path.replace("." + split[split.length - 1], "")).getFile();
 			File folder = new File(folderPath);
 			
 			if (folder.canRead()) { // True: Normal FileSystem (= eclipse run mode)

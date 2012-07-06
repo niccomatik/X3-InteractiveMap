@@ -9,11 +9,12 @@ import de.ncm.x3.iam.gui.component.JRenderPanel;
 
 public class JSector extends JRenderPanel {
 	
-	private Sector	sector;
+	private Sector sector;
 	
 	public JSector(Sector s) {
 		super();
 		this.setSector(s);
+		
 	}
 	
 	@Override
