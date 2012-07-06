@@ -60,8 +60,8 @@ public class JUniverseMap extends JRenderPanel {
 					logger.info("Adding new Sectors");
 					for (GridPos gridPos : map.getSectors().keySet()) {
 						Sector sector = map.getSectors().get(gridPos);
-						// logger.debug("Pos: " + gridPos + "\tSector: " + sector.getName());
-						add(new JSector(sector), gridPos);
+						JSector jSec = new JSector(sector);
+						add(jSec, gridPos);
 					}
 					validate();
 					repaint();

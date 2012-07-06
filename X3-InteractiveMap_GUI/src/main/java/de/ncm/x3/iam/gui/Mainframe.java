@@ -4,7 +4,6 @@ package de.ncm.x3.iam.gui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -23,6 +22,7 @@ import javax.swing.UIManager;
 import org.apache.log4j.Logger;
 
 import de.ncm.x3.iam.bundle.GuiBundleManager;
+import de.ncm.x3.iam.data.universe.GridPos;
 import de.ncm.x3.iam.gui.component.ComponentFactory;
 import de.ncm.x3.iam.gui.component.universe.JUniverseMap;
 import de.ncm.x3.iam.gui.component.universe.JUniverseMapScrollContainer;
@@ -154,13 +154,7 @@ public class Mainframe extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Implement center on sector
-				Rectangle rect = getBounds();
-				rect.x = 500;
-				rect.y = 500;
-				
-				jUniverseMapScrollContainer.getViewport().scrollRectToVisible(rect);
-				
+				jUniverseMapScrollContainer.centerViewOnSector(new GridPos(5, 5)); // TODO: Replace DummyData with real actual sector
 			}
 		});
 		menuView.add(menuItemCenterMap);

@@ -14,14 +14,14 @@ import de.ncm.x3.iam.data.universe.GridPos;
 
 public class UniverseLayout implements LayoutManager2 {
 	
-	private static final Logger	          logger	 = Logger.getLogger(UniverseLayout.class);
-	protected HashMap<GridPos, Component>	sectors	 = new HashMap<GridPos, Component>();
-	private double	                      scale	     = 1.0;
-	private Dimension	                  sectorSize	= new Dimension(100, 100);
-	private int	                          xSpace	 = 30;
-	private int	                          ySpace	 = 30;
-	private int	                          maxX	     = 0;
-	private int	                          maxY	     = 0;
+	private static final Logger logger = Logger.getLogger(UniverseLayout.class);
+	protected HashMap<GridPos, Component> sectors = new HashMap<GridPos, Component>();
+	private double scale = 1.0;
+	private Dimension sectorSize = new Dimension(100, 100);
+	private int xSpace = 30;
+	private int ySpace = 30;
+	private int maxX = 0;
+	private int maxY = 0;
 	
 	public UniverseLayout() {
 		super();
@@ -108,11 +108,11 @@ public class UniverseLayout implements LayoutManager2 {
 		return (int) (((gridY + 1) * ySpace + gridY * getSectorHeight()) * scale);
 	}
 	
-	private int getSectorWidth() {
+	public int getSectorWidth() {
 		return (int) (sectorSize.width * scale);
 	}
 	
-	private int getSectorHeight() {
+	public int getSectorHeight() {
 		return (int) (sectorSize.height * scale);
 	}
 	
