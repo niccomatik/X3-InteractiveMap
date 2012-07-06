@@ -3,6 +3,7 @@ package de.ncm.x3.iam.gui.component.universe;
 
 
 import java.awt.Graphics2D;
+import java.awt.GridBagLayout;
 
 import de.ncm.x3.iam.data.universe.Sector;
 import de.ncm.x3.iam.gui.component.JRenderPanel;
@@ -12,7 +13,7 @@ public class JSector extends JRenderPanel {
 	private Sector sector;
 	
 	public JSector(Sector s) {
-		super();
+		super(new GridBagLayout());
 		this.setSector(s);
 		
 	}
@@ -27,6 +28,7 @@ public class JSector extends JRenderPanel {
 	
 	private void setSector(Sector s) {
 		this.sector = s;
+		
 	}
 	
 	public Sector getSector() {

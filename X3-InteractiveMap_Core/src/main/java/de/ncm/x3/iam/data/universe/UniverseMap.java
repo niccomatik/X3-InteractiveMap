@@ -8,9 +8,9 @@ import org.apache.log4j.Logger;
 
 public class UniverseMap {
 	
-	private static Logger	         logger	    = Logger.getLogger(UniverseMap.class);
-	private HashMap<GridPos, Sector>	sectors	= new HashMap<GridPos, Sector>();
-	private HashMap<Integer, String>	races;
+	private static Logger logger = Logger.getLogger(UniverseMap.class);
+	private HashMap<GridPos, Sector> sectors = new HashMap<GridPos, Sector>();
+	private HashMap<Integer, Race> races;
 	
 	public UniverseMap() {}
 	
@@ -25,12 +25,12 @@ public class UniverseMap {
 		return sectors;
 	}
 	
-	public void setRaces(HashMap<Integer, String> raceMap) {
+	public void setRaces(HashMap<Integer, Race> raceMap) {
 		this.races = raceMap;
 		
 	}
 	
-	public HashMap<Integer, String> getRaces() {
+	public HashMap<Integer, Race> getRaces() {
 		return races;
 	}
 	

@@ -1,0 +1,47 @@
+<?xml version="1.0" standalone="yes" ?>
+<?xml-stylesheet href="x2script.xsl" type="text/xsl" ?>
+<script>
+<name>al.plugin.ncm.map.register</name>
+<version>0</version>
+<engineversion>52</engineversion>
+<description>Description</description>
+<arguments>
+</arguments>
+<sourceplaintext>
+<![CDATA[
+  al engine: register script=al.ncm.map.main
+  return null
+]]>
+</sourceplaintext>
+<sourcetext>
+<line indent=""><text>al&#160;engine:&#160;register&#160;script=</text><call>al.ncm.map.main</call></line>
+<line indent=""><text>return&#160;</text><var>null</var></line>
+</sourcetext>
+<codearray>
+
+<sval type="array" size="10">
+  <sval type="string" val="al.plugin.ncm.map.register"/>
+  <sval type="int" val="52"/>
+  <sval type="string" val="Description"/>
+  <sval type="int" val="0"/>
+  <sval type="int" val="0"/>
+  <sval type="int" val="0"/>
+  <sval type="array" size="2">
+    <sval type="array" size="2">
+      <sval type="int" val="1000"/>
+      <sval type="string" val="al.ncm.map.main"/>
+    </sval>
+    <sval type="array" size="3">
+      <sval type="int" val="103"/>
+      <sval type="int" val="0"/>
+      <sval type="int" val="0"/>
+    </sval>
+  </sval>
+  <sval type="int" val="0"/>
+  <sval type="int" val="0"/>
+  <sval type="int" val="0"/>
+</sval>
+
+</codearray>
+<nosignature>0182</nosignature>
+</script>

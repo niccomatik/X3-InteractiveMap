@@ -19,10 +19,10 @@ import de.ncm.x3.iam.parser.Parser;
 
 public abstract class XMLParser<E> extends Parser {
 	
-	private DocumentBuilder	       dBuilder;
-	private DocumentBuilderFactory	dbFactory;
-	private long	               lastModified	= -1;
-	private File	               file;
+	private DocumentBuilder dBuilder;
+	private DocumentBuilderFactory dbFactory;
+	private long lastModified = -1;
+	private File file;
 	
 	public XMLParser(File logFile) {
 		this.file = logFile;
@@ -68,13 +68,14 @@ public abstract class XMLParser<E> extends Parser {
 			doc.getDocumentElement().normalize();
 			Element rootNode = doc.getDocumentElement();
 			ret = parseXML(rootNode);
+			fireParseEndEvent(new ParseEvent(this, ret));
+			this.lastModified = lastModified;
 		} catch (SAXException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		fireParseEndEvent(new ParseEvent(this, ret));
-		this.lastModified = lastModified;
+		
 	}
 	
 	public boolean isModified() {

@@ -1,0 +1,328 @@
+<?xml version="1.0" standalone="yes" ?>
+<?xml-stylesheet href="x2script.xsl" type="text/xsl" ?>
+<script>
+<name>al.ncm.map.WrapGateConnections</name>
+<version>0</version>
+<engineversion>52</engineversion>
+<description>Description</description>
+<arguments>
+<argument index="1" name="sectorToCheck" type="Var/String" desc="Sector For WrapGate Connections" />
+</arguments>
+<sourceplaintext>
+<![CDATA[
+  
+  $seperator = '<GateSeperator>'
+  
+  $north = $sectorToCheck -> get north warp gate
+  $south = $sectorToCheck -> get south warp gate
+  $east = $sectorToCheck -> get east warp gate
+  $west = $sectorToCheck -> get west warp gate
+  
+  
+  $northDest = $north get gate destination: return sector=[TRUE]
+  $southDest = $south get gate destination: return sector=[TRUE]
+  $eastDest = $east get gate destination: return sector=[TRUE]
+  $westDest = $west get gate destination: return sector=[TRUE]
+  
+@ $logTextNoth = [THIS] -> call script al.ncm.map.SectorToPosString :  Sector=$northDest  The Identification for log parse='NorthGate'
+  
+@ $logTextSouth = [THIS] -> call script al.ncm.map.SectorToPosString :  Sector=$southDest  The Identification for log parse='SouthGate'
+  
+@ $logTextEast = [THIS] -> call script al.ncm.map.SectorToPosString :  Sector=$eastDest  The Identification for log parse='EastGate'
+  
+@ $logTextWest = [THIS] -> call script al.ncm.map.SectorToPosString :  Sector=$westDest  The Identification for log parse='WestGate'
+  
+  $return = '<GateConnections>' + $logTextNoth + $logTextSouth + $logTextEast + $logTextWest + '</GateConnections>'
+  
+  
+  
+  
+  
+  return $return
+]]>
+</sourceplaintext>
+<sourcetext>
+<line indent=""></line>
+<line indent=""><var>$seperator&#160;=&#160;</var><var>'&lt;GateSeperator&gt;'</var></line>
+<line indent=""></line>
+<line indent=""><var>$north&#160;=&#160;</var><var>$sectorToCheck&#160;-&gt;</var><text>&#160;get&#160;north&#160;warp&#160;gate</text></line>
+<line indent=""><var>$south&#160;=&#160;</var><var>$sectorToCheck&#160;-&gt;</var><text>&#160;get&#160;south&#160;warp&#160;gate</text></line>
+<line indent=""><var>$east&#160;=&#160;</var><var>$sectorToCheck&#160;-&gt;</var><text>&#160;get&#160;east&#160;warp&#160;gate</text></line>
+<line indent=""><var>$west&#160;=&#160;</var><var>$sectorToCheck&#160;-&gt;</var><text>&#160;get&#160;west&#160;warp&#160;gate</text></line>
+<line indent=""></line>
+<line indent=""></line>
+<line indent=""><var>$northDest&#160;=&#160;</var><var>$north</var><text>&#160;get&#160;gate&#160;destination:&#160;return&#160;sector=</text><var>[TRUE]</var></line>
+<line indent=""><var>$southDest&#160;=&#160;</var><var>$south</var><text>&#160;get&#160;gate&#160;destination:&#160;return&#160;sector=</text><var>[TRUE]</var></line>
+<line indent=""><var>$eastDest&#160;=&#160;</var><var>$east</var><text>&#160;get&#160;gate&#160;destination:&#160;return&#160;sector=</text><var>[TRUE]</var></line>
+<line indent=""><var>$westDest&#160;=&#160;</var><var>$west</var><text>&#160;get&#160;gate&#160;destination:&#160;return&#160;sector=</text><var>[TRUE]</var></line>
+<line indent=""></line>
+<line interruptable="@" indent=""><var>$logTextNoth&#160;=&#160;</var><var>[THIS]&#160;-&gt;</var><text>&#160;call&#160;script&#160;</text><call>al.ncm.map.SectorToPosString</call><text>&#160;:&#160;</text><text>&#160;Sector=</text><var>$northDest</var><text>&#160;</text><text>&#160;The&#160;Identification&#160;for&#160;log&#160;parse=</text><var>'NorthGate'</var></line>
+<line indent=""></line>
+<line interruptable="@" indent=""><var>$logTextSouth&#160;=&#160;</var><var>[THIS]&#160;-&gt;</var><text>&#160;call&#160;script&#160;</text><call>al.ncm.map.SectorToPosString</call><text>&#160;:&#160;</text><text>&#160;Sector=</text><var>$southDest</var><text>&#160;</text><text>&#160;The&#160;Identification&#160;for&#160;log&#160;parse=</text><var>'SouthGate'</var></line>
+<line indent=""></line>
+<line interruptable="@" indent=""><var>$logTextEast&#160;=&#160;</var><var>[THIS]&#160;-&gt;</var><text>&#160;call&#160;script&#160;</text><call>al.ncm.map.SectorToPosString</call><text>&#160;:&#160;</text><text>&#160;Sector=</text><var>$eastDest</var><text>&#160;</text><text>&#160;The&#160;Identification&#160;for&#160;log&#160;parse=</text><var>'EastGate'</var></line>
+<line indent=""></line>
+<line interruptable="@" indent=""><var>$logTextWest&#160;=&#160;</var><var>[THIS]&#160;-&gt;</var><text>&#160;call&#160;script&#160;</text><call>al.ncm.map.SectorToPosString</call><text>&#160;:&#160;</text><text>&#160;Sector=</text><var>$westDest</var><text>&#160;</text><text>&#160;The&#160;Identification&#160;for&#160;log&#160;parse=</text><var>'WestGate'</var></line>
+<line indent=""></line>
+<line indent=""><var>$return&#160;=&#160;</var><var>'&lt;GateConnections&gt;'</var><text>&#160;</text><var>+</var><text>&#160;</text><var>$logTextNoth</var><text>&#160;</text><var>+</var><text>&#160;</text><var>$logTextSouth</var><text>&#160;</text><var>+</var><text>&#160;</text><var>$logTextEast</var><text>&#160;</text><var>+</var><text>&#160;</text><var>$logTextWest</var><text>&#160;</text><var>+</var><text>&#160;</text><var>'&lt;/GateConnections&gt;'</var></line>
+<line indent=""></line>
+<line indent=""></line>
+<line indent=""></line>
+<line indent=""></line>
+<line indent=""></line>
+<line indent=""><text>return&#160;</text><var>$return</var></line>
+</sourcetext>
+<codearray>
+
+<sval type="array" size="10">
+  <sval type="string" val="al.ncm.map.WrapGateConnections"/>
+  <sval type="int" val="52"/>
+  <sval type="string" val="Description"/>
+  <sval type="int" val="0"/>
+  <sval type="int" val="0"/>
+  <sval type="array" size="15">
+    <sval type="string" val="sectorToCheck"/>
+    <sval type="string" val="seperator"/>
+    <sval type="string" val="north"/>
+    <sval type="string" val="south"/>
+    <sval type="string" val="east"/>
+    <sval type="string" val="west"/>
+    <sval type="string" val="northDest"/>
+    <sval type="string" val="southDest"/>
+    <sval type="string" val="eastDest"/>
+    <sval type="string" val="westDest"/>
+    <sval type="string" val="logTextNoth"/>
+    <sval type="string" val="logTextSouth"/>
+    <sval type="string" val="logTextEast"/>
+    <sval type="string" val="logTextWest"/>
+    <sval type="string" val="return"/>
+  </sval>
+  <sval type="array" size="15">
+    <sval type="array" size="7">
+      <sval type="int" val="104"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="&lt;GateSeperator&gt;"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="-1"/>
+    </sval>
+    <sval type="array" size="4">
+      <sval type="int" val="806"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="0"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="4">
+      <sval type="int" val="807"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="0"/>
+      <sval type="int" val="3"/>
+    </sval>
+    <sval type="array" size="4">
+      <sval type="int" val="808"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="0"/>
+      <sval type="int" val="4"/>
+    </sval>
+    <sval type="array" size="4">
+      <sval type="int" val="809"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="0"/>
+      <sval type="int" val="5"/>
+    </sval>
+    <sval type="array" size="6">
+      <sval type="int" val="1057"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="2"/>
+      <sval type="int" val="6"/>
+      <sval type="int" val="131075"/>
+      <sval type="int" val="10"/>
+    </sval>
+    <sval type="array" size="6">
+      <sval type="int" val="1057"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="7"/>
+      <sval type="int" val="131075"/>
+      <sval type="int" val="10"/>
+    </sval>
+    <sval type="array" size="6">
+      <sval type="int" val="1057"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="4"/>
+      <sval type="int" val="8"/>
+      <sval type="int" val="131075"/>
+      <sval type="int" val="10"/>
+    </sval>
+    <sval type="array" size="6">
+      <sval type="int" val="1057"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="5"/>
+      <sval type="int" val="9"/>
+      <sval type="int" val="131075"/>
+      <sval type="int" val="10"/>
+    </sval>
+    <sval type="array" size="10">
+      <sval type="int" val="102"/>
+      <sval type="string" val="al.ncm.map.SectorToPosString"/>
+      <sval type="int" val="10"/>
+      <sval type="int" val="131075"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="2"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="6"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="NorthGate"/>
+    </sval>
+    <sval type="array" size="10">
+      <sval type="int" val="102"/>
+      <sval type="string" val="al.ncm.map.SectorToPosString"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="131075"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="2"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="7"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="SouthGate"/>
+    </sval>
+    <sval type="array" size="10">
+      <sval type="int" val="102"/>
+      <sval type="string" val="al.ncm.map.SectorToPosString"/>
+      <sval type="int" val="12"/>
+      <sval type="int" val="131075"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="2"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="8"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="EastGate"/>
+    </sval>
+    <sval type="array" size="10">
+      <sval type="int" val="102"/>
+      <sval type="string" val="al.ncm.map.SectorToPosString"/>
+      <sval type="int" val="13"/>
+      <sval type="int" val="131075"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="2"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="9"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="WestGate"/>
+    </sval>
+    <sval type="array" size="37">
+      <sval type="int" val="104"/>
+      <sval type="int" val="14"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="&lt;GateConnections&gt;"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="10"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="12"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="13"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="&lt;/GateConnections&gt;"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-1"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-2"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-4"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-6"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-8"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-10"/>
+    </sval>
+    <sval type="array" size="3">
+      <sval type="int" val="103"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="14"/>
+    </sval>
+  </sval>
+  <sval type="array" size="1">
+    <sval type="array" size="2">
+      <sval type="int" val="11"/>
+      <sval type="string" val="Sector For WrapGate Connections"/>
+    </sval>
+  </sval>
+  <sval type="array" size="14">
+    <sval type="array" size="2">
+      <sval type="int" val="0"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="1"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="5"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="5"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="9"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="10"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="11"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="12"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="13"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="14"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="14"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="14"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="14"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="14"/>
+      <sval type="int" val="2"/>
+    </sval>
+  </sval>
+  <sval type="int" val="0"/>
+</sval>
+
+</codearray>
+<nosignature>7891</nosignature>
+</script>

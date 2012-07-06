@@ -1,0 +1,237 @@
+<?xml version="1.0" standalone="yes" ?>
+<?xml-stylesheet href="x2script.xsl" type="text/xsl" ?>
+<script>
+<name>al.ncm.map.SectorToPosString</name>
+<version>0</version>
+<engineversion>52</engineversion>
+<description>Description</description>
+<arguments>
+<argument index="1" name="sector" type="Var/Sector" desc="Sector" />
+<argument index="2" name="ID" type="Var/String" desc="The Identification for log parse" />
+</arguments>
+<sourceplaintext>
+<![CDATA[
+  
+  if $sector == null
+    $gridX = -1
+    $gridY = $gridX
+    
+  else
+    $gridX = $sector -> get universe x index
+    $gridY = $sector -> get universe y index
+  end
+  
+  
+  $logString = '<Sector>' + '<Name>' + $ID + '</Name>' + '<X>' + $gridX + '</X>' + '<Y>' + $gridY + '</Y>' + '</Sector>'
+  
+  
+  return $logString
+]]>
+</sourceplaintext>
+<sourcetext>
+<line indent=""></line>
+<line indent=""><var>if&#160;</var><var>$sector</var><text>&#160;</text><var>==</var><text>&#160;</text><var>null</var></line>
+<line indent="&#160;"><var>$gridX&#160;=&#160;</var><var>-1</var></line>
+<line indent="&#160;"><var>$gridY&#160;=&#160;</var><var>$gridX</var></line>
+<line indent="&#160;"></line>
+<line indent=""><text>else</text></line>
+<line indent="&#160;"><var>$gridX&#160;=&#160;</var><var>$sector&#160;-&gt;</var><text>&#160;get&#160;universe&#160;x&#160;index</text></line>
+<line indent="&#160;"><var>$gridY&#160;=&#160;</var><var>$sector&#160;-&gt;</var><text>&#160;get&#160;universe&#160;y&#160;index</text></line>
+<line indent=""><text>end</text></line>
+<line indent=""></line>
+<line indent=""></line>
+<line indent=""><var>$logString&#160;=&#160;</var><var>'&lt;Sector&gt;'</var><text>&#160;</text><var>+</var><text>&#160;</text><var>'&lt;Name&gt;'</var><text>&#160;</text><var>+</var><text>&#160;</text><var>$ID</var><text>&#160;</text><var>+</var><text>&#160;</text><var>'&lt;/Name&gt;'</var><text>&#160;</text><var>+</var><text>&#160;</text><var>'&lt;X&gt;'</var><text>&#160;</text><var>+</var><text>&#160;</text><var>$gridX</var><text>&#160;</text><var>+</var><text>&#160;</text><var>'&lt;/X&gt;'</var><text>&#160;</text><var>+</var><text>&#160;</text><var>'&lt;Y&gt;'</var><text>&#160;</text><var>+</var><text>&#160;</text><var>$gridY</var><text>&#160;</text><var>+</var><text>&#160;</text><var>'&lt;/Y&gt;'</var><text>&#160;</text><var>+</var><text>&#160;</text><var>'&lt;/Sector&gt;'</var></line>
+<line indent=""></line>
+<line indent=""></line>
+<line indent=""><text>return&#160;</text><var>$logString</var></line>
+</sourcetext>
+<codearray>
+
+<sval type="array" size="10">
+  <sval type="string" val="al.ncm.map.SectorToPosString"/>
+  <sval type="int" val="52"/>
+  <sval type="string" val="Description"/>
+  <sval type="int" val="0"/>
+  <sval type="int" val="0"/>
+  <sval type="array" size="5">
+    <sval type="string" val="sector"/>
+    <sval type="string" val="ID"/>
+    <sval type="string" val="gridX"/>
+    <sval type="string" val="gridY"/>
+    <sval type="string" val="logString"/>
+  </sval>
+  <sval type="array" size="8">
+    <sval type="array" size="13">
+      <sval type="int" val="104"/>
+      <sval type="int" val="-1610611709"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="0"/>
+      <sval type="int" val="0"/>
+      <sval type="int" val="0"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="0"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="-1"/>
+      <sval type="int" val="0"/>
+      <sval type="int" val="-2"/>
+    </sval>
+    <sval type="array" size="7">
+      <sval type="int" val="104"/>
+      <sval type="int" val="2"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="4"/>
+      <sval type="int" val="-1"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="-1"/>
+    </sval>
+    <sval type="array" size="7">
+      <sval type="int" val="104"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="2"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="-1"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="112"/>
+      <sval type="int" val="6"/>
+    </sval>
+    <sval type="array" size="4">
+      <sval type="int" val="804"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="0"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="4">
+      <sval type="int" val="805"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="0"/>
+      <sval type="int" val="3"/>
+    </sval>
+    <sval type="array" size="67">
+      <sval type="int" val="104"/>
+      <sval type="int" val="4"/>
+      <sval type="int" val="21"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="&lt;Sector&gt;"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="&lt;Name&gt;"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="&lt;/Name&gt;"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="&lt;X&gt;"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="2"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="&lt;/X&gt;"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="&lt;Y&gt;"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="&lt;/Y&gt;"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="&lt;/Sector&gt;"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="21"/>
+      <sval type="int" val="-1"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-2"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-4"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-6"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-8"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-10"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-12"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-14"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-16"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-18"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-20"/>
+    </sval>
+    <sval type="array" size="3">
+      <sval type="int" val="103"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="4"/>
+    </sval>
+  </sval>
+  <sval type="array" size="2">
+    <sval type="array" size="2">
+      <sval type="int" val="14"/>
+      <sval type="string" val="Sector"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="11"/>
+      <sval type="string" val="The Identification for log parse"/>
+    </sval>
+  </sval>
+  <sval type="array" size="8">
+    <sval type="array" size="2">
+      <sval type="int" val="0"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="3"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="4"/>
+      <sval type="int" val="5"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="6"/>
+      <sval type="int" val="4"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="6"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="6"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="7"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="7"/>
+      <sval type="int" val="2"/>
+    </sval>
+  </sval>
+  <sval type="int" val="0"/>
+</sval>
+
+</codearray>
+<nosignature>7454</nosignature>
+</script>

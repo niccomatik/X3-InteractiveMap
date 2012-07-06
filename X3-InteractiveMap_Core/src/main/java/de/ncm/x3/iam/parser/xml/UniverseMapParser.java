@@ -10,8 +10,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import de.ncm.x3.iam.data.RaceFactory;
 import de.ncm.x3.iam.data.universe.GridPos;
+import de.ncm.x3.iam.data.universe.Race;
 import de.ncm.x3.iam.data.universe.Sector;
 import de.ncm.x3.iam.data.universe.UniverseMap;
 import de.ncm.x3.iam.data.universe.WarpGate;
@@ -19,9 +19,9 @@ import de.ncm.x3.iam.data.universe.WarpGateConstants;
 
 public class UniverseMapParser extends XMLParser<UniverseMap> {
 	
-	private static Logger	logger	= Logger.getLogger(UniverseMapParser.class);
-	private Node	      mapNode;
-	private Node	      racesNode;
+	private static Logger logger = Logger.getLogger(UniverseMapParser.class);
+	private Node mapNode;
+	private Node racesNode;
 	
 	public UniverseMapParser(File logFile) {
 		super(logFile);
@@ -39,13 +39,13 @@ public class UniverseMapParser extends XMLParser<UniverseMap> {
 			}
 		}
 		
-		HashMap<Integer, String> raceMap = parseRaces(racesNode);
+		HashMap<Integer, Race> raceMap = parseRaces(racesNode);
 		return parseMap(raceMap, mapNode);
 	}
 	
-	private HashMap<Integer, String> parseRaces(Node item) {
+	private HashMap<Integer, Race> parseRaces(Node item) {
 		
-		HashMap<Integer, String> raceMap = new HashMap<Integer, String>();
+		HashMap<Integer, Race> raceMap = new HashMap<Integer, Race>();
 		NodeList children = item.getChildNodes();
 		for (int i = 0; i < children.getLength(); i++) {
 			if (children.item(i).getNodeName().equalsIgnoreCase("Race")) {
@@ -55,7 +55,7 @@ public class UniverseMapParser extends XMLParser<UniverseMap> {
 		return raceMap;
 	}
 	
-	private void parseRace(HashMap<Integer, String> raceMap, Node mapNode) {
+	private void parseRace(HashMap<Integer, Race> raceMap, Node mapNode) {
 		NodeList children = mapNode.getChildNodes();
 		
 		Integer id = 0;
@@ -65,25 +65,25 @@ public class UniverseMapParser extends XMLParser<UniverseMap> {
 			if (children.item(i).getNodeName().equalsIgnoreCase("Name")) {
 				name = children.item(i).getFirstChild().getNodeValue();
 			} else if (children.item(i).getNodeName().equalsIgnoreCase("ID")) {
-				id = new Integer(children.item(i).getFirstChild().getNodeValue());
+				id = Race.getIDFromRawString(children.item(i).getFirstChild().getNodeValue());
 			}
 		}
-		raceMap.put(id, name);
+		raceMap.put(id, new Race(id, name));
 	}
 	
-	private UniverseMap parseMap(HashMap<Integer, String> raceMap, Node item) {
+	private UniverseMap parseMap(HashMap<Integer, Race> raceMap, Node item) {
 		NodeList children = item.getChildNodes();
 		UniverseMap map = new UniverseMap();
 		map.setRaces(raceMap);
 		for (int i = 0; i < children.getLength(); i++) {
 			if (children.item(i).getNodeName().equalsIgnoreCase("Sector")) {
-				parseSector(map, children.item(i));
+				parseSector(raceMap, map, children.item(i));
 			}
 		}
 		return map;
 	}
 	
-	private void parseSector(UniverseMap map, Node item) {
+	private void parseSector(HashMap<Integer, Race> raceMap, UniverseMap map, Node item) {
 		
 		NodeList children = item.getChildNodes();
 		
@@ -98,7 +98,8 @@ public class UniverseMapParser extends XMLParser<UniverseMap> {
 			} else if (children.item(i).getNodeName().equalsIgnoreCase("Y")) {
 				gc.setGridY(getIntValueOf(children.item(i)));
 			} else if (children.item(i).getNodeName().equalsIgnoreCase("RaceID")) {
-				sector.setRace(RaceFactory.get(getStringValueOf(children.item(i))));
+				Integer raceID = Race.getIDFromRawString(getStringValueOf(children.item(i)));
+				sector.setRace(raceMap.get(raceID));
 			} else if (children.item(i).getNodeName().equalsIgnoreCase("GateConnections")) {
 				parseGateConnections(sector, children.item(i));
 			}

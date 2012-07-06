@@ -1,0 +1,172 @@
+<?xml version="1.0" standalone="yes" ?>
+<?xml-stylesheet href="x2script.xsl" type="text/xsl" ?>
+<script>
+<name>al.ncm.map.GetRaceID</name>
+<version>0</version>
+<engineversion>45</engineversion>
+<description>Description</description>
+<arguments>
+<argument index="1" name="race" type="Var/Race" desc="The Race" />
+</arguments>
+<sourcetext>
+<line linenr="001" indent=""><var>$id.raw&#160;=&#160;</var><var>$race&#160;-&gt;</var><text>&#160;get&#160;ID&#160;code</text></line>
+<line linenr="002" indent=""></line>
+<line linenr="003" indent=""><var>$invalidString&#160;=&#160;</var><text>get&#160;substring&#160;of&#160;</text><var>$id.raw</var><text>&#160;offset=</text><var>1</var><text>&#160;length=</text><var>9</var></line>
+<line linenr="004" indent=""></line>
+<line linenr="005" indent=""><var>if&#160;</var><var>$invalidString</var><text>&#160;</text><var>==</var><text>&#160;</text><var>'&lt;invalid&gt;'</var></line>
+<line linenr="006" indent="&#160;"></line>
+<line linenr="007" indent="&#160;"><var>$id.raw.length&#160;=&#160;</var><text>get&#160;length&#160;of&#160;string&#160;</text><var>$id.raw</var></line>
+<line linenr="008" indent="&#160;"><var>$length&#160;=&#160;</var><var>$id.raw.length</var><text>&#160;</text><var>-</var><text>&#160;</text><var>10</var></line>
+<line linenr="009" indent="&#160;"><var>$output&#160;=&#160;</var><text>get&#160;substring&#160;of&#160;</text><var>$id.raw</var><text>&#160;offset=</text><var>10</var><text>&#160;length=</text><var>$length</var></line>
+<line linenr="010" indent="&#160;"></line>
+<line linenr="011" indent="&#160;"></line>
+<line linenr="012" indent=""><text>end</text></line>
+<line linenr="013" indent=""></line>
+<line linenr="014" indent=""></line>
+<line linenr="015" indent=""></line>
+<line linenr="016" indent=""></line>
+<line linenr="017" indent=""></line>
+<line linenr="018" indent=""><text>return&#160;</text><var>$output</var></line>
+</sourcetext>
+<codearray>
+
+<sval type="array" size="10">
+  <sval type="string" val="al.ncm.map.GetRaceID"/>
+  <sval type="int" val="45"/>
+  <sval type="string" val="Description"/>
+  <sval type="int" val="0"/>
+  <sval type="int" val="0"/>
+  <sval type="array" size="6">
+    <sval type="string" val="race"/>
+    <sval type="string" val="id.raw"/>
+    <sval type="string" val="invalidString"/>
+    <sval type="string" val="id.raw.length"/>
+    <sval type="string" val="length"/>
+    <sval type="string" val="output"/>
+  </sval>
+  <sval type="array" size="7">
+    <sval type="array" size="4">
+      <sval type="int" val="1036"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="0"/>
+      <sval type="int" val="1"/>
+    </sval>
+    <sval type="array" size="8">
+      <sval type="int" val="1077"/>
+      <sval type="int" val="2"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="4"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="4"/>
+      <sval type="int" val="9"/>
+    </sval>
+    <sval type="array" size="13">
+      <sval type="int" val="104"/>
+      <sval type="int" val="-1610611197"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="2"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="&lt;invalid&gt;"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="0"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="-1"/>
+      <sval type="int" val="0"/>
+      <sval type="int" val="-2"/>
+    </sval>
+    <sval type="array" size="4">
+      <sval type="int" val="1075"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="1"/>
+    </sval>
+    <sval type="array" size="13">
+      <sval type="int" val="104"/>
+      <sval type="int" val="4"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="4"/>
+      <sval type="int" val="10"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="12"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="-1"/>
+      <sval type="int" val="12"/>
+      <sval type="int" val="-2"/>
+    </sval>
+    <sval type="array" size="8">
+      <sval type="int" val="1077"/>
+      <sval type="int" val="5"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="4"/>
+      <sval type="int" val="10"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="4"/>
+    </sval>
+    <sval type="array" size="3">
+      <sval type="int" val="103"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="5"/>
+    </sval>
+  </sval>
+  <sval type="array" size="1">
+    <sval type="array" size="2">
+      <sval type="int" val="16"/>
+      <sval type="string" val="The Race"/>
+    </sval>
+  </sval>
+  <sval type="array" size="11">
+    <sval type="array" size="2">
+      <sval type="int" val="1"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="2"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="3"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="6"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="6"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="6"/>
+      <sval type="int" val="4"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="6"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="6"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="6"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="6"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="6"/>
+      <sval type="int" val="2"/>
+    </sval>
+  </sval>
+  <sval type="int" val="0"/>
+</sval>
+
+</codearray>
+</script>
