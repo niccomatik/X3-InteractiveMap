@@ -4,7 +4,7 @@ package de.ncm.x3.iam.data.universe;
 
 public class WarpGate implements WarpGateConstants {
 	
-	private final GridPos	targetGridPos;
+	private final GridPos targetGridPos;
 	
 	public WarpGate(GridPos targetGridPos) {
 		super();
@@ -48,6 +48,10 @@ public class WarpGate implements WarpGateConstants {
 	@Override
 	public String toString() {
 		return "WarpGate [targetGridPos=" + targetGridPos + "]";
+	}
+	
+	public boolean exists() {
+		return targetGridPos != null && !targetGridPos.equals(new GridPos());
 	}
 	
 }

@@ -4,12 +4,16 @@ package de.ncm.x3.iam.data.universe;
 
 public class GridPos {
 	
-	public int	gridX;
-	public int	gridY;
+	public int gridX;
+	public int gridY;
 	
 	public GridPos(int gridX, int gridY) {
 		this.gridX = gridX;
 		this.gridY = gridY;
+	}
+	
+	public GridPos() {
+		this(-1, -1);
 	}
 	
 	public int getGridX() {

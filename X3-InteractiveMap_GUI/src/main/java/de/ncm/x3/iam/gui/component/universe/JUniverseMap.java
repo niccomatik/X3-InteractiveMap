@@ -38,10 +38,7 @@ public class JUniverseMap extends JRenderPanel {
 	private class PListener implements ParseListener {
 		
 		@Override
-		public void onParseStart(ParseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void onParseStart(ParseEvent e) {}
 		
 		@Override
 		public void onParseEnd(ParseEvent e) {

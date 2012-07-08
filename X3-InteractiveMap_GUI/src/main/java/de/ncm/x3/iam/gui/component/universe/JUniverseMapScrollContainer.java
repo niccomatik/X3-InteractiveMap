@@ -9,6 +9,7 @@ import javax.swing.JViewport;
 
 import de.ncm.x3.iam.data.universe.GridPos;
 import de.ncm.x3.iam.gui.layout.UniverseLayout;
+import de.ncm.x3.iam.gui.listener.universe.HandScrollListener;
 
 public class JUniverseMapScrollContainer extends JScrollPane {
 	
@@ -21,6 +22,9 @@ public class JUniverseMapScrollContainer extends JScrollPane {
 			throw new IllegalStateException("No supported Layoutmanager in " + map.getClass().getName());
 		}
 		// TODO: integrate mouse Movement translation
+		HandScrollListener scrollListener = new HandScrollListener(map);
+		getViewport().addMouseMotionListener(scrollListener);
+		getViewport().addMouseListener(scrollListener);
 	}
 	
 	public void centerViewOnSector(GridPos gridpos) {
@@ -34,12 +38,23 @@ public class JUniverseMapScrollContainer extends JScrollPane {
 		JViewport vp = getViewport();
 		
 		Point vPos = new Point((sectorWidth / 2 + sectorPixelX - vp.getWidth() / 2), (sectorHeight / 2 + sectorPixelY - vp.getHeight() / 2));
-		if (vPos.x < 0) {
-			vPos.x = 0;
-		}
-		if (vPos.y < 0) {
-			vPos.y = 0;
-		}
-		vp.setViewPosition(vPos);
+		
+		setViewPosition(vPos);
+		setAutoscrolls(false);
 	}
+	
+	public Point getViewPosition() {
+		return getViewport().getViewPosition();
+	}
+	
+	public void setViewPosition(Point p) {
+		if (p.x < 0) {
+			p.x = 0;
+		}
+		if (p.y < 0) {
+			p.y = 0;
+		}
+		getViewport().setViewPosition(p);
+	}
+	
 }

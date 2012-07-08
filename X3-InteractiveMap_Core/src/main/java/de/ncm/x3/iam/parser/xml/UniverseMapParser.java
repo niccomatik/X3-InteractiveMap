@@ -88,7 +88,7 @@ public class UniverseMapParser extends XMLParser<UniverseMap> {
 		NodeList children = item.getChildNodes();
 		
 		Sector sector = new Sector();
-		GridPos gc = new GridPos(-1, -1);
+		GridPos gc = new GridPos();
 		
 		for (int i = 0; i < children.getLength(); i++) {
 			if (children.item(i).getNodeName().equalsIgnoreCase("Name")) {
@@ -131,11 +131,11 @@ public class UniverseMapParser extends XMLParser<UniverseMap> {
 					if (name.equalsIgnoreCase("NorthGate")) {
 						sector.setWarpGate(WarpGateConstants.WARPGATE_NORTH, new WarpGate(gridPos));
 					} else if (name.equalsIgnoreCase("SouthGate")) {
-						sector.setWarpGate(WarpGateConstants.WARPGATE_NORTH, new WarpGate(gridPos));
+						sector.setWarpGate(WarpGateConstants.WARPGATE_SOUTH, new WarpGate(gridPos));
 					} else if (name.equalsIgnoreCase("EastGate")) {
-						sector.setWarpGate(WarpGateConstants.WARPGATE_NORTH, new WarpGate(gridPos));
+						sector.setWarpGate(WarpGateConstants.WARPGATE_EAST, new WarpGate(gridPos));
 					} else if (name.equalsIgnoreCase("WestGate")) {
-						sector.setWarpGate(WarpGateConstants.WARPGATE_NORTH, new WarpGate(gridPos));
+						sector.setWarpGate(WarpGateConstants.WARPGATE_WEST, new WarpGate(gridPos));
 					}
 					
 				}

@@ -4,9 +4,9 @@ package de.ncm.x3.iam.data.universe;
 
 public class Sector implements WarpGateConstants {
 	
-	private String	   name	      = "";
-	private Race	   race	      = null;
-	private WarpGate[]	warpGates	= new WarpGate[4];
+	private String name = "";
+	private Race race = null;
+	private WarpGate[] warpGates = new WarpGate[4];
 	
 	public Sector(String name, Race race, WarpGate[] warpGates) {
 		super();
@@ -15,9 +15,7 @@ public class Sector implements WarpGateConstants {
 		this.warpGates = warpGates;
 	}
 	
-	public Sector() {
-		// TODO Auto-generated constructor stub
-	}
+	public Sector() {}
 	
 	public String getName() {
 		return name;

@@ -23,8 +23,8 @@ public class X3InteractiveMapStarter {
 			if (arg.startsWith("-")) {
 				arg = arg.substring(1);
 			}
-			if (arg.trim().equalsIgnoreCase("EclipseRunMode")) {
-				System.setProperty("isEclipseRunMode", "true");
+			if (arg.trim().equalsIgnoreCase("DevRunMode")) {
+				System.setProperty("isDevRunMode", "true");
 			}
 		}
 		

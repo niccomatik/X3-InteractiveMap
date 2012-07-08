@@ -45,9 +45,8 @@ public class Mainframe extends JFrame {
 	
 	public Mainframe() {
 		super();
-		UIManager.getDefaults().addResourceBundle("language.lang");
 		logger.info("Creating the GUI");
-		
+		UIManager.getDefaults().addResourceBundle(GuiBundleManager.get().getBundle());
 		setLocationByPlatform(true);
 		setTitle("X - InteractiveMap");
 		setSize(1024, 768);

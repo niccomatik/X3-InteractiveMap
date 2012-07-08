@@ -15,11 +15,13 @@ import org.apache.log4j.Logger;
 public class GuiBundleManager {
 	
 	private static Logger logger = Logger.getLogger(GuiBundleManager.class);
-	private String path = "language.lang";
+	private String bundle = "language.lang";
 	
 	private static GuiBundleManager instance = null;
 	
-	private GuiBundleManager() {}
+	private GuiBundleManager() {
+		
+	}
 	
 	public static GuiBundleManager get() {
 		if (instance == null) {
@@ -32,11 +34,11 @@ public class GuiBundleManager {
 		
 		ArrayList<Locale> out = new ArrayList<Locale>();
 		
-		String[] split = path.split("\\.");
+		String[] split = bundle.split("\\.");
 		
-		if (new Boolean(System.getProperty("isEclipseRunMode"))) {
+		if (new Boolean(System.getProperty("isDevRunMode"))) {
 			
-			String folderPath = getClass().getResource("/" + path.replace("." + split[split.length - 1], "")).getFile();
+			String folderPath = getClass().getResource("/" + bundle.replace("." + split[split.length - 1], "")).getFile();
 			File folder = new File(folderPath);
 			
 			if (folder.canRead()) { // True: Normal FileSystem (= eclipse run mode)
@@ -96,5 +98,13 @@ public class GuiBundleManager {
 			buff.deleteCharAt(0);
 		}
 		return buff.toString();
+	}
+	
+	public String getBundle() {
+		return bundle;
+	}
+	
+	public void setBundle(String bundle) {
+		this.bundle = bundle;
 	}
 }

@@ -1,0 +1,1 @@
+If you want to use an IDE like eclipse you have to link this folder to "{Project_location}/externalRessources" for using development-Run

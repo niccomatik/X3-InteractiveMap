@@ -4,6 +4,7 @@
 	<artifactId>X3-InteractiveMap_GUI</artifactId>
 	<name>X3-InteractiveMap_GUI</name>
 	<build>
+		<!-- <directory>${basedir}/target/program</directory> -->
 		<pluginManagement>
 			<plugins>
 
