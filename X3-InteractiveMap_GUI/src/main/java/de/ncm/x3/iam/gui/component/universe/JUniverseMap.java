@@ -3,6 +3,7 @@ package de.ncm.x3.iam.gui.component.universe;
 
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Graphics2D;
 
@@ -16,6 +17,9 @@ import de.ncm.x3.iam.gui.layout.UniverseLayout;
 import de.ncm.x3.iam.parser.ParseEvent;
 import de.ncm.x3.iam.parser.ParseListener;
 import de.ncm.x3.iam.parser.ParserFactory;
+import de.ncm.x3.iam.settings.ColorPackageChangedEvent;
+import de.ncm.x3.iam.settings.ColorPackageChangedListener;
+import de.ncm.x3.iam.settings.ColorPackageManager;
 
 public class JUniverseMap extends JRenderPanel {
 	
@@ -26,6 +30,20 @@ public class JUniverseMap extends JRenderPanel {
 		
 		ParserFactory.getUniverseMapParser().addParseListener(new PListener());
 		setBackground(Color.BLACK);
+		
+		ColorPackageManager.get().setColorPackackageChangedListener(new ColorPackageChangedListener() {
+			
+			@Override
+			public void colorPackageChanged(ColorPackageChangedEvent e) {
+				for (Component comp : getComponents()) {
+					if (comp instanceof JSector) {
+						JSector sec = (JSector) comp;
+						sec.setBackground(ColorPackageManager.get().getRaceColor(sec.getSector().getRace().getId()));
+					}
+				}
+				
+			}
+		});
 		
 	}
 	
@@ -58,6 +76,7 @@ public class JUniverseMap extends JRenderPanel {
 					for (GridPos gridPos : map.getSectors().keySet()) {
 						Sector sector = map.getSectors().get(gridPos);
 						JSector jSec = new JSector(sector);
+						jSec.setBackground(ColorPackageManager.get().getRaceColor(sector.getRace().getId()));
 						add(jSec, gridPos);
 					}
 					validate();

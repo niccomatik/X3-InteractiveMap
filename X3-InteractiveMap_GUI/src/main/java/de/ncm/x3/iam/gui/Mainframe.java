@@ -3,12 +3,6 @@ package de.ncm.x3.iam.gui;
 
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.util.Locale;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
@@ -22,22 +16,33 @@ import javax.swing.UIManager;
 import org.apache.log4j.Logger;
 
 import de.ncm.x3.iam.bundle.GuiBundleManager;
-import de.ncm.x3.iam.data.universe.GridPos;
 import de.ncm.x3.iam.gui.component.ComponentFactory;
 import de.ncm.x3.iam.gui.component.universe.JUniverseMap;
 import de.ncm.x3.iam.gui.component.universe.JUniverseMapScrollContainer;
-import de.ncm.x3.iam.gui.util.ComponentUtils;
 import de.ncm.x3.iam.parser.ParserManager;
-import de.ncm.x3.iam.settings.PropertyManager;
 
 public class Mainframe extends JFrame {
 	
+	private static Mainframe instance;
 	private Logger logger = Logger.getLogger(Mainframe.class);
 	private JPanel contentPane;
 	private JRadioButtonMenuItem actualrdbtnmntmLanguage;
 	private ParserManager parseManager;
 	protected ComponentFactory componentFactory = ComponentFactory.get();
 	private JUniverseMapScrollContainer jUniverseMapScrollContainer;
+	private JMenu menuData;
+	private JCheckBoxMenuItem menuItemParsing;
+	private JMenuBar menuBar;
+	private JMenuItem menuItemClose;
+	private JMenu menuEdit;
+	private JMenuItem menuItemChooseLogpath;
+	private JMenu menuColorPack;
+	private JMenu menuView;
+	private JCheckBoxMenuItem menuItemCenterViewAutomaticOnActualSector;
+	private JCheckBoxMenuItem menuItemCenterMapAutomaticOnActualSector;
+	private JMenuItem menuItemCenterMapOnActualSector;
+	private JMenu menuHelp;
+	private JMenu menuLanguage;
 	
 	/**
 	 * Create the frame
@@ -45,8 +50,11 @@ public class Mainframe extends JFrame {
 	
 	public Mainframe() {
 		super();
+		this.parseManager = new ParserManager();
+		instance = this;
 		logger.info("Creating the GUI");
 		UIManager.getDefaults().addResourceBundle(GuiBundleManager.get().getBundle());
+		
 		setLocationByPlatform(true);
 		setTitle("X - InteractiveMap");
 		setSize(1024, 768);
@@ -61,140 +69,50 @@ public class Mainframe extends JFrame {
 		jUniverseMapScrollContainer = new JUniverseMapScrollContainer(jUniverseMap);
 		contentPane.add(jUniverseMapScrollContainer, BorderLayout.CENTER);
 		
-		this.parseManager = new ParserManager();
 		logger.info("GUI created");
 		
 	}
 	
 	private void setupMenu() {
-		JMenuBar menuBar = new JMenuBar();
+		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
-		JMenu menuData = componentFactory.createLocalisedComponent("mainframe.menu.data", JMenu.class);
+		menuData = MenuFactory.createMenuData();
+		menuItemParsing = MenuFactory.createMenuItemParsing(parseManager);
+		menuData.add(menuItemParsing);
+		menuItemClose = MenuFactory.createMenuItemClose();
+		menuEdit = MenuFactory.createMenuEdit();
+		menuItemChooseLogpath = MenuFactory.createMenuItemChooseLogpath();
+		menuColorPack = MenuFactory.createMenuColorPack();
+		menuView = MenuFactory.createMenuView();
+		menuItemCenterMapAutomaticOnActualSector = MenuFactory.createMenuItemCenterMapAutomaticOnActualSector();
+		menuItemCenterMapOnActualSector = MenuFactory.createMenuItemCenterMapOnActualSector(jUniverseMapScrollContainer);
+		menuHelp = MenuFactory.createMenuHelp();
+		menuLanguage = MenuFactory.createMenuLanguage();
+		
 		menuBar.add(menuData);
-		
-		final JCheckBoxMenuItem chckbxmntmParsing = componentFactory.createLocalisedComponent("mainframe.menu.data.parsing", JCheckBoxMenuItem.class);
-		
-		chckbxmntmParsing.addItemListener(new ItemListener() {
-			
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				if (chckbxmntmParsing.isSelected()) {
-					parseManager.startParsing();
-				} else {
-					parseManager.stopParsing();
-				}
-			}
-		});
-		
-		EventQueue.invokeLater(new Runnable() {
-			
-			@Override
-			public void run() {
-				logger.info("JCheckBoxMenuItemParsing: Set Value from properties");
-				boolean enabled = false;
-				String prop = PropertyManager.get().getProperty("parser.continuousparsing.enabled");
-				if (prop != null) {
-					if (prop.trim().equals("true") || prop.trim().equals("1")) {
-						enabled = true;
-					}
-				}
-				chckbxmntmParsing.setSelected(enabled);
-			}
-		});
-		
-		menuData.add(chckbxmntmParsing);
-		
 		menuData.addSeparator();
+		menuData.add(menuItemClose);
 		
-		JMenuItem mntmClose = componentFactory.createLocalisedComponent("mainframe.menu.data.close", JMenuItem.class);
-		mntmClose.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				quit();
-			}
-		});
-		menuData.add(mntmClose);
-		
-		JMenu menuEdit = componentFactory.createLocalisedComponent("mainframe.menu.edit", JMenu.class);
 		menuBar.add(menuEdit);
+		menuEdit.add(menuItemChooseLogpath);
+		menuEdit.add(menuColorPack);
 		
-		JMenuItem mntmChooseLogpath = componentFactory.createLocalisedComponent("mainframe.menu.edit.choose_logpath", JMenuItem.class);
-		mntmChooseLogpath.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Choose and save Logpath
-				
-			}
-		});
-		menuEdit.add(mntmChooseLogpath);
-		
-		JMenu menuView = componentFactory.createLocalisedComponent("mainframe.menu.view", JMenu.class);
 		menuBar.add(menuView);
+		menuView.add(menuItemCenterMapAutomaticOnActualSector);
+		menuView.add(menuItemCenterMapOnActualSector);
 		
-		JCheckBoxMenuItem checkBoxMenuItemCenterViewOnActualSector = componentFactory.createLocalisedComponent(
-				"mainframe.menu.view.ceter_map_on_sector.automatic", JCheckBoxMenuItem.class);
-		
-		checkBoxMenuItemCenterViewOnActualSector.setSelected(true);
-		chckbxmntmParsing.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Implement automatic center on sector
-				
-			}
-		});
-		menuView.add(checkBoxMenuItemCenterViewOnActualSector);
-		
-		JMenuItem menuItemCenterMap = componentFactory.createLocalisedComponent("mainframe.menu.view.ceter_map_on_sector", JMenuItem.class);
-		menuItemCenterMap.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				jUniverseMapScrollContainer.centerViewOnSector(new GridPos(5, 5)); // TODO: Replace DummyData with real actual sector
-			}
-		});
-		menuView.add(menuItemCenterMap);
-		
-		JMenu menuHelp = componentFactory.createLocalisedComponent("mainframe.menu.help", JMenu.class);
 		menuBar.add(menuHelp);
-		
-		JMenu mnLanguage = componentFactory.createLocalisedComponent("mainframe.menu.help.language", JMenu.class);
-		menuHelp.add(mnLanguage);
-		
-		for (final Locale l : GuiBundleManager.get().getAvailableLocales()) {
-			
-			final JRadioButtonMenuItem rdbtnmntmLanguage = new JRadioButtonMenuItem(l.getDisplayLanguage(l));
-			
-			if (l.getDisplayLanguage(l).equalsIgnoreCase(rdbtnmntmLanguage.getLocale().getDisplayLanguage(l))) {
-				rdbtnmntmLanguage.setSelected(true);
-				actualrdbtnmntmLanguage = rdbtnmntmLanguage;
-			} else {
-				rdbtnmntmLanguage.setSelected(false);
-			}
-			rdbtnmntmLanguage.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					if (actualrdbtnmntmLanguage != null) {
-						actualrdbtnmntmLanguage.setSelected(false);
-					}
-					actualrdbtnmntmLanguage = rdbtnmntmLanguage;
-					actualrdbtnmntmLanguage.setSelected(true);
-					ComponentUtils.setLocaleRecursively(Mainframe.this, l);
-				}
-			});
-			
-			mnLanguage.add(rdbtnmntmLanguage);
-			
-		}
+		menuHelp.add(menuLanguage);
 		
 	}
 	
-	protected void quit() {
+	public static void quit() {
 		System.exit(0);
+	}
+	
+	public static Mainframe get() {
+		return instance;
 	}
 	
 }
