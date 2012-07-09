@@ -21,7 +21,6 @@ public class JUniverseMapScrollContainer extends JScrollPane {
 		if (!(map.getLayout() instanceof UniverseLayout)) {
 			throw new IllegalStateException("No supported Layoutmanager in " + map.getClass().getName());
 		}
-		// TODO: integrate mouse Movement translation
 		HandScrollListener scrollListener = new HandScrollListener(map);
 		getViewport().addMouseMotionListener(scrollListener);
 		getViewport().addMouseListener(scrollListener);

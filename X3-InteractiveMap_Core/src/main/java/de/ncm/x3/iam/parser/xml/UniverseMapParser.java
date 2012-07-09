@@ -127,15 +127,19 @@ public class UniverseMapParser extends XMLParser<UniverseMap> {
 							gridPos.setGridY(Integer.parseInt(sectorNode.item(j).getFirstChild().getNodeValue()));
 						}
 					}
+					WarpGate wg = null;
+					if (!gridPos.equals(new GridPos())) {
+						wg = new WarpGate(gridPos);
+					}
 					
 					if (name.equalsIgnoreCase("NorthGate")) {
-						sector.setWarpGate(WarpGateConstants.WARPGATE_NORTH, new WarpGate(gridPos));
+						sector.setWarpGate(WarpGateConstants.WARPGATE_NORTH, wg);
 					} else if (name.equalsIgnoreCase("SouthGate")) {
-						sector.setWarpGate(WarpGateConstants.WARPGATE_SOUTH, new WarpGate(gridPos));
+						sector.setWarpGate(WarpGateConstants.WARPGATE_SOUTH, wg);
 					} else if (name.equalsIgnoreCase("EastGate")) {
-						sector.setWarpGate(WarpGateConstants.WARPGATE_EAST, new WarpGate(gridPos));
+						sector.setWarpGate(WarpGateConstants.WARPGATE_EAST, wg);
 					} else if (name.equalsIgnoreCase("WestGate")) {
-						sector.setWarpGate(WarpGateConstants.WARPGATE_WEST, new WarpGate(gridPos));
+						sector.setWarpGate(WarpGateConstants.WARPGATE_WEST, wg);
 					}
 					
 				}

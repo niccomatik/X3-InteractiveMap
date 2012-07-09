@@ -12,9 +12,9 @@ import javax.swing.JPanel;
 
 public abstract class JRenderPanel extends JPanel {
 	
-	private Graphics2D	g2d; // With field java don't have to reserve new
-	                         // space for every Paint
-	                         
+	private Graphics2D g2d; // With field java don't have to reserve new
+							// space for every Paint
+	
 	public JRenderPanel() {
 		this(null);
 	}
@@ -44,5 +44,4 @@ public abstract class JRenderPanel extends JPanel {
 	public Dimension getMaximumSize() {
 		return getPreferredSize();
 	}
-	
 }

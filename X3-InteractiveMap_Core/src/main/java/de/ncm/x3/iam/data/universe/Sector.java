@@ -2,8 +2,11 @@
 package de.ncm.x3.iam.data.universe;
 
 
+import org.apache.log4j.Logger;
+
 public class Sector implements WarpGateConstants {
 	
+	private static final Logger logger = Logger.getLogger(Sector.class);
 	private String name = "";
 	private Race race = null;
 	private WarpGate[] warpGates = new WarpGate[4];

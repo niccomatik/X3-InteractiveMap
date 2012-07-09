@@ -38,6 +38,7 @@ public class UniverseLayout implements LayoutManager2 {
 		for (GridPos key : sectors.keySet()) {
 			if (sectors.get(key).equals(comp)) {
 				sectors.remove(key);
+				return;
 			}
 		}
 		

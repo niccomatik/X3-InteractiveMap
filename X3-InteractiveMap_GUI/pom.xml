@@ -5,6 +5,32 @@
 	<name>X3-InteractiveMap_GUI</name>
 	<build>
 		<!-- <directory>${basedir}/target/program</directory> -->
+		
+		<plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>1.7.1</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <manifestEntries>
+                    <Main-Class>de.ncm.x3.iam.start.X3InteractiveMapStarter</Main-Class>
+                    <Built-By>niccomatik</Built-By>
+                  </manifestEntries>
+                </transformer>
+              </transformers>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
 		<pluginManagement>
 			<plugins>
 
@@ -16,20 +42,6 @@
 						<target>1.6</target>
 					</configuration>
 
-				</plugin>
-
-				<plugin>
-					<artifactId>maven-assembly-plugin</artifactId>
-					<configuration>
-						<archive>
-							<manifest>
-								<mainClass>de.ncm.x3.iam.start.X3InteractiveMapStarter</mainClass>
-							</manifest>
-						</archive>
-						<descriptorRefs>
-							<descriptorRef>jar-with-dependencies</descriptorRef>
-						</descriptorRefs>
-					</configuration>
 				</plugin>
 
 				<!--This plugin's configuration is used to store Eclipse m2e settings 
