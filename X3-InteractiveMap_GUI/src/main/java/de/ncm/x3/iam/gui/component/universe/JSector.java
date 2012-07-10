@@ -61,7 +61,7 @@ public class JSector extends JRenderPanel implements WarpGateConstants {
 			}
 		}
 		jLabelSectorName.setText("<html><body style=\"text-align: center;\">" + s.getName() + "</body></html>");
-		jLabelSectorName.setToolTipText(s.getName());
+		jLabelSectorName.setToolTipText(s.getRace().getName());
 		
 	}
 	

@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Locale;
 
 import javax.swing.JCheckBoxMenuItem;
@@ -189,13 +191,21 @@ public abstract class MenuFactory {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					for (Component item : menu.getMenuComponents()) {
-						if (item instanceof JRadioButtonMenuItem) {
-							((JRadioButtonMenuItem) item).setSelected(false);
-						}
-					}
-					menuItem.setSelected(true);
 					ComponentUtils.setLocaleRecursively(Mainframe.get(), l);
+				}
+			});
+			
+			menuItem.addPropertyChangeListener("locale", new PropertyChangeListener() {
+				
+				@Override
+				public void propertyChange(PropertyChangeEvent evt) {
+					Locale newValue = (Locale) evt.getNewValue();
+					if (menuItem.getText().equalsIgnoreCase(newValue.getDisplayLanguage(l))) {
+						menuItem.setSelected(true);
+					} else {
+						menuItem.setSelected(false);
+					}
+					
 				}
 			});
 			
