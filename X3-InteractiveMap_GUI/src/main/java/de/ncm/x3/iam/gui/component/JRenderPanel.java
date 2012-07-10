@@ -29,7 +29,6 @@ public abstract class JRenderPanel extends JPanel {
 		g2d = (Graphics2D) g;
 		
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		
 		paintView(g2d);
 	}
 	

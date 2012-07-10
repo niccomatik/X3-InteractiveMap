@@ -10,6 +10,9 @@ import java.awt.Graphics2D;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+
+import org.apache.log4j.Logger;
 
 import de.ncm.x3.iam.data.universe.Sector;
 import de.ncm.x3.iam.data.universe.WarpGate;
@@ -18,6 +21,8 @@ import de.ncm.x3.iam.gui.component.JRenderPanel;
 
 public class JSector extends JRenderPanel implements WarpGateConstants {
 	
+	private static final Logger logger = Logger.getLogger(JSector.class);
+	
 	private Sector sector;
 	
 	private JLabel jLabelSectorName;
@@ -25,19 +30,25 @@ public class JSector extends JRenderPanel implements WarpGateConstants {
 	
 	private Color warpGateTextColor = new Color(255, 150, 0);
 	
+	private boolean highlighted = false;
+	
+	private Color highlightColor = Color.ORANGE;
+	
 	public JSector(Sector s) {
 		super(new BorderLayout());
 		this.setSector(s);
-		setBorder(new EmptyBorder(5, 5, 5, 5));
+		setHighlighted(false);
 		
 	}
 	
 	@Override
 	public void paintView(Graphics2D g) {
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, getWidth(), getHeight());
+		
 		g.setColor(getBackground());
 		g.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, getWidth() / 3, getHeight() / 3);
-		g.setColor(getForeground());
-		g.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, getWidth() / 3, getHeight() / 3);
+		
 	}
 	
 	private void setSector(Sector s) {
@@ -100,8 +111,6 @@ public class JSector extends JRenderPanel implements WarpGateConstants {
 		Font font = label.getFont();
 		font = new Font(font.getName(), Font.BOLD, font.getSize() + 2);
 		label.setFont(font);
-		// label.setBackground(new Color(0, 100, 255, 150));
-		// label.setOpaque(true);
 		
 		switch (warpGateID) {
 			case WARPGATE_NORTH:
@@ -125,4 +134,29 @@ public class JSector extends JRenderPanel implements WarpGateConstants {
 		return label;
 	}
 	
+	public void setHighlighted(boolean b) {
+		
+		this.highlighted = b;
+		if (b) {
+			logger.debug(sector.getName() + ": is highlighted");
+			this.setBorder(new LineBorder(highlightColor, 5, true));
+		} else {
+			this.setBorder(new EmptyBorder(5, 5, 5, 5));
+		}
+		repaint();
+		validate();
+	}
+	
+	public boolean isHighlighted() {
+		return this.highlighted;
+	}
+	
+	public void setHighlightColor(Color c) {
+		this.highlightColor = c;
+		// repaint();
+	}
+	
+	public Color getHighlightColor() {
+		return highlightColor;
+	}
 }

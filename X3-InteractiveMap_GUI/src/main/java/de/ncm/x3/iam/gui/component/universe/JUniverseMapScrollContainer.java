@@ -2,14 +2,20 @@
 package de.ncm.x3.iam.gui.component.universe;
 
 
+import java.awt.EventQueue;
 import java.awt.Point;
 
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 
+import de.ncm.x3.iam.data.ActualPlayerInfo;
 import de.ncm.x3.iam.data.universe.GridPos;
 import de.ncm.x3.iam.gui.layout.UniverseLayout;
 import de.ncm.x3.iam.gui.listener.universe.HandScrollListener;
+import de.ncm.x3.iam.parser.ParseEvent;
+import de.ncm.x3.iam.parser.ParseListener;
+import de.ncm.x3.iam.parser.ParserFactory;
+import de.ncm.x3.iam.settings.PropertyManager;
 
 public class JUniverseMapScrollContainer extends JScrollPane {
 	
@@ -24,6 +30,10 @@ public class JUniverseMapScrollContainer extends JScrollPane {
 		HandScrollListener scrollListener = new HandScrollListener(map);
 		getViewport().addMouseMotionListener(scrollListener);
 		getViewport().addMouseListener(scrollListener);
+		
+		PListener pListener = new PListener();
+		// ParserFactory.getUniverseMapParser().addParseListener(pListener);
+		ParserFactory.getActualPlayerPositionParser().addParseListener(pListener);
 	}
 	
 	public void centerViewOnSector(GridPos gridpos) {
@@ -54,6 +64,35 @@ public class JUniverseMapScrollContainer extends JScrollPane {
 			p.y = 0;
 		}
 		getViewport().setViewPosition(p);
+	}
+	
+	private class PListener implements ParseListener {
+		
+		@Override
+		public void onParseStart(ParseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void onParseEnd(ParseEvent e) {
+			if (new Boolean(PropertyManager.get().getProperty("universemap.automaticcenter"))) {
+				
+				if (e.getParsedValue() instanceof ActualPlayerInfo) {
+					final ActualPlayerInfo playerInfo = (ActualPlayerInfo) e.getParsedValue();
+					EventQueue.invokeLater(new Runnable() {
+						
+						@Override
+						public void run() {
+							centerViewOnSector(playerInfo.getSectorPosition());
+						}
+					});
+					
+				}
+			}
+			
+		}
+		
 	}
 	
 }

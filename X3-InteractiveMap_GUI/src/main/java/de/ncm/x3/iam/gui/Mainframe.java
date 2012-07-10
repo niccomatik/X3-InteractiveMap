@@ -19,7 +19,6 @@ import de.ncm.x3.iam.bundle.GuiBundleManager;
 import de.ncm.x3.iam.gui.component.ComponentFactory;
 import de.ncm.x3.iam.gui.component.universe.JUniverseMap;
 import de.ncm.x3.iam.gui.component.universe.JUniverseMapScrollContainer;
-import de.ncm.x3.iam.parser.ParserManager;
 
 public class Mainframe extends JFrame {
 	
@@ -27,7 +26,6 @@ public class Mainframe extends JFrame {
 	private Logger logger = Logger.getLogger(Mainframe.class);
 	private JPanel contentPane;
 	private JRadioButtonMenuItem actualrdbtnmntmLanguage;
-	private ParserManager parseManager;
 	protected ComponentFactory componentFactory = ComponentFactory.get();
 	private JUniverseMapScrollContainer jUniverseMapScrollContainer;
 	private JMenu menuData;
@@ -38,7 +36,6 @@ public class Mainframe extends JFrame {
 	private JMenuItem menuItemChooseLogpath;
 	private JMenu menuColorPack;
 	private JMenu menuView;
-	private JCheckBoxMenuItem menuItemCenterViewAutomaticOnActualSector;
 	private JCheckBoxMenuItem menuItemCenterMapAutomaticOnActualSector;
 	private JMenuItem menuItemCenterMapOnActualSector;
 	private JMenu menuHelp;
@@ -50,7 +47,6 @@ public class Mainframe extends JFrame {
 	
 	public Mainframe() {
 		super();
-		this.parseManager = new ParserManager();
 		instance = this;
 		logger.info("Creating the GUI");
 		UIManager.getDefaults().addResourceBundle(GuiBundleManager.get().getBundle());
@@ -78,7 +74,7 @@ public class Mainframe extends JFrame {
 		setJMenuBar(menuBar);
 		
 		menuData = MenuFactory.createMenuData();
-		menuItemParsing = MenuFactory.createMenuItemParsing(parseManager);
+		menuItemParsing = MenuFactory.createMenuItemParsing();
 		menuData.add(menuItemParsing);
 		menuItemClose = MenuFactory.createMenuItemClose();
 		menuEdit = MenuFactory.createMenuEdit();

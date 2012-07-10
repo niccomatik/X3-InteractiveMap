@@ -37,7 +37,7 @@ public abstract class MenuFactory {
 		return ComponentFactory.get().createLocalisedComponent("mainframe.menu.data", JMenu.class);
 	}
 	
-	public static JCheckBoxMenuItem createMenuItemParsing(final ParserManager parseManager) {
+	public static JCheckBoxMenuItem createMenuItemParsing() {
 		final JCheckBoxMenuItem menuItem = ComponentFactory.get().createLocalisedComponent("mainframe.menu.data.parsing", JCheckBoxMenuItem.class);
 		
 		menuItem.addItemListener(new ItemListener() {
@@ -45,9 +45,9 @@ public abstract class MenuFactory {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if (menuItem.isSelected()) {
-					parseManager.startParsing();
+					ParserManager.get().startParsing();
 				} else {
-					parseManager.stopParsing();
+					ParserManager.get().stopParsing();
 				}
 			}
 		});
@@ -138,16 +138,15 @@ public abstract class MenuFactory {
 	}
 	
 	public static JCheckBoxMenuItem createMenuItemCenterMapAutomaticOnActualSector() {
-		JCheckBoxMenuItem menuItem = ComponentFactory.get().createLocalisedComponent("mainframe.menu.view.ceter_map_on_sector.automatic",
+		final JCheckBoxMenuItem menuItem = ComponentFactory.get().createLocalisedComponent("mainframe.menu.view.ceter_map_on_sector.automatic",
 				JCheckBoxMenuItem.class);
 		
-		menuItem.setSelected(true);
+		menuItem.setSelected(new Boolean(PropertyManager.get().getProperty("universemap.automaticcenter")));
 		menuItem.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Implement automatic center on sector
-				
+				PropertyManager.get().setProperty("universemap.automaticcenter", "" + menuItem.isSelected());
 			}
 		});
 		return menuItem;

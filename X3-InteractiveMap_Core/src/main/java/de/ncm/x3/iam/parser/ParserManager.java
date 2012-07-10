@@ -8,17 +8,19 @@ import org.apache.log4j.Logger;
 
 public class ParserManager {
 	
-	private static Logger	        logger	    = Logger.getLogger(ParserManager.class);
-	protected HashMap<Parser, Long>	parserMap	= new HashMap<Parser, Long>();	         // Parser, LastTimeInvoked
-	protected Thread	            parseThread	= null;
-	protected long	                waitTime	= 100;
-	protected boolean	            active	    = false;
+	private static Logger logger = Logger.getLogger(ParserManager.class);
+	private static ParserManager instance;
+	protected HashMap<Parser, Long> parserMap = new HashMap<Parser, Long>(); // Parser, LastTimeInvoked
+	protected Thread parseThread = null;
+	protected long waitTime = 100;
+	protected boolean active = false;
 	
-	public ParserManager() {
+	private ParserManager() {
 		addParser(ParserFactory.getUniverseMapParser());
+		addParser(ParserFactory.getActualPlayerPositionParser());
 	}
 	
-	private void addParser(Parser parser) {
+	public void addParser(Parser parser) {
 		parserMap.put(parser, System.currentTimeMillis());
 		
 	}
@@ -60,6 +62,7 @@ public class ParserManager {
 			
 			@Override
 			public void run() {
+				parseThread.setPriority(3);
 				while (active) {
 					reParse();
 					try {
@@ -72,6 +75,13 @@ public class ParserManager {
 			}
 		});
 		
+	}
+	
+	public static ParserManager get() {
+		if (instance == null) {
+			instance = new ParserManager();
+		}
+		return instance;
 	}
 	
 }

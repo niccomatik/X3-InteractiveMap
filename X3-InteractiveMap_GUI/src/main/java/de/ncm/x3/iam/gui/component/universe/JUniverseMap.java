@@ -6,9 +6,11 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Graphics2D;
+import java.util.HashMap;
 
 import org.apache.log4j.Logger;
 
+import de.ncm.x3.iam.data.ActualPlayerInfo;
 import de.ncm.x3.iam.data.universe.GridPos;
 import de.ncm.x3.iam.data.universe.Sector;
 import de.ncm.x3.iam.data.universe.UniverseMap;
@@ -24,11 +26,15 @@ import de.ncm.x3.iam.settings.ColorPackageManager;
 public class JUniverseMap extends JRenderPanel {
 	
 	private static final Logger logger = Logger.getLogger(JUniverseMap.class);
+	private ActualPlayerInfo actualPlayerInfo = new ActualPlayerInfo();
+	private UniverseMap universeMap;
+	private HashMap<GridPos, JSector> jUniverseMap = new HashMap<GridPos, JSector>();
 	
 	public JUniverseMap() {
 		super(new UniverseLayout());
-		
-		ParserFactory.getUniverseMapParser().addParseListener(new PListener());
+		PListener pListener = new PListener();
+		ParserFactory.getUniverseMapParser().addParseListener(pListener);
+		ParserFactory.getActualPlayerPositionParser().addParseListener(pListener);
 		setBackground(Color.BLACK);
 		
 		ColorPackageManager.get().setColorPackackageChangedListener(new ColorPackageChangedListener() {
@@ -53,6 +59,51 @@ public class JUniverseMap extends JRenderPanel {
 		g.fillRect(0, 0, getWidth(), getHeight());
 	}
 	
+	public void setActualPlayerInfo(ActualPlayerInfo actualPlayerInfo) {
+		if (!this.actualPlayerInfo.getSectorPosition().equals(actualPlayerInfo.getSectorPosition())) {
+			GridPos oldSector = this.actualPlayerInfo.getSectorPosition();
+			GridPos newSector = actualPlayerInfo.getSectorPosition();
+			JSector oldJSector = jUniverseMap.get(oldSector);
+			if (oldJSector != null) {
+				oldJSector.setHighlighted(false);
+			}
+			
+			JSector newJSector = jUniverseMap.get(newSector);
+			if (newJSector != null) {
+				newJSector.setHighlighted(true);
+			}
+			this.actualPlayerInfo.setSectorPosition(actualPlayerInfo.getSectorPosition());
+		}
+		
+	}
+	
+	public void setUniverseMap(UniverseMap map) {
+		removeAllSectors();
+		logger.info("Adding new Sectors");
+		this.universeMap = map;
+		for (GridPos gridPos : map.getSectors().keySet()) {
+			Sector sector = map.getSectors().get(gridPos);
+			JSector jSec = new JSector(sector);
+			jSec.setBackground(ColorPackageManager.get().getRaceColor(sector.getRace().getId()));
+			add(jSec, gridPos);
+			jUniverseMap.put(gridPos, jSec);
+		}
+		validate();
+		repaint();
+		if (getParent() != null) {
+			getParent().validate();
+		}
+		logger.info("New Sectors added");
+		
+	}
+	
+	private void removeAllSectors() {
+		for (GridPos gp : jUniverseMap.keySet()) {
+			remove(jUniverseMap.get(gp));
+		}
+		
+	}
+	
 	private class PListener implements ParseListener {
 		
 		@Override
@@ -60,35 +111,31 @@ public class JUniverseMap extends JRenderPanel {
 		
 		@Override
 		public void onParseEnd(ParseEvent e) {
-			final UniverseMap map;
 			if (e.getParsedValue() instanceof UniverseMap) {
-				map = (UniverseMap) e.getParsedValue();
+				final UniverseMap map = (UniverseMap) e.getParsedValue();
+				
+				EventQueue.invokeLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						setUniverseMap(map);
+					}
+				});
+			} else if (e.getParsedValue() instanceof ActualPlayerInfo) {
+				final ActualPlayerInfo actualPlayerInfo = (ActualPlayerInfo) e.getParsedValue();
+				EventQueue.invokeLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						setActualPlayerInfo(actualPlayerInfo);
+					}
+				});
+				
 			} else {
-				throw new IllegalStateException("Parsed value has to be a UniverseMap");
+				logger.debug("ParseEvent not covered by JUniverseMap");
 			}
 			
-			EventQueue.invokeLater(new Runnable() {
-				
-				@Override
-				public void run() {
-					removeAll();
-					logger.info("Adding new Sectors");
-					for (GridPos gridPos : map.getSectors().keySet()) {
-						Sector sector = map.getSectors().get(gridPos);
-						JSector jSec = new JSector(sector);
-						jSec.setBackground(ColorPackageManager.get().getRaceColor(sector.getRace().getId()));
-						add(jSec, gridPos);
-					}
-					validate();
-					repaint();
-					if (getParent() != null) {
-						getParent().validate();
-					}
-					logger.info("New Sectors added");
-				}
-			});
-			
 		}
+		
 	}
-	
 }
