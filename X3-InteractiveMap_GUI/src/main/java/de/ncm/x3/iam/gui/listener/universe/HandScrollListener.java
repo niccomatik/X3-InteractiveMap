@@ -13,8 +13,8 @@ import javax.swing.JViewport;
 
 public class HandScrollListener extends MouseAdapter {
 	
-	private final Cursor defCursor = Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
-	private final Cursor hndCursor = Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR);
+	private final Cursor defaultCursor = Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
+	private final Cursor moveableCursor = Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR);
 	private final Point pp = new Point();
 	private JComponent comp;
 	
@@ -34,13 +34,22 @@ public class HandScrollListener extends MouseAdapter {
 	
 	@Override
 	public void mousePressed(MouseEvent e) {
-		comp.setCursor(hndCursor);
 		pp.setLocation(e.getPoint());
 	}
 	
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		comp.setCursor(defCursor);
-		// comp.repaint();
+		
 	}
+	
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		comp.setCursor(moveableCursor);
+	}
+	
+	@Override
+	public void mouseExited(MouseEvent e) {
+		comp.setCursor(defaultCursor);
+	}
+	
 }

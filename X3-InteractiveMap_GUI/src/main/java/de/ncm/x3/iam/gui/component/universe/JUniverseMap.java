@@ -150,4 +150,8 @@ public class JUniverseMap extends JRenderPanel {
 		}
 		
 	}
+	
+	public ActualPlayerInfo getActualPlayerInfo() {
+		return actualPlayerInfo;
+	}
 }

@@ -70,7 +70,6 @@ public class JUniverseMapScrollContainer extends JScrollPane {
 		
 		@Override
 		public void onParseStart(ParseEvent e) {
-			// TODO Auto-generated method stub
 			
 		}
 		

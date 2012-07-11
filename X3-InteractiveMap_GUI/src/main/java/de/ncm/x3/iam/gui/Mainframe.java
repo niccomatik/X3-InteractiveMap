@@ -45,6 +45,7 @@ public class Mainframe extends JFrame {
 	private JMenu menuHelp;
 	private JMenu menuLanguage;
 	private JMenuItem menuItemInstallScripts;
+	private JUniverseMap jUniverseMap;
 	
 	/**
 	 * Create the frame
@@ -67,7 +68,7 @@ public class Mainframe extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
-		JUniverseMap jUniverseMap = new JUniverseMap();
+		jUniverseMap = new JUniverseMap();
 		jUniverseMapScrollContainer = new JUniverseMapScrollContainer(jUniverseMap);
 		contentPane.add(jUniverseMapScrollContainer, BorderLayout.CENTER);
 		
@@ -88,7 +89,7 @@ public class Mainframe extends JFrame {
 		menuColorPack = MenuFactory.createMenuColorPack();
 		menuView = MenuFactory.createMenuView();
 		menuItemCenterMapAutomaticOnActualSector = MenuFactory.createMenuItemCenterMapAutomaticOnActualSector();
-		menuItemCenterMapOnActualSector = MenuFactory.createMenuItemCenterMapOnActualSector(jUniverseMapScrollContainer);
+		menuItemCenterMapOnActualSector = MenuFactory.createMenuItemCenterMapOnActualSector(this);
 		menuHelp = MenuFactory.createMenuHelp();
 		menuLanguage = MenuFactory.createMenuLanguage();
 		menuItemInstallScripts = MenuFactory.createMenuItemInstallScripts();
@@ -124,10 +125,7 @@ public class Mainframe extends JFrame {
 	private class WListener implements WindowListener {
 		
 		@Override
-		public void windowOpened(WindowEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void windowOpened(WindowEvent e) {}
 		
 		@Override
 		public void windowClosing(WindowEvent e) {
@@ -136,35 +134,28 @@ public class Mainframe extends JFrame {
 		}
 		
 		@Override
-		public void windowClosed(WindowEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void windowClosed(WindowEvent e) {}
 		
 		@Override
-		public void windowIconified(WindowEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void windowIconified(WindowEvent e) {}
 		
 		@Override
-		public void windowDeiconified(WindowEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void windowDeiconified(WindowEvent e) {}
 		
 		@Override
-		public void windowActivated(WindowEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void windowActivated(WindowEvent e) {}
 		
 		@Override
-		public void windowDeactivated(WindowEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void windowDeactivated(WindowEvent e) {}
 		
+	}
+	
+	public JUniverseMap getJUniverseMap() {
+		return jUniverseMap;
+	}
+	
+	public JUniverseMapScrollContainer getJUniverseMapScrollContainer() {
+		return jUniverseMapScrollContainer;
 	}
 	
 }

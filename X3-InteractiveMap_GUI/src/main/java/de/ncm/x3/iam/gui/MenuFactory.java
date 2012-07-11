@@ -25,9 +25,7 @@ import org.apache.log4j.Logger;
 
 import de.ncm.x3.iam.bundle.GuiBundleManager;
 import de.ncm.x3.iam.data.ScriptManager;
-import de.ncm.x3.iam.data.universe.GridPos;
 import de.ncm.x3.iam.gui.component.ComponentFactory;
-import de.ncm.x3.iam.gui.component.universe.JUniverseMapScrollContainer;
 import de.ncm.x3.iam.gui.util.ComponentUtils;
 import de.ncm.x3.iam.parser.ParserFactory;
 import de.ncm.x3.iam.parser.ParserManager;
@@ -99,7 +97,6 @@ public abstract class MenuFactory {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Choose and save Logpath
 				JFileChooser fc;
 				File propDefinedFile = new File(PropertyManager.get().getProperty("log.parser.xml.path"));
 				if (propDefinedFile.exists()) {
@@ -181,13 +178,14 @@ public abstract class MenuFactory {
 		return menuItem;
 	}
 	
-	public static JMenuItem createMenuItemCenterMapOnActualSector(final JUniverseMapScrollContainer scrollContainer) {
+	public static JMenuItem createMenuItemCenterMapOnActualSector(final Mainframe mf) {
 		JMenuItem menuItem = ComponentFactory.get().createLocalisedComponent("mainframe.menu.view.ceter_map_on_sector", JMenuItem.class);
 		menuItem.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				scrollContainer.centerViewOnSector(new GridPos(5, 5)); // TODO: Replace DummyData with real actual sector
+				mf.getJUniverseMapScrollContainer().centerViewOnSector(mf.getJUniverseMap().getActualPlayerInfo().getSectorPosition());
+				// sector
 			}
 		});
 		return menuItem;

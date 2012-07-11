@@ -18,9 +18,7 @@ public class ScriptManager {
 	
 	private static ScriptManager instance;
 	
-	private ScriptManager() {
-		// TODO Auto-generated constructor stub
-	}
+	private ScriptManager() {}
 	
 	public void installScriptsTo(File folder) {
 		if (!folder.isDirectory()) {

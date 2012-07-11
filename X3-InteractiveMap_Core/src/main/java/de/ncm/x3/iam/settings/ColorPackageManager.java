@@ -62,7 +62,6 @@ public class ColorPackageManager {
 			logger.error("ColorPackage '" + colorPackage + "' does not exist", e);
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
