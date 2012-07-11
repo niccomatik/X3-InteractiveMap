@@ -59,7 +59,7 @@ public class JUniverseMap extends JRenderPanel {
 		g.fillRect(0, 0, getWidth(), getHeight());
 	}
 	
-	public void setActualPlayerInfo(ActualPlayerInfo actualPlayerInfo) {
+	public void setActualPlayerInfo(final ActualPlayerInfo actualPlayerInfo) {
 		if (!this.actualPlayerInfo.getSectorPosition().equals(actualPlayerInfo.getSectorPosition())) {
 			GridPos oldSector = this.actualPlayerInfo.getSectorPosition();
 			GridPos newSector = actualPlayerInfo.getSectorPosition();
@@ -71,6 +71,15 @@ public class JUniverseMap extends JRenderPanel {
 			JSector newJSector = jUniverseMap.get(newSector);
 			if (newJSector != null) {
 				newJSector.setHighlighted(true);
+			} else if (universeMap.getSectors().get(newSector) != null) {
+				EventQueue.invokeLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						setActualPlayerInfo(actualPlayerInfo); // Sector is there but not added to GUI => Try again
+						
+					}
+				});
 			}
 			this.actualPlayerInfo.setSectorPosition(actualPlayerInfo.getSectorPosition());
 		}
@@ -85,6 +94,9 @@ public class JUniverseMap extends JRenderPanel {
 			Sector sector = map.getSectors().get(gridPos);
 			JSector jSec = new JSector(sector);
 			jSec.setBackground(ColorPackageManager.get().getRaceColor(sector.getRace().getId()));
+			if (gridPos.equals(actualPlayerInfo.getSectorPosition())) {
+				jSec.setHighlighted(true);
+			}
 			add(jSec, gridPos);
 			jUniverseMap.put(gridPos, jSec);
 		}

@@ -4,6 +4,8 @@ package de.ncm.x3.iam.settings;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -12,12 +14,12 @@ import org.apache.log4j.Logger;
 
 public class PropertyManager {
 	
-	private static Logger	       logger	       = Logger.getLogger(PropertyManager.class);
-	private Properties	           userProperties	= null;
-	private static PropertyManager	instance	   = null;
-	private static final String	   defaultProbFile	= "default.properties";	              // In jar file
-	private static final String	   userProbFile	   = "user.properties";	                  // At program directory
-	                                                                                          
+	private static Logger logger = Logger.getLogger(PropertyManager.class);
+	private Properties userProperties = null;
+	private static PropertyManager instance = null;
+	private static final String defaultProbFile = "default.properties"; // In jar file
+	private static final String userProbFile = "user.properties"; // At program directory
+	
 	private PropertyManager() {
 		logger.info("Loading Properties");
 		
@@ -76,6 +78,24 @@ public class PropertyManager {
 			instance = new PropertyManager();
 		}
 		return instance;
+	}
+	
+	public void setProperty(String key, boolean value) {
+		setProperty(key, "" + value);
+		
+	}
+	
+	public void save() {
+		logger.info("Saving properties");
+		try {
+			userProperties.store(new FileOutputStream(userProbFile), "User properties");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 }

@@ -10,20 +10,26 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
 import java.util.Locale;
 
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.UIManager;
 
 import org.apache.log4j.Logger;
 
 import de.ncm.x3.iam.bundle.GuiBundleManager;
+import de.ncm.x3.iam.data.ScriptManager;
 import de.ncm.x3.iam.data.universe.GridPos;
 import de.ncm.x3.iam.gui.component.ComponentFactory;
 import de.ncm.x3.iam.gui.component.universe.JUniverseMapScrollContainer;
 import de.ncm.x3.iam.gui.util.ComponentUtils;
+import de.ncm.x3.iam.parser.ParserFactory;
 import de.ncm.x3.iam.parser.ParserManager;
 import de.ncm.x3.iam.settings.ColorPackageManager;
 import de.ncm.x3.iam.settings.PropertyManager;
@@ -49,6 +55,7 @@ public abstract class MenuFactory {
 				} else {
 					ParserManager.get().stopParsing();
 				}
+				PropertyManager.get().setProperty("parser.continuousparsing.enabled", menuItem.isSelected());
 			}
 		});
 		
@@ -87,15 +94,37 @@ public abstract class MenuFactory {
 	}
 	
 	public static JMenuItem createMenuItemChooseLogpath() {
-		JMenuItem menuItem = ComponentFactory.get().createLocalisedComponent("mainframe.menu.edit.choose_logpath", JMenuItem.class);
+		final JMenuItem menuItem = ComponentFactory.get().createLocalisedComponent("mainframe.menu.edit.choose_logpath", JMenuItem.class);
 		menuItem.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Choose and save Logpath
+				JFileChooser fc;
+				File propDefinedFile = new File(PropertyManager.get().getProperty("log.parser.xml.path"));
+				if (propDefinedFile.exists()) {
+					fc = new JFileChooser(propDefinedFile);
+				} else {
+					fc = new JFileChooser(System.getProperty("user.home"));
+				}
+				
+				fc.setLocale(menuItem.getLocale());
+				fc.setDialogTitle(UIManager.get("filechooser.logpath.title", fc.getLocale()).toString());
+				
+				fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				int returnVal = fc.showOpenDialog(null);
+				File f;
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					f = fc.getSelectedFile();
+					f.mkdirs();
+					
+					PropertyManager.get().setProperty("log.parser.xml.path", f.getAbsolutePath());
+					ParserFactory.updateXMLParserPath();
+				}
 				
 			}
 		});
+		
 		return menuItem;
 	}
 	
@@ -106,7 +135,7 @@ public abstract class MenuFactory {
 	}
 	
 	private static void fillMenuColorPack(final JMenu menu) {
-		// TODO: fill menu with ColorPacks
+		
 		for (final String cp : ColorPackageManager.get().listColorPackages()) {
 			final JRadioButtonMenuItem item = new JRadioButtonMenuItem(cp);
 			if (cp.equalsIgnoreCase(PropertyManager.get().getProperty("colorpackage.actual"))) {
@@ -211,5 +240,34 @@ public abstract class MenuFactory {
 			menu.add(menuItem);
 			
 		}
+	}
+	
+	public static JMenuItem createMenuItemInstallScripts() {
+		final JMenuItem menuItem = ComponentFactory.get().createLocalisedComponent("mainframe.menu.edit.installScripts", JMenuItem.class);
+		
+		menuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				JFileChooser fc = new JFileChooser(PropertyManager.get().getProperty("game.scriptfolder"));
+				fc.setLocale(menuItem.getLocale());
+				fc.setDialogTitle(UIManager.get("filechooser.scriptpath.title", fc.getLocale()).toString());
+				
+				fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				int returnVal = fc.showOpenDialog(null);
+				File f;
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					f = fc.getSelectedFile();
+					f.mkdirs();
+					ScriptManager.get().installScriptsTo(f);
+					JOptionPane.showMessageDialog(menuItem, UIManager.get("filechooser.scriptpath.success", fc.getLocale()).toString());
+					PropertyManager.get().setProperty("game.scriptfolder", f.getAbsolutePath());
+				}
+				
+			}
+		});
+		
+		return menuItem;
 	}
 }

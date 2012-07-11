@@ -25,7 +25,7 @@ public class ColorPackageManager {
 	private Properties actualProperties = new Properties();
 	
 	private ColorPackageManager() {
-		setActualColorPackage("default");
+		setActualColorPackage(PropertyManager.get().getProperty("colorpackage.actual"));
 	}
 	
 	public String[] listColorPackages() {
@@ -35,7 +35,6 @@ public class ColorPackageManager {
 			path = developmentPath + path;
 		}
 		ArrayList<String> packList = new ArrayList<String>();
-		System.out.println(new File(path).getAbsolutePath());
 		for (File f : new File(path).listFiles()) {
 			if (f.isDirectory()) {
 				packList.add(f.getName());
@@ -58,6 +57,7 @@ public class ColorPackageManager {
 				colorPackackageChangedListener.colorPackageChanged(new ColorPackageChangedEvent(actualColorPackage, colorPackage, actualProperties));
 			}
 			actualColorPackage = colorPackage;
+			PropertyManager.get().setProperty("colorpackage.actual", colorPackage);
 		} catch (FileNotFoundException e) {
 			logger.error("ColorPackage '" + colorPackage + "' does not exist", e);
 			

@@ -43,11 +43,11 @@ public class JSector extends JRenderPanel implements WarpGateConstants {
 	
 	@Override
 	public void paintView(Graphics2D g) {
-		g.setColor(Color.BLACK);
+		g.setColor(getParent().getBackground()); // have to fill the whole Panel due to bad-looking edges.
 		g.fillRect(0, 0, getWidth(), getHeight());
 		
 		g.setColor(getBackground());
-		g.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, getWidth() / 3, getHeight() / 3);
+		g.fillRoundRect(0, 0, getWidth(), getHeight(), getWidth() / 3, getHeight() / 3);
 		
 	}
 	

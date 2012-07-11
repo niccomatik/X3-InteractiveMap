@@ -3,6 +3,8 @@ package de.ncm.x3.iam.gui;
 
 
 import java.awt.BorderLayout;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
@@ -12,6 +14,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.UIManager;
+import javax.swing.WindowConstants;
 
 import org.apache.log4j.Logger;
 
@@ -19,6 +22,7 @@ import de.ncm.x3.iam.bundle.GuiBundleManager;
 import de.ncm.x3.iam.gui.component.ComponentFactory;
 import de.ncm.x3.iam.gui.component.universe.JUniverseMap;
 import de.ncm.x3.iam.gui.component.universe.JUniverseMapScrollContainer;
+import de.ncm.x3.iam.settings.PropertyManager;
 
 public class Mainframe extends JFrame {
 	
@@ -40,6 +44,7 @@ public class Mainframe extends JFrame {
 	private JMenuItem menuItemCenterMapOnActualSector;
 	private JMenu menuHelp;
 	private JMenu menuLanguage;
+	private JMenuItem menuItemInstallScripts;
 	
 	/**
 	 * Create the frame
@@ -54,7 +59,8 @@ public class Mainframe extends JFrame {
 		setLocationByPlatform(true);
 		setTitle("X - InteractiveMap");
 		setSize(1024, 768);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		addWindowListener(new WListener());
 		setupMenu();
 		
 		contentPane = new JPanel();
@@ -85,6 +91,7 @@ public class Mainframe extends JFrame {
 		menuItemCenterMapOnActualSector = MenuFactory.createMenuItemCenterMapOnActualSector(jUniverseMapScrollContainer);
 		menuHelp = MenuFactory.createMenuHelp();
 		menuLanguage = MenuFactory.createMenuLanguage();
+		menuItemInstallScripts = MenuFactory.createMenuItemInstallScripts();
 		
 		menuBar.add(menuData);
 		menuData.addSeparator();
@@ -92,6 +99,8 @@ public class Mainframe extends JFrame {
 		
 		menuBar.add(menuEdit);
 		menuEdit.add(menuItemChooseLogpath);
+		menuEdit.add(menuItemInstallScripts);
+		menuEdit.addSeparator();
 		menuEdit.add(menuColorPack);
 		
 		menuBar.add(menuView);
@@ -104,11 +113,58 @@ public class Mainframe extends JFrame {
 	}
 	
 	public static void quit() {
+		PropertyManager.get().save();
 		System.exit(0);
 	}
 	
 	public static Mainframe get() {
 		return instance;
+	}
+	
+	private class WListener implements WindowListener {
+		
+		@Override
+		public void windowOpened(WindowEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void windowClosing(WindowEvent e) {
+			quit();
+			
+		}
+		
+		@Override
+		public void windowClosed(WindowEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void windowIconified(WindowEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void windowDeiconified(WindowEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void windowActivated(WindowEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void windowDeactivated(WindowEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
 	}
 	
 }

@@ -71,7 +71,9 @@ public abstract class XMLParser<E> extends Parser {
 			fireParseEndEvent(new ParseEvent(this, ret));
 			this.lastModified = lastModified;
 		} catch (SAXException e) {
-			e.printStackTrace();
+			if (Boolean.parseBoolean(System.getProperty("isDevOutputMode"))) {
+				e.printStackTrace();
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -92,7 +94,7 @@ public abstract class XMLParser<E> extends Parser {
 		return file;
 	}
 	
-	protected void setFile(File file) {
+	public void setFile(File file) {
 		this.file = file;
 	}
 	

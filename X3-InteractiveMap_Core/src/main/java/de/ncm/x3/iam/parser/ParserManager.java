@@ -3,6 +3,7 @@ package de.ncm.x3.iam.parser;
 
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import org.apache.log4j.Logger;
 
@@ -10,7 +11,7 @@ public class ParserManager {
 	
 	private static Logger logger = Logger.getLogger(ParserManager.class);
 	private static ParserManager instance;
-	protected HashMap<Parser, Long> parserMap = new HashMap<Parser, Long>(); // Parser, LastTimeInvoked
+	protected HashMap<Parser, Long> parserMap = new LinkedHashMap<Parser, Long>(); // Parser, LastTimeInvoked
 	protected Thread parseThread = null;
 	protected long waitTime = 100;
 	protected boolean active = false;
