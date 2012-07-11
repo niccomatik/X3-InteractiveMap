@@ -101,12 +101,12 @@ public class Mainframe extends JFrame {
 		menuBar.add(menuEdit);
 		menuEdit.add(menuItemChooseLogpath);
 		menuEdit.add(menuItemInstallScripts);
-		menuEdit.addSeparator();
-		menuEdit.add(menuColorPack);
 		
 		menuBar.add(menuView);
 		menuView.add(menuItemCenterMapAutomaticOnActualSector);
 		menuView.add(menuItemCenterMapOnActualSector);
+		menuView.addSeparator();
+		menuView.add(menuColorPack);
 		
 		menuBar.add(menuHelp);
 		menuHelp.add(menuLanguage);
