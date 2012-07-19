@@ -6,13 +6,14 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 
 import org.apache.log4j.Logger;
 
@@ -20,6 +21,7 @@ import de.ncm.x3.iam.data.universe.Sector;
 import de.ncm.x3.iam.data.universe.WarpGate;
 import de.ncm.x3.iam.data.universe.WarpGateConstants;
 import de.ncm.x3.iam.gui.component.JRenderPanel;
+import de.ncm.x3.iam.settings.ColorPackageManager;
 
 public class JSector extends JRenderPanel implements WarpGateConstants {
 	
@@ -30,16 +32,22 @@ public class JSector extends JRenderPanel implements WarpGateConstants {
 	private JLabel jLabelSectorName;
 	private JLabel[] jLabelWarpGate;
 	
-	private Color warpGateTextColor = new Color(255, 150, 0);
+	// private Color warpGateTextColor = new Color(255, 150, 0);
+	private Color warpGateTextColor = Color.BLACK;
 	
 	private boolean highlighted = false;
 	
-	private Color highlightColor = Color.ORANGE;
+	private Image sectorBackgroundImage;
+	
+	private Image sectorHighlightImage;
+	
+	private Insets sectorBackgroundImageOffset;
 	
 	public JSector(Sector s) {
 		super(new BorderLayout());
 		this.setSector(s);
 		setHighlighted(false);
+		this.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 		addMouseListener(new MouseListener() {
 			
@@ -58,21 +66,24 @@ public class JSector extends JRenderPanel implements WarpGateConstants {
 			@Override
 			public void mouseClicked(MouseEvent e) {}
 		});
-		
 	}
 	
 	@Override
 	public void paintView(Graphics2D g) {
 		g.setColor(getParent().getBackground()); // have to fill the whole Panel due to bad-looking edges.
 		g.fillRect(0, 0, getWidth(), getHeight());
-		
-		g.setColor(getBackground());
-		g.fillRoundRect(0, 0, getWidth(), getHeight(), getWidth() / 3, getHeight() / 3);
+		if (isHighlighted()) {
+			g.drawImage(sectorHighlightImage, 0, 0, getWidth(), getHeight(), this);
+		}
+		g.drawImage(sectorBackgroundImage, sectorBackgroundImageOffset.left, sectorBackgroundImageOffset.top, getWidth()
+				- (sectorBackgroundImageOffset.right + sectorBackgroundImageOffset.left), getHeight()
+				- (sectorBackgroundImageOffset.bottom + sectorBackgroundImageOffset.top), this);
 		
 	}
 	
-	private void setSector(Sector s) {
+	public void setSector(Sector s) {
 		this.sector = s;
+		reloadImages();
 		drawSectorInfo(s);
 	}
 	
@@ -131,6 +142,7 @@ public class JSector extends JRenderPanel implements WarpGateConstants {
 		Font font = label.getFont();
 		font = new Font(font.getName(), Font.BOLD, font.getSize() + 2);
 		label.setFont(font);
+		label.setBorder(new EmptyBorder(3, 3, 3, 3));
 		
 		switch (warpGateID) {
 			case WARPGATE_NORTH:
@@ -151,18 +163,16 @@ public class JSector extends JRenderPanel implements WarpGateConstants {
 				break;
 		
 		}
+		
 		return label;
 	}
 	
 	public void setHighlighted(boolean b) {
 		
 		this.highlighted = b;
-		if (b) {
-			logger.debug(sector.getName() + ": is highlighted");
-			this.setBorder(new LineBorder(highlightColor, 5, true));
-		} else {
-			this.setBorder(new EmptyBorder(5, 5, 5, 5));
-		}
+		
+		logger.debug(sector.getName() + ": is highlighted");
+		
 		repaint();
 		validate();
 	}
@@ -171,12 +181,11 @@ public class JSector extends JRenderPanel implements WarpGateConstants {
 		return this.highlighted;
 	}
 	
-	public void setHighlightColor(Color c) {
-		this.highlightColor = c;
-		// repaint();
+	public void reloadImages() {
+		this.sectorBackgroundImage = ColorPackageManager.get().getSectorImage(sector.getRace().getId());
+		this.sectorHighlightImage = ColorPackageManager.get().getSectorHighlightImage();
+		this.sectorBackgroundImageOffset = ColorPackageManager.get().getSectorBackgroundImageOffset();
+		this.setBorder(new EmptyBorder(sectorBackgroundImageOffset));
 	}
 	
-	public Color getHighlightColor() {
-		return highlightColor;
-	}
 }

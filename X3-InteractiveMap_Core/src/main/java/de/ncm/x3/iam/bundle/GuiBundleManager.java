@@ -12,6 +12,8 @@ import java.util.jar.JarFile;
 
 import org.apache.log4j.Logger;
 
+import de.ncm.x3.iam.util.StringUtil;
+
 public class GuiBundleManager {
 	
 	private static Logger logger = Logger.getLogger(GuiBundleManager.class);
@@ -86,18 +88,10 @@ public class GuiBundleManager {
 			// Strip off any leading '_' and whitespace, what's left is the variant.
 			variant = localeFileName.substring(endIndexOfCountryCode).trim();
 			if (variant.startsWith("_")) {
-				variant = trimLeadingCharacter(variant, '_');
+				variant = StringUtil.removeFirstCharacter(variant, '_');
 			}
 		}
 		return language.length() > 0 ? new Locale(language, country, variant) : null;
-	}
-	
-	private static String trimLeadingCharacter(String s, char c) {
-		StringBuffer buff = new StringBuffer(s);
-		if (buff.length() > 0 && buff.charAt(0) == c) {
-			buff.deleteCharAt(0);
-		}
-		return buff.toString();
 	}
 	
 	public String getBundle() {

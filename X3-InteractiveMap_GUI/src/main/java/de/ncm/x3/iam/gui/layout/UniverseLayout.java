@@ -17,7 +17,7 @@ public class UniverseLayout implements LayoutManager2 {
 	private static final Logger logger = Logger.getLogger(UniverseLayout.class);
 	protected HashMap<GridPos, Component> sectors = new HashMap<GridPos, Component>();
 	private double scale = 1.0;
-	private Dimension sectorSize = new Dimension(100, 100);
+	private Dimension sectorSize = new Dimension(110, 110);
 	private int xSpace = 30;
 	private int ySpace = 30;
 	private int maxX = 0;

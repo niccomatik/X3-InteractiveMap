@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.apache.log4j.Logger;
@@ -44,7 +45,7 @@ public class JUniverseMap extends JRenderPanel {
 				for (Component comp : getComponents()) {
 					if (comp instanceof JSector) {
 						JSector sec = (JSector) comp;
-						sec.setBackground(ColorPackageManager.get().getRaceColor(sec.getSector().getRace().getId()));
+						sec.reloadImages();
 					}
 				}
 				
@@ -87,18 +88,27 @@ public class JUniverseMap extends JRenderPanel {
 	}
 	
 	public void setUniverseMap(UniverseMap map) {
-		removeAllSectors();
+		removeAllUnnecessarySectors(map.getSectors());
 		logger.info("Adding new Sectors");
 		this.universeMap = map;
 		for (GridPos gridPos : map.getSectors().keySet()) {
 			Sector sector = map.getSectors().get(gridPos);
-			JSector jSec = new JSector(sector);
-			jSec.setBackground(ColorPackageManager.get().getRaceColor(sector.getRace().getId()));
+			
+			JSector jSec;
+			if (jUniverseMap.containsKey(gridPos)) {
+				jSec = jUniverseMap.get(gridPos);
+				jSec.setSector(sector);
+			} else {
+				
+				jSec = new JSector(sector);
+				
+				add(jSec, gridPos);
+				jUniverseMap.put(gridPos, jSec);
+			}
+			
 			if (gridPos.equals(actualPlayerInfo.getSectorPosition())) {
 				jSec.setHighlighted(true);
 			}
-			add(jSec, gridPos);
-			jUniverseMap.put(gridPos, jSec);
 		}
 		validate();
 		repaint();
@@ -109,9 +119,16 @@ public class JUniverseMap extends JRenderPanel {
 		
 	}
 	
-	private void removeAllSectors() {
+	private void removeAllUnnecessarySectors(HashMap<GridPos, Sector> sectors) {
+		ArrayList<GridPos> removeList = new ArrayList<GridPos>();
 		for (GridPos gp : jUniverseMap.keySet()) {
-			remove(jUniverseMap.get(gp));
+			if (!sectors.containsKey(gp)) {
+				remove(jUniverseMap.get(gp));
+				removeList.add(gp);
+			}
+		}
+		for (GridPos gp : removeList) {
+			jUniverseMap.remove(gp);
 		}
 		
 	}
