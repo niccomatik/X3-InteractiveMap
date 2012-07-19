@@ -170,8 +170,9 @@ public class JSector extends JRenderPanel implements WarpGateConstants {
 	public void setHighlighted(boolean b) {
 		
 		this.highlighted = b;
-		
-		logger.debug(sector.getName() + ": is highlighted");
+		if (b) {
+			logger.debug(sector.getName() + ": is highlighted");
+		}
 		
 		repaint();
 		validate();
