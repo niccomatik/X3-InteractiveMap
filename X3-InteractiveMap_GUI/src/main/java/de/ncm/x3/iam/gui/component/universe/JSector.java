@@ -194,8 +194,16 @@ public class JSector extends JRenderPanel implements WarpGateConstants {
 	public void reloadImages() {
 		this.sectorBackgroundImage = ColorPackageManager.get().getSectorImage(sector.getRace().getId());
 		this.sectorHighlightImage = ColorPackageManager.get().getSectorHighlightImage();
-		this.sectorBackgroundImageOffset = ColorPackageManager.get().getSectorBackgroundImageOffset();
+		setSectorBackgroundImageOffset(ColorPackageManager.get().getSectorBackgroundImageOffset());
 		this.setBorder(new EmptyBorder(sectorBackgroundImageOffset));
+	}
+	
+	public Insets getSectorBackgroundImageOffset() {
+		return sectorBackgroundImageOffset;
+	}
+	
+	public void setSectorBackgroundImageOffset(Insets sectorBackgroundImageOffset) {
+		this.sectorBackgroundImageOffset = sectorBackgroundImageOffset;
 	}
 	
 }

@@ -205,7 +205,7 @@ public class JUniverseMap extends JRenderPanel {
 	
 	public void drawGateConnections(Graphics2D g) {
 		while (updatingGateCalculations) {
-		} // wait until calculations are ready
+		} // wait until calculations are done
 		
 		// Connection which is not a Line parallel to X- or Y-Axe
 		g.setStroke(new BasicStroke(5, BasicStroke.CAP_ROUND, BasicStroke.JOIN_MITER));
@@ -227,7 +227,6 @@ public class JUniverseMap extends JRenderPanel {
 				Point pixelPos2 = calculatePixelPosOfLine(x2, y2, jSec2, gateCon.getGate2());
 				
 				g.drawLine(pixelPos1.x, pixelPos1.y, pixelPos2.x, pixelPos2.y);
-				// TODO: check if gate is north, south... to adjust the line points
 			}
 		}
 		
@@ -250,17 +249,29 @@ public class JUniverseMap extends JRenderPanel {
 		Sector sec = jSec.getSector();
 		if (sec.isWarpgate(WarpGateConstants.WARPGATE_NORTH, gateToCheck)) {
 			x += jSec.getWidth() / 2;
+			if (!jSec.isHighlighted()) {
+				y += jSec.getSectorBackgroundImageOffset().top;
+			}
 			
 		} else if (sec.isWarpgate(WarpGateConstants.WARPGATE_EAST, gateToCheck)) {
 			x += jSec.getWidth();
 			y += jSec.getHeight() / 2;
+			if (!jSec.isHighlighted()) {
+				x -= jSec.getSectorBackgroundImageOffset().right;
+			}
 			
 		} else if (sec.isWarpgate(WarpGateConstants.WARPGATE_SOUTH, gateToCheck)) {
 			x += jSec.getWidth() / 2;
 			y += jSec.getHeight();
+			if (!jSec.isHighlighted()) {
+				y -= jSec.getSectorBackgroundImageOffset().bottom;
+			}
 			
 		} else if (sec.isWarpgate(WarpGateConstants.WARPGATE_WEST, gateToCheck)) {
 			y += jSec.getHeight() / 2;
+			if (!jSec.isHighlighted()) {
+				x += jSec.getSectorBackgroundImageOffset().left;
+			}
 		}
 		
 		return new Point(x, y);
