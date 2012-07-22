@@ -52,4 +52,11 @@ public class Sector implements WarpGateConstants {
 		getWarpGates()[id] = warpGate;
 	}
 	
+	public boolean isWarpgate(byte id, WarpGate warpGate) {
+		if (warpGate == null) {
+			return false;
+		}
+		return warpGate.equals(getWarpGate(id));
+	}
+	
 }

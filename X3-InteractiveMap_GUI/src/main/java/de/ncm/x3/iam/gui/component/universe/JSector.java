@@ -70,8 +70,17 @@ public class JSector extends JRenderPanel implements WarpGateConstants {
 	
 	@Override
 	public void paintView(Graphics2D g) {
-		g.setColor(getParent().getBackground()); // have to fill the whole Panel due to bad-looking edges.
-		g.fillRect(0, 0, getWidth(), getHeight());
+		// g.setColor(getParent().getBackground()); // have to fill the whole Panel due to bad-looking edges.
+		// g.fillRect(0, 0, getWidth(), getHeight());
+		g.setColor(Color.white);
+		if (sectorBackgroundImage == null) {
+			int stringheight = 10;
+			for (int i = 0; i < (getHeight() / stringheight); i++) {
+				g.drawString("? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ", 0, i * stringheight);
+			}
+			return;
+		}
+		
 		if (isHighlighted()) {
 			g.drawImage(sectorHighlightImage, 0, 0, getWidth(), getHeight(), this);
 		}
