@@ -36,13 +36,18 @@ public abstract class MenuFactory {
 	
 	private static final Logger logger = Logger.getLogger(MenuFactory.class);
 	
+	/**
+	 * @wbp.factory
+	 */
 	public static JMenu createMenuData() {
-		
-		return ComponentFactory.get().createLocalisedComponent("mainframe.menu.data", JMenu.class);
+		JMenu menu = new JMenu();
+		ComponentFactory.get().createLocalisedComponent("mainframe.menu.data", menu);
+		return menu;
 	}
 	
 	public static JCheckBoxMenuItem createMenuItemParsing() {
-		final JCheckBoxMenuItem menuItem = ComponentFactory.get().createLocalisedComponent("mainframe.menu.data.parsing", JCheckBoxMenuItem.class);
+		final JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem();
+		ComponentFactory.get().createLocalisedComponent("mainframe.menu.data.parsing", menuItem);
 		
 		menuItem.addItemListener(new ItemListener() {
 			
@@ -76,7 +81,8 @@ public abstract class MenuFactory {
 	}
 	
 	public static JMenuItem createMenuItemClose() {
-		JMenuItem menuItem = ComponentFactory.get().createLocalisedComponent("mainframe.menu.data.close", JMenuItem.class);
+		JMenuItem menuItem = new JMenuItem();
+		ComponentFactory.get().createLocalisedComponent("mainframe.menu.data.close", menuItem);
 		menuItem.addActionListener(new ActionListener() {
 			
 			@Override
@@ -88,11 +94,14 @@ public abstract class MenuFactory {
 	}
 	
 	public static JMenu createMenuEdit() {
-		return ComponentFactory.get().createLocalisedComponent("mainframe.menu.edit", JMenu.class);
+		JMenu menu = new JMenu();
+		ComponentFactory.get().createLocalisedComponent("mainframe.menu.edit", menu);
+		return menu;
 	}
 	
 	public static JMenuItem createMenuItemChooseLogpath() {
-		final JMenuItem menuItem = ComponentFactory.get().createLocalisedComponent("mainframe.menu.edit.choose_logpath", JMenuItem.class);
+		final JMenuItem menuItem = new JMenuItem();
+		ComponentFactory.get().createLocalisedComponent("mainframe.menu.edit.choose_logpath", menuItem);
 		menuItem.addActionListener(new ActionListener() {
 			
 			@Override
@@ -126,7 +135,8 @@ public abstract class MenuFactory {
 	}
 	
 	public static JMenu createMenuColorPack() {
-		JMenu menu = ComponentFactory.get().createLocalisedComponent("mainframe.menu.edit.colorpack", JMenu.class);
+		JMenu menu = new JMenu();
+		ComponentFactory.get().createLocalisedComponent("mainframe.menu.edit.colorpack", menu);
 		fillMenuColorPack(menu);
 		return menu;
 	}
@@ -160,12 +170,14 @@ public abstract class MenuFactory {
 	}
 	
 	public static JMenu createMenuView() {
-		return ComponentFactory.get().createLocalisedComponent("mainframe.menu.view", JMenu.class);
+		JMenu menu = new JMenu();
+		ComponentFactory.get().createLocalisedComponent("mainframe.menu.view", menu);
+		return menu;
 	}
 	
 	public static JCheckBoxMenuItem createMenuItemCenterMapAutomaticOnActualSector() {
-		final JCheckBoxMenuItem menuItem = ComponentFactory.get().createLocalisedComponent("mainframe.menu.view.ceter_map_on_sector.automatic",
-				JCheckBoxMenuItem.class);
+		final JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem();
+		ComponentFactory.get().createLocalisedComponent("mainframe.menu.view.ceter_map_on_sector.automatic", menuItem);
 		
 		menuItem.setSelected(new Boolean(PropertyManager.get().getProperty("universemap.automaticcenter")));
 		menuItem.addActionListener(new ActionListener() {
@@ -179,7 +191,8 @@ public abstract class MenuFactory {
 	}
 	
 	public static JMenuItem createMenuItemCenterMapOnActualSector(final Mainframe mf) {
-		JMenuItem menuItem = ComponentFactory.get().createLocalisedComponent("mainframe.menu.view.ceter_map_on_sector", JMenuItem.class);
+		JMenuItem menuItem = new JMenuItem();
+		ComponentFactory.get().createLocalisedComponent("mainframe.menu.view.ceter_map_on_sector", menuItem);
 		menuItem.addActionListener(new ActionListener() {
 			
 			@Override
@@ -192,12 +205,14 @@ public abstract class MenuFactory {
 	}
 	
 	public static JMenu createMenuHelp() {
-		
-		return ComponentFactory.get().createLocalisedComponent("mainframe.menu.help", JMenu.class);
+		JMenu menu = new JMenu();
+		ComponentFactory.get().createLocalisedComponent("mainframe.menu.help", menu);
+		return menu;
 	}
 	
 	public static JMenu createMenuLanguage() {
-		JMenu menu = ComponentFactory.get().createLocalisedComponent("mainframe.menu.help.language", JMenu.class);
+		JMenu menu = new JMenu();
+		ComponentFactory.get().createLocalisedComponent("mainframe.menu.help.language", menu);
 		fillMenuLanguage(menu);
 		return menu;
 	}
@@ -241,7 +256,9 @@ public abstract class MenuFactory {
 	}
 	
 	public static JMenuItem createMenuItemInstallScripts() {
-		final JMenuItem menuItem = ComponentFactory.get().createLocalisedComponent("mainframe.menu.edit.installScripts", JMenuItem.class);
+		final JMenuItem menuItem = new JMenuItem();
+		
+		ComponentFactory.get().createLocalisedComponent("mainframe.menu.edit.installScripts", menuItem);
 		
 		menuItem.addActionListener(new ActionListener() {
 			

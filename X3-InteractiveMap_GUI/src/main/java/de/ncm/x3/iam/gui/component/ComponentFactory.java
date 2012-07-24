@@ -30,14 +30,40 @@ public class ComponentFactory {
 		putLocalisationTextMethod(JLabel.class, "setText");
 	}
 	
-	public <E extends Component> E createLocalisedComponent(String key, Class<E> componetClass) {
-		return createLocalisedComponent(key, componetClass, getClass());
+	// public <E extends Component> E createLocalisedComponent(String key, Class<E> componetClass) {
+	// return createLocalisedComponent(key, componetClass, getClass()); // null can also be a valid constructor argument
+	// }
+	//
+	// public <E extends Component> E createLocalisedComponent(String key, Class<E> componetClass, Object... args) {
+	// // TODO: Constructor arguments
+	// Method localTextMethod = getLocalTextSetMethod(componetClass);
+	// try {
+	// E comp = componetClass.newInstance();
+	// comp.addPropertyChangeListener("locale", new LocaleChangedListener(comp, localTextMethod, key));
+	// setLocalText(comp, localTextMethod, key, comp.getLocale()); // set the Text for the first time
+	// return comp;
+	// } catch (InstantiationException e) {
+	// e.printStackTrace();
+	// } catch (IllegalAccessException e) {
+	// e.printStackTrace();
+	// }
+	//
+	// return null;
+	// }
+	
+	public HashMap<Class<? extends Component>, String> getLocalisationTextMethods() {
+		return localisationTextMethods;
+	}
+	
+	public <E extends Component> E createLocalisedComponent(String key, E comp) {
+		Method localTextMethod = getLocalTextSetMethod(comp.getClass());
+		setLocalText(comp, localTextMethod, key, comp.getLocale());
+		comp.addPropertyChangeListener("locale", new LocaleChangedListener(comp, localTextMethod, key));
+		return comp;
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public <E extends Component> E createLocalisedComponent(String key, Class<E> componetClass, Object... args) {
-		// TODO: Constructor arguments
-		
+	private Method getLocalTextSetMethod(Class<? extends Component> componetClass) {
 		String methodString = localisationTextMethods.get(componetClass); // Component Class itself exists in 'Map localisationTextMethods'
 		if (methodString == null) { // if Component Class itself does not exist in 'Map localisationTextMethods'
 			for (Class clazz : localisationTextMethods.keySet()) { // Search for superclasses in 'Map localisationTextMethods'
@@ -51,32 +77,14 @@ public class ComponentFactory {
 			}
 		}
 		
-		Method localTextMethod = null;
 		for (Method m : componetClass.getMethods()) {
 			if (m.getName().equals(methodString)) { // search for the Method
-				localTextMethod = m;
+				return m;
 			}
 		}
-		if (localTextMethod == null) {
-			throw new IllegalStateException("The method '" + methodString + "' does not exist for " + componetClass);
-		}
 		
-		try {
-			E comp = componetClass.newInstance();
-			comp.addPropertyChangeListener("locale", new LocaleChangedListener(comp, localTextMethod, key));
-			setLocalText(comp, localTextMethod, key, comp.getLocale()); // set the Text for the first time
-			return comp;
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		}
+		throw new IllegalStateException("The method '" + methodString + "' does not exist for " + componetClass);
 		
-		return null;
-	}
-	
-	public HashMap<Class<? extends Component>, String> getLocalisationTextMethods() {
-		return localisationTextMethods;
 	}
 	
 	public void putLocalisationTextMethod(Class<? extends Component> clazz, String methodName) {
@@ -92,7 +100,7 @@ public class ComponentFactory {
 	
 	private void setLocalText(Component comp, Method method, String key, Locale locale) {
 		try {
-			method.invoke(comp, UIManager.get(key, locale).toString());
+			method.invoke(comp, (String) UIManager.get(key, locale));
 			
 		} catch (IllegalAccessException e) {
 			logger.fatal("Cannot change LocaleText due to ", e);

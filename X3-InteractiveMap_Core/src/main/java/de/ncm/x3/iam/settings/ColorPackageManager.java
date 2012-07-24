@@ -51,9 +51,12 @@ public class ColorPackageManager {
 	public String[] listColorPackages() {
 		String path = getPath();
 		ArrayList<String> packList = new ArrayList<String>();
-		for (File f : new File(path).listFiles()) {
-			if (f.isDirectory()) {
-				packList.add(f.getName());
+		File pathFile = new File(path);
+		if (pathFile.listFiles() != null) {
+			for (File f : pathFile.listFiles()) {
+				if (f.isDirectory()) {
+					packList.add(f.getName());
+				}
 			}
 		}
 		
