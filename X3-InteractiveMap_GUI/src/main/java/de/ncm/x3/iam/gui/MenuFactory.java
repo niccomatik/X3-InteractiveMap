@@ -2,53 +2,104 @@
 package de.ncm.x3.iam.gui;
 
 
-import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.io.File;
-import java.util.Locale;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
-import javax.swing.UIManager;
+import javax.swing.KeyStroke;
 
 import org.apache.log4j.Logger;
 
-import de.ncm.x3.iam.bundle.GuiBundleManager;
-import de.ncm.x3.iam.data.ScriptManager;
 import de.ncm.x3.iam.gui.component.ComponentFactory;
-import de.ncm.x3.iam.gui.util.ComponentUtils;
-import de.ncm.x3.iam.parser.ParserFactory;
+import de.ncm.x3.iam.gui.component.JMenuSeperator;
 import de.ncm.x3.iam.parser.ParserManager;
-import de.ncm.x3.iam.settings.ColorPackageManager;
 import de.ncm.x3.iam.settings.PropertyManager;
 
-public abstract class MenuFactory {
+public final class MenuFactory {
 	
 	private static final Logger logger = Logger.getLogger(MenuFactory.class);
 	
 	/**
 	 * @wbp.factory
+	 * @wbp.factory.parameter.source messageKey The KeyString mentioned in the language file
 	 */
-	public static JMenu createMenuData() {
-		JMenu menu = new JMenu();
-		ComponentFactory.get().createLocalisedComponent("mainframe.menu.data", menu);
+	public static JMenu createJMenu(String messageKey) {
+		JMenu menu = new JMenu(Messages.getString(messageKey));
+		ComponentFactory.localise(menu, messageKey);
 		return menu;
 	}
 	
-	public static JCheckBoxMenuItem createMenuItemParsing() {
-		final JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem();
-		ComponentFactory.get().createLocalisedComponent("mainframe.menu.data.parsing", menuItem);
+	/**
+	 * @wbp.factory
+	 * @wbp.factory.parameter.source messageKey The KeyString mentioned in the language file
+	 */
+	public static JMenuItem createJMenuItem(String messageKey) {
+		JMenuItem menuItem = new JMenuItem(Messages.getString(messageKey));
+		ComponentFactory.localise(menuItem, messageKey);
+		return menuItem;
+	}
+	
+	/**
+	 * @wbp.factory
+	 * @wbp.factory.parameter.source messageKey The KeyString mentioned in the language file
+	 */
+	public static JCheckBoxMenuItem createJCheckBoxMenuItem(String messageKey) {
+		JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem(Messages.getString(messageKey));
+		ComponentFactory.localise(menuItem, messageKey);
+		return menuItem;
+	}
+	
+	/**
+	 * @wbp.factory
+	 * @wbp.factory.parameter.source messageKey The KeyString mentioned in the language file
+	 */
+	public static JRadioButtonMenuItem createJRadioButtonMenuItem(String messageKey) {
+		JRadioButtonMenuItem menuItem = new JRadioButtonMenuItem(Messages.getString(messageKey));
+		ComponentFactory.localise(menuItem, messageKey);
+		return menuItem;
+	}
+	
+	/**
+	 * @wbp.factory
+	 * @wbp.factory.parameter.source messageKey The KeyString mentioned in the language file
+	 */
+	public static JPopupMenu createJPopupMenu(String messageKey) {
+		JPopupMenu menu = new JPopupMenu(Messages.getString(messageKey));
+		ComponentFactory.localise(menu, messageKey);
+		return menu;
+	}
+	
+	/**
+	 * @wbp.factory
+	 */
+	public static JMenuSeperator createJMenuSeperator() {
+		JMenuSeperator seperator = new JMenuSeperator();
+		return seperator;
+	}
+	
+	public static JMenuItem setupMenuItemExit(JMenuItem menuItem) {
+		// menuItem.setMnemonic(KeyEvent.VK_Q);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, ActionEvent.CTRL_MASK));
 		
+		menuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Mainframe.quit();
+			}
+		});
+		return menuItem;
+	}
+	
+	public static JCheckBoxMenuItem setupMenuItemParsingFiles(final JCheckBoxMenuItem menuItem) {
 		menuItem.addItemListener(new ItemListener() {
 			
 			@Override
@@ -78,211 +129,54 @@ public abstract class MenuFactory {
 			}
 		});
 		return menuItem;
+		
 	}
 	
-	public static JMenuItem createMenuItemClose() {
-		JMenuItem menuItem = new JMenuItem();
-		ComponentFactory.get().createLocalisedComponent("mainframe.menu.data.close", menuItem);
-		menuItem.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Mainframe.quit();
-			}
-		});
-		return menuItem;
-	}
-	
-	public static JMenu createMenuEdit() {
-		JMenu menu = new JMenu();
-		ComponentFactory.get().createLocalisedComponent("mainframe.menu.edit", menu);
+	public static JMenu setupMenuEdit(JMenu menu) {
+		// TODO Auto-generated method stub
 		return menu;
 	}
 	
-	public static JMenuItem createMenuItemChooseLogpath() {
-		final JMenuItem menuItem = new JMenuItem();
-		ComponentFactory.get().createLocalisedComponent("mainframe.menu.edit.choose_logpath", menuItem);
-		menuItem.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JFileChooser fc;
-				File propDefinedFile = new File(PropertyManager.get().getProperty("log.parser.xml.path"));
-				if (propDefinedFile.exists()) {
-					fc = new JFileChooser(propDefinedFile);
-				} else {
-					fc = new JFileChooser(System.getProperty("user.home"));
-				}
-				
-				fc.setLocale(menuItem.getLocale());
-				fc.setDialogTitle(UIManager.get("filechooser.logpath.title", fc.getLocale()).toString());
-				
-				fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-				int returnVal = fc.showOpenDialog(null);
-				File f;
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					f = fc.getSelectedFile();
-					f.mkdirs();
-					
-					PropertyManager.get().setProperty("log.parser.xml.path", f.getAbsolutePath());
-					ParserFactory.updateXMLParserPath();
-				}
-				
-			}
-		});
+	public static JMenuItem setupMenuItemInstallScripts(JMenuItem menuItem) {
+		// TODO Auto-generated method stub
 		
+		return menuItem;
+		
+	}
+	
+	public static JMenuItem setupMenuItemSettings(JMenuItem menuItem) {
+		// TODO Auto-generated method stub
 		return menuItem;
 	}
 	
-	public static JMenu createMenuColorPack() {
-		JMenu menu = new JMenu();
-		ComponentFactory.get().createLocalisedComponent("mainframe.menu.edit.colorpack", menu);
-		fillMenuColorPack(menu);
-		return menu;
-	}
-	
-	private static void fillMenuColorPack(final JMenu menu) {
-		
-		for (final String cp : ColorPackageManager.get().listColorPackages()) {
-			final JRadioButtonMenuItem item = new JRadioButtonMenuItem(cp);
-			if (cp.equalsIgnoreCase(PropertyManager.get().getProperty("colorpackage.actual"))) {
-				item.setSelected(true);
-			} else {
-				item.setSelected(false);
-			}
-			item.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					for (Component comp : menu.getMenuComponents()) {
-						if (comp instanceof JRadioButtonMenuItem) {
-							((JRadioButtonMenuItem) comp).setSelected(false);
-						}
-					}
-					item.setSelected(true);
-					ColorPackageManager.get().setActualColorPackage(cp);
-				}
-			});
-			
-			menu.add(item);
-		}
-		
-	}
-	
-	public static JMenu createMenuView() {
-		JMenu menu = new JMenu();
-		ComponentFactory.get().createLocalisedComponent("mainframe.menu.view", menu);
-		return menu;
-	}
-	
-	public static JCheckBoxMenuItem createMenuItemCenterMapAutomaticOnActualSector() {
-		final JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem();
-		ComponentFactory.get().createLocalisedComponent("mainframe.menu.view.ceter_map_on_sector.automatic", menuItem);
-		
-		menuItem.setSelected(new Boolean(PropertyManager.get().getProperty("universemap.automaticcenter")));
-		menuItem.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				PropertyManager.get().setProperty("universemap.automaticcenter", "" + menuItem.isSelected());
-			}
-		});
+	public static JMenu setupMenuView(JMenu menuItem) {
+		// TODO Auto-generated method stub
 		return menuItem;
 	}
 	
-	public static JMenuItem createMenuItemCenterMapOnActualSector(final Mainframe mf) {
-		JMenuItem menuItem = new JMenuItem();
-		ComponentFactory.get().createLocalisedComponent("mainframe.menu.view.ceter_map_on_sector", menuItem);
-		menuItem.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				mf.getJUniverseMapScrollContainer().centerViewOnSector(mf.getJUniverseMap().getActualPlayerInfo().getSectorPosition());
-				// sector
-			}
-		});
+	public static JCheckBoxMenuItem setupMenuItemCenterMapAutomatically(JCheckBoxMenuItem menuItem) {
+		// TODO Auto-generated method stub
 		return menuItem;
 	}
 	
-	public static JMenu createMenuHelp() {
-		JMenu menu = new JMenu();
-		ComponentFactory.get().createLocalisedComponent("mainframe.menu.help", menu);
-		return menu;
-	}
-	
-	public static JMenu createMenuLanguage() {
-		JMenu menu = new JMenu();
-		ComponentFactory.get().createLocalisedComponent("mainframe.menu.help.language", menu);
-		fillMenuLanguage(menu);
-		return menu;
-	}
-	
-	private static void fillMenuLanguage(final JMenu menu) {
-		
-		for (final Locale l : GuiBundleManager.get().getAvailableLocales()) {
-			
-			final JRadioButtonMenuItem menuItem = new JRadioButtonMenuItem(l.getDisplayLanguage(l));
-			
-			if (l.getDisplayLanguage(l).equalsIgnoreCase(menuItem.getLocale().getDisplayLanguage(l))) {
-				menuItem.setSelected(true);
-			} else {
-				menuItem.setSelected(false);
-			}
-			menuItem.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					ComponentUtils.setLocaleRecursively(Mainframe.get(), l);
-				}
-			});
-			
-			menuItem.addPropertyChangeListener("locale", new PropertyChangeListener() {
-				
-				@Override
-				public void propertyChange(PropertyChangeEvent evt) {
-					Locale newValue = (Locale) evt.getNewValue();
-					if (menuItem.getText().equalsIgnoreCase(newValue.getDisplayLanguage(l))) {
-						menuItem.setSelected(true);
-					} else {
-						menuItem.setSelected(false);
-					}
-					
-				}
-			});
-			
-			menu.add(menuItem);
-			
-		}
-	}
-	
-	public static JMenuItem createMenuItemInstallScripts() {
-		final JMenuItem menuItem = new JMenuItem();
-		
-		ComponentFactory.get().createLocalisedComponent("mainframe.menu.edit.installScripts", menuItem);
-		
-		menuItem.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				JFileChooser fc = new JFileChooser(PropertyManager.get().getProperty("game.scriptfolder"));
-				fc.setLocale(menuItem.getLocale());
-				fc.setDialogTitle(UIManager.get("filechooser.scriptpath.title", fc.getLocale()).toString());
-				
-				fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-				int returnVal = fc.showOpenDialog(null);
-				File f;
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					f = fc.getSelectedFile();
-					f.mkdirs();
-					ScriptManager.get().installScriptsTo(f);
-					JOptionPane.showMessageDialog(menuItem, UIManager.get("filechooser.scriptpath.success", fc.getLocale()).toString());
-					PropertyManager.get().setProperty("game.scriptfolder", f.getAbsolutePath());
-				}
-				
-			}
-		});
-		
+	public static JMenuItem setupMenuItemCenterMap(JMenuItem menuItem) {
+		// TODO Auto-generated method stub
 		return menuItem;
 	}
+	
+	public static JMenu setupMenuHelp(JMenu menu) {
+		// TODO Auto-generated method stub
+		return menu;
+	}
+	
+	public static JMenuItem setupMenuItemAbout(JMenuItem menuItem) {
+		// TODO Auto-generated method stub
+		return menuItem;
+	}
+	
+	public static JMenu setupMenuData(JMenu menu) {
+		// TODO Auto-generated method stub
+		return menu;
+	}
+	
 }

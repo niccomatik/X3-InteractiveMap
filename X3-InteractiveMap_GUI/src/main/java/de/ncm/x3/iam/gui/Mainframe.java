@@ -3,6 +3,7 @@ package de.ncm.x3.iam.gui;
 
 
 import java.awt.BorderLayout;
+import java.awt.EventQueue;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -12,16 +13,18 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.UIManager;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JTree;
 import javax.swing.WindowConstants;
 
 import org.apache.log4j.Logger;
 
-import de.ncm.x3.iam.bundle.GuiBundleManager;
 import de.ncm.x3.iam.gui.component.ComponentFactory;
+import de.ncm.x3.iam.gui.component.JMenuSeperator;
 import de.ncm.x3.iam.gui.component.universe.JUniverseMap;
 import de.ncm.x3.iam.gui.component.universe.JUniverseMapScrollContainer;
+import de.ncm.x3.iam.parser.ParserManager;
 import de.ncm.x3.iam.settings.PropertyManager;
 
 public class Mainframe extends JFrame {
@@ -29,23 +32,25 @@ public class Mainframe extends JFrame {
 	private static Mainframe instance;
 	private Logger logger = Logger.getLogger(Mainframe.class);
 	private JPanel contentPane;
-	private JRadioButtonMenuItem actualrdbtnmntmLanguage;
-	protected ComponentFactory componentFactory = ComponentFactory.get();
 	private JUniverseMapScrollContainer jUniverseMapScrollContainer;
-	private JMenu menuData;
-	private JCheckBoxMenuItem menuItemParsing;
+	
 	private JMenuBar menuBar;
-	private JMenuItem menuItemClose;
-	private JMenu menuEdit;
-	private JMenuItem menuItemChooseLogpath;
-	private JMenu menuColorPack;
-	private JMenu menuView;
-	private JCheckBoxMenuItem menuItemCenterMapAutomaticOnActualSector;
-	private JMenuItem menuItemCenterMapOnActualSector;
-	private JMenu menuHelp;
-	private JMenu menuLanguage;
-	private JMenuItem menuItemInstallScripts;
 	private JUniverseMap jUniverseMap;
+	private JMenu mnData;
+	private JMenu mnEdit;
+	private JMenu mnView;
+	private JMenu mnHelp;
+	private JCheckBoxMenuItem chckbxmntmParsingFiles;
+	private JMenuItem mntmQuit;
+	private JMenuSeperator menuSeperator;
+	private JMenuItem mntmInstallScripts;
+	private JMenuItem mntmSettings;
+	private JCheckBoxMenuItem mntmCenterMapAutomatically;
+	private JMenuItem mntmCenterMapOn;
+	private JMenuItem mntmAbout;
+	private JScrollPane scrollPane;
+	private JTree tree;
+	private JSplitPane splitPane;
 	
 	/**
 	 * Create the frame
@@ -55,7 +60,6 @@ public class Mainframe extends JFrame {
 		super();
 		instance = this;
 		logger.info("Creating the GUI");
-		UIManager.getDefaults().addResourceBundle(GuiBundleManager.get().getBundle());
 		
 		setLocationByPlatform(true);
 		setTitle("X - InteractiveMap");
@@ -70,46 +74,76 @@ public class Mainframe extends JFrame {
 		
 		jUniverseMap = new JUniverseMap();
 		jUniverseMapScrollContainer = new JUniverseMapScrollContainer(jUniverseMap);
-		contentPane.add(jUniverseMapScrollContainer, BorderLayout.CENTER);
+		
+		tree = new JTree();
+		// tree.setModel(new DefaultTreeModel(root))
+		scrollPane = new JScrollPane(tree);
+		
+		splitPane = ComponentFactory.createHorizontalJSplitPane(scrollPane, jUniverseMapScrollContainer, (int) (getWidth() * 0.2));
+		contentPane.add(splitPane, BorderLayout.CENTER);
 		
 		logger.info("GUI created");
+		// TODO: remove automatic start of parsing without using properties after menu is build
+		EventQueue.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				ParserManager.get().startParsing();
+			}
+			
+		});
 		
 	}
 	
 	private void setupMenu() {
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
+		mnData = MenuFactory.createJMenu("Mainframe.mnData.text"); //$NON-NLS-1$
+		MenuFactory.setupMenuData(mnData);
+		menuBar.add(mnData);
 		
-		menuData = MenuFactory.createMenuData();
-		menuItemParsing = MenuFactory.createMenuItemParsing();
-		menuData.add(menuItemParsing);
-		menuItemClose = MenuFactory.createMenuItemClose();
-		menuEdit = MenuFactory.createMenuEdit();
-		menuItemChooseLogpath = MenuFactory.createMenuItemChooseLogpath();
-		menuColorPack = MenuFactory.createMenuColorPack();
-		menuView = MenuFactory.createMenuView();
-		menuItemCenterMapAutomaticOnActualSector = MenuFactory.createMenuItemCenterMapAutomaticOnActualSector();
-		menuItemCenterMapOnActualSector = MenuFactory.createMenuItemCenterMapOnActualSector(this);
-		menuHelp = MenuFactory.createMenuHelp();
-		menuLanguage = MenuFactory.createMenuLanguage();
-		menuItemInstallScripts = MenuFactory.createMenuItemInstallScripts();
+		chckbxmntmParsingFiles = MenuFactory.createJCheckBoxMenuItem("Mainframe.chckbxmntmParsingFiles.text"); //$NON-NLS-1$
+		MenuFactory.setupMenuItemParsingFiles(chckbxmntmParsingFiles);
+		mnData.add(chckbxmntmParsingFiles);
 		
-		menuBar.add(menuData);
-		menuData.addSeparator();
-		menuData.add(menuItemClose);
+		menuSeperator = MenuFactory.createJMenuSeperator();
+		mnData.add(menuSeperator);
 		
-		menuBar.add(menuEdit);
-		menuEdit.add(menuItemChooseLogpath);
-		menuEdit.add(menuItemInstallScripts);
+		mntmQuit = MenuFactory.createJMenuItem("Mainframe.mntmQuit.text");
+		MenuFactory.setupMenuItemExit(mntmQuit);
+		mnData.add(mntmQuit);
 		
-		menuBar.add(menuView);
-		menuView.add(menuItemCenterMapAutomaticOnActualSector);
-		menuView.add(menuItemCenterMapOnActualSector);
-		menuView.addSeparator();
-		menuView.add(menuColorPack);
+		mnEdit = MenuFactory.createJMenu("Mainframe.mnEdit.text"); //$NON-NLS-1$
+		MenuFactory.setupMenuEdit(mnEdit);
+		menuBar.add(mnEdit);
 		
-		menuBar.add(menuHelp);
-		menuHelp.add(menuLanguage);
+		mntmInstallScripts = MenuFactory.createJMenuItem("Mainframe.mntmInstallScripts.text"); //$NON-NLS-1$
+		MenuFactory.setupMenuItemInstallScripts(mntmInstallScripts);
+		mnEdit.add(mntmInstallScripts);
+		
+		mntmSettings = MenuFactory.createJMenuItem("Mainframe.mntmSettings.text"); //$NON-NLS-1$
+		MenuFactory.setupMenuItemSettings(mntmSettings);
+		mnEdit.add(mntmSettings);
+		
+		mnView = MenuFactory.createJMenu("Mainframe.mnView.text"); //$NON-NLS-1$
+		MenuFactory.setupMenuView(mnView);
+		menuBar.add(mnView);
+		
+		mntmCenterMapAutomatically = MenuFactory.createJCheckBoxMenuItem("Mainframe.mntmCenterMapAutomatically.text"); //$NON-NLS-1$
+		MenuFactory.setupMenuItemCenterMapAutomatically(mntmCenterMapAutomatically);
+		mnView.add(mntmCenterMapAutomatically);
+		
+		mntmCenterMapOn = MenuFactory.createJMenuItem("Mainframe.mntmCenterMapOn.text"); //$NON-NLS-1$
+		MenuFactory.setupMenuItemCenterMap(mntmCenterMapOn);
+		mnView.add(mntmCenterMapOn);
+		
+		mnHelp = MenuFactory.createJMenu("Mainframe.mnHelp.text"); //$NON-NLS-1
+		MenuFactory.setupMenuHelp(mnHelp);
+		menuBar.add(mnHelp);
+		
+		mntmAbout = MenuFactory.createJMenuItem("Mainframe.mntmAbout.text"); //$NON-NLS-1$
+		MenuFactory.setupMenuItemAbout(mntmAbout);
+		mnHelp.add(mntmAbout);
 		
 	}
 	
