@@ -1,10 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>X3-InteractiveMap_GUI</artifactId>
 	<name>X3-InteractiveMap_GUI</name>
 	<build>
-		<!-- <directory>${basedir}/target/program</directory> -->
 		
 		<plugins>
 		
@@ -60,6 +60,7 @@
                   </manifestEntries>
                 </transformer>
               </transformers>
+
             </configuration>
           </execution>
         </executions>
@@ -118,6 +119,11 @@
 			<groupId>de.ncm.x3.iam</groupId>
 			<artifactId>X3-InteractiveMap_Core</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jgoodies</groupId>
+			<artifactId>forms</artifactId>
+			<version>1.2.1</version>
 		</dependency>
 	</dependencies>
 	<parent>

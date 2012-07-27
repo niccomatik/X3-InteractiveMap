@@ -48,4 +48,8 @@ public class Messages {
 		RESOURCE_BUNDLE = loadBundle(newLocale);
 		return RESOURCE_BUNDLE;
 	}
+	
+	public static Locale getActualLocale() {
+		return RESOURCE_BUNDLE.getLocale();
+	}
 }

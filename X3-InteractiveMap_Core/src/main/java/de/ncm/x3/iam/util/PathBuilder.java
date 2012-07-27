@@ -2,13 +2,15 @@
 package de.ncm.x3.iam.util;
 
 
-public class FilePath {
+import java.io.File;
+
+public class PathBuilder {
 	
 	private String path = "";
 	
-	public FilePath() {}
+	public PathBuilder() {}
 	
-	public FilePath append(String s) {
+	public PathBuilder append(String s) {
 		s = s.trim();
 		s = StringUtil.removeLastCharacter(s, '/');
 		s = StringUtil.removeLastCharacter(s, '\\');
@@ -16,7 +18,7 @@ public class FilePath {
 		if (path.trim().length() > 0) {
 			s = StringUtil.removeFirstCharacter(s, '/');
 			s = StringUtil.removeFirstCharacter(s, '\\');
-			this.path += "/" + s;
+			this.path += File.separator + s;
 		} else {
 			this.path += s;
 		}
@@ -29,7 +31,7 @@ public class FilePath {
 	}
 	
 	public static String createPath(String... strings) {
-		FilePath path = new FilePath();
+		PathBuilder path = new PathBuilder();
 		
 		for (String s : strings) {
 			path.append(s);
@@ -57,7 +59,7 @@ public class FilePath {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		FilePath other = (FilePath) obj;
+		PathBuilder other = (PathBuilder) obj;
 		if (path == null) {
 			if (other.path != null) {
 				return false;

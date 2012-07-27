@@ -15,7 +15,7 @@ public abstract class ParserFactory {
 	
 	public static Parser getUniverseMapParser() {
 		if (universeMapParser == null) {
-			File file = new File(PropertyManager.get().getProperty("log.parser.xml.path"), PropertyManager.get().getProperty("log.parser.xml.universemap.file"));
+			File file = new File(PropertyManager.get().getLogpath(), PropertyManager.get().getUniverseMapLogFile());
 			universeMapParser = new UniverseMapParser(file);
 		}
 		return universeMapParser;
@@ -24,18 +24,17 @@ public abstract class ParserFactory {
 	
 	public static Parser getActualPlayerPositionParser() {
 		if (actualPlayerPositionParser == null) {
-			File file = new File(PropertyManager.get().getProperty("log.parser.xml.path"), PropertyManager.get().getProperty(
-					"log.parser.xml.actualplayerposition.file"));
+			File file = new File(PropertyManager.get().getLogpath(), PropertyManager.get().getUniverseMapPlayerPositionFile());
 			actualPlayerPositionParser = new ActualPlayerPositionParser(file);
 		}
 		return actualPlayerPositionParser;
 	}
 	
 	public static void updateXMLParserPath() {
-		File file = new File(PropertyManager.get().getProperty("log.parser.xml.path"), PropertyManager.get().getProperty("log.parser.xml.universemap.file"));
+		File file = new File(PropertyManager.get().getLogpath(), PropertyManager.get().getUniverseMapLogFile());
 		universeMapParser.setFile(file);
 		
-		file = new File(PropertyManager.get().getProperty("log.parser.xml.path"), PropertyManager.get().getProperty("log.parser.xml.actualplayerposition.file"));
+		file = new File(PropertyManager.get().getLogpath(), PropertyManager.get().getUniverseMapPlayerPositionFile());
 		actualPlayerPositionParser.setFile(file);
 	}
 }

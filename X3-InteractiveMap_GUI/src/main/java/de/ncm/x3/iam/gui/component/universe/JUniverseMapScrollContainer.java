@@ -75,7 +75,7 @@ public class JUniverseMapScrollContainer extends JScrollPane {
 		
 		@Override
 		public void onParseEnd(ParseEvent e) {
-			if (new Boolean(PropertyManager.get().getProperty("universemap.automaticcenter"))) {
+			if (new Boolean(PropertyManager.get().getAutomaticCenterEnabled())) {
 				
 				if (e.getParsedValue() instanceof ActualPlayerInfo) {
 					final ActualPlayerInfo playerInfo = (ActualPlayerInfo) e.getParsedValue();

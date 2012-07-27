@@ -20,6 +20,14 @@ public class PropertyManager {
 	private static final String defaultProbFile = "default.properties"; // In jar file
 	private static final String userProbFile = "user.properties"; // At program directory
 	
+	public static final String KEY_GAMEFOLDER = "game.folder";
+	public static final String KEY_UNIVERSEMAP_LOGFILENAME = "log.parser.xml.universemap.file";
+	public static final String KEY_UNIVERSEMAP_PLAYERPOSITION_LOGFILENAME = "log.parser.xml.actualplayerposition.file";
+	public static final String KEY_LOGPATH = "log.parser.xml.path";
+	public static final String KEY_PARSER_CONTINOUSPARSING_ENABLED = "parser.continuousparsing.enabled";
+	public static final String KEY_ACTUAL_COLORPACK = "colorpackage.actual";
+	public static final String KEY_UNIVERSEMAP_AUTOMATICCENTER = "universemap.automaticcenter";
+	
 	private PropertyManager() {
 		logger.info("Loading Properties");
 		
@@ -94,6 +102,64 @@ public class PropertyManager {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+	}
+	
+	public String getGameFolder() {
+		return getProperty(KEY_GAMEFOLDER);
+	}
+	
+	public String getLogpath() {
+		return getProperty(KEY_LOGPATH);
+	}
+	
+	public String getUniverseMapLogFile() {
+		return getProperty(KEY_UNIVERSEMAP_LOGFILENAME);
+	}
+	
+	public String getUniverseMapPlayerPositionFile() {
+		return getProperty(KEY_UNIVERSEMAP_PLAYERPOSITION_LOGFILENAME);
+	}
+	
+	public boolean getAutomaticCenterEnabled() {
+		return new Boolean(getProperty(KEY_UNIVERSEMAP_AUTOMATICCENTER));
+	}
+	
+	public boolean getContinousParsingEnabled() {
+		return new Boolean(getProperty(KEY_PARSER_CONTINOUSPARSING_ENABLED));
+	}
+	
+	public String getActualColorPackage() {
+		return getProperty(KEY_ACTUAL_COLORPACK);
+	}
+	
+	public void setUniverseMapLogFile(String value) {
+		setProperty(KEY_UNIVERSEMAP_LOGFILENAME, value);
+	}
+	
+	public void setUniverseMapPlayerPositionFile(String value) {
+		setProperty(KEY_UNIVERSEMAP_PLAYERPOSITION_LOGFILENAME, value);
+	}
+	
+	public void setAutomaticCenterEnabled(boolean value) {
+		setProperty(KEY_UNIVERSEMAP_AUTOMATICCENTER, value);
+	}
+	
+	public void setContinousParsingEnabled(boolean value) {
+		setProperty(KEY_PARSER_CONTINOUSPARSING_ENABLED, value);
+	}
+	
+	public void setActualColorPackage(String value) {
+		setProperty(KEY_ACTUAL_COLORPACK, value);
+	}
+	
+	public void setGameFolder(String value) {
+		setProperty(KEY_GAMEFOLDER, value);
+		
+	}
+	
+	public void setLogPath(String value) {
+		setProperty(KEY_LOGPATH, value);
 		
 	}
 	

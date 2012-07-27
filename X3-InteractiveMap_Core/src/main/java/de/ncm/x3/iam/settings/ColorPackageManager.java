@@ -18,7 +18,7 @@ import javax.imageio.ImageIO;
 
 import org.apache.log4j.Logger;
 
-import de.ncm.x3.iam.util.FilePath;
+import de.ncm.x3.iam.util.PathBuilder;
 
 public class ColorPackageManager {
 	
@@ -45,7 +45,7 @@ public class ColorPackageManager {
 	}
 	
 	private ColorPackageManager() {
-		setActualColorPackage(PropertyManager.get().getProperty("colorpackage.actual"));
+		setActualColorPackage(PropertyManager.get().getActualColorPackage());
 	}
 	
 	public String[] listColorPackages() {
@@ -67,14 +67,14 @@ public class ColorPackageManager {
 		actualProperties.clear();
 		clearImageBuffer();
 		
-		String propPath = FilePath.createPath(getPath(), colorPackage);
+		String propPath = PathBuilder.createPath(getPath(), colorPackage);
 		try {
-			actualProperties.load(new FileInputStream(FilePath.createPath(propPath, propertiesFileName)));
+			actualProperties.load(new FileInputStream(PathBuilder.createPath(propPath, propertiesFileName)));
 			if (colorPackackageChangedListener != null) {
 				colorPackackageChangedListener.colorPackageChanged(new ColorPackageChangedEvent(actualColorPackage, colorPackage, actualProperties));
 			}
 			actualColorPackage = colorPackage;
-			PropertyManager.get().setProperty("colorpackage.actual", colorPackage);
+			PropertyManager.get().setActualColorPackage(colorPackage);
 		} catch (FileNotFoundException e) {
 			logger.error("ColorPackage '" + colorPackage + "' does not exist", e);
 			
@@ -111,7 +111,7 @@ public class ColorPackageManager {
 		BufferedImage image = raceSectorImages.get(id); // Buffering Images
 		
 		if (image == null) {
-			File imageFile = new File(FilePath.createPath(getActualImageFolderForRace(id), "Sector.png"));
+			File imageFile = new File(PathBuilder.createPath(getActualImageFolderForRace(id), "Sector.png"));
 			try {
 				image = ImageIO.read(imageFile);
 				raceSectorImages.put(id, image);
@@ -128,7 +128,7 @@ public class ColorPackageManager {
 	
 	public Image getSectorHighlightImage() {
 		if (sectorHighlightImage == null) {
-			File imageFile = new File(FilePath.createPath(getActualColorPackagePath(), "images", "Highlight.png"));
+			File imageFile = new File(PathBuilder.createPath(getActualColorPackagePath(), "images", "Highlight.png"));
 			try {
 				sectorHighlightImage = ImageIO.read(imageFile);
 			} catch (IOException e) {
@@ -149,20 +149,20 @@ public class ColorPackageManager {
 	private String getPath() {
 		String path = folder;
 		if (new Boolean(System.getProperty("isDevRunMode"))) {
-			path = FilePath.createPath(developmentPath, path);
+			path = PathBuilder.createPath(developmentPath, path);
 		}
 		return path;
 	}
 	
 	public String getActualColorPackagePath() {
 		
-		return FilePath.createPath(getPath(), getActualColorPackage());
+		return PathBuilder.createPath(getPath(), getActualColorPackage());
 	}
 	
 	public String getActualImageFolderForRace(Integer id) {
 		String path = getActualColorPackagePath();
 		String raceFolder = "race" + raceIdFormatter.format(id);
-		path = FilePath.createPath(path, "images", raceFolder);
+		path = PathBuilder.createPath(path, "images", raceFolder);
 		
 		return path;
 	}
@@ -172,7 +172,7 @@ public class ColorPackageManager {
 		BufferedImage image = gateImages.get(id); // Buffering Images
 		
 		if (image == null) {
-			File imageFile = new File(FilePath.createPath(getActualColorPackagePath(), "images", "gates", raceIdFormatter.format(id) + ".png"));
+			File imageFile = new File(PathBuilder.createPath(getActualColorPackagePath(), "images", "gates", raceIdFormatter.format(id) + ".png"));
 			try {
 				image = ImageIO.read(imageFile);
 				gateImages.put(id, image);

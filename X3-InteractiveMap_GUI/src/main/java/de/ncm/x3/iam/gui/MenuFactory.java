@@ -3,6 +3,7 @@ package de.ncm.x3.iam.gui;
 
 
 import java.awt.EventQueue;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -33,6 +34,7 @@ public final class MenuFactory {
 	 */
 	public static JMenu createJMenu(String messageKey) {
 		JMenu menu = new JMenu(Messages.getString(messageKey));
+		menu.setLocale(Messages.getActualLocale());
 		ComponentFactory.localise(menu, messageKey);
 		return menu;
 	}
@@ -43,6 +45,7 @@ public final class MenuFactory {
 	 */
 	public static JMenuItem createJMenuItem(String messageKey) {
 		JMenuItem menuItem = new JMenuItem(Messages.getString(messageKey));
+		menuItem.setLocale(Messages.getActualLocale());
 		ComponentFactory.localise(menuItem, messageKey);
 		return menuItem;
 	}
@@ -53,6 +56,7 @@ public final class MenuFactory {
 	 */
 	public static JCheckBoxMenuItem createJCheckBoxMenuItem(String messageKey) {
 		JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem(Messages.getString(messageKey));
+		menuItem.setLocale(Messages.getActualLocale());
 		ComponentFactory.localise(menuItem, messageKey);
 		return menuItem;
 	}
@@ -63,6 +67,7 @@ public final class MenuFactory {
 	 */
 	public static JRadioButtonMenuItem createJRadioButtonMenuItem(String messageKey) {
 		JRadioButtonMenuItem menuItem = new JRadioButtonMenuItem(Messages.getString(messageKey));
+		menuItem.setLocale(Messages.getActualLocale());
 		ComponentFactory.localise(menuItem, messageKey);
 		return menuItem;
 	}
@@ -73,6 +78,7 @@ public final class MenuFactory {
 	 */
 	public static JPopupMenu createJPopupMenu(String messageKey) {
 		JPopupMenu menu = new JPopupMenu(Messages.getString(messageKey));
+		menu.setLocale(Messages.getActualLocale());
 		ComponentFactory.localise(menu, messageKey);
 		return menu;
 	}
@@ -109,7 +115,7 @@ public final class MenuFactory {
 				} else {
 					ParserManager.get().stopParsing();
 				}
-				PropertyManager.get().setProperty("parser.continuousparsing.enabled", menuItem.isSelected());
+				PropertyManager.get().setContinousParsingEnabled(menuItem.isSelected());
 			}
 		});
 		
@@ -118,14 +124,8 @@ public final class MenuFactory {
 			@Override
 			public void run() {
 				logger.info("JCheckBoxMenuItemParsing: Set Value from properties");
-				boolean enabled = false;
-				String prop = PropertyManager.get().getProperty("parser.continuousparsing.enabled");
-				if (prop != null) {
-					if (prop.trim().equals("true") || prop.trim().equals("1")) {
-						enabled = true;
-					}
-				}
-				menuItem.setSelected(enabled);
+				
+				menuItem.setSelected(PropertyManager.get().getContinousParsingEnabled());
 			}
 		});
 		return menuItem;
@@ -144,8 +144,15 @@ public final class MenuFactory {
 		
 	}
 	
-	public static JMenuItem setupMenuItemSettings(JMenuItem menuItem) {
-		// TODO Auto-generated method stub
+	public static JMenuItem setupMenuItemSettings(JMenuItem menuItem, final Frame comp) {
+		menuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JSettingsDialog dialog = new JSettingsDialog(comp);
+				dialog.setVisible(true);
+			}
+		});
 		return menuItem;
 	}
 	
@@ -154,13 +161,27 @@ public final class MenuFactory {
 		return menuItem;
 	}
 	
-	public static JCheckBoxMenuItem setupMenuItemCenterMapAutomatically(JCheckBoxMenuItem menuItem) {
-		// TODO Auto-generated method stub
+	public static JCheckBoxMenuItem setupMenuItemCenterMapAutomatically(final JCheckBoxMenuItem menuItem) {
+		menuItem.setSelected(new Boolean(PropertyManager.get().getAutomaticCenterEnabled()));
+		menuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				PropertyManager.get().setAutomaticCenterEnabled(menuItem.isSelected());
+			}
+		});
+		
 		return menuItem;
 	}
 	
-	public static JMenuItem setupMenuItemCenterMap(JMenuItem menuItem) {
-		// TODO Auto-generated method stub
+	public static JMenuItem setupMenuItemCenterMap(JMenuItem menuItem, final Mainframe mf) {
+		menuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mf.getJUniverseMapScrollContainer().centerViewOnSector(mf.getJUniverseMap().getActualPlayerInfo().getSectorPosition());
+			}
+		});
 		return menuItem;
 	}
 	

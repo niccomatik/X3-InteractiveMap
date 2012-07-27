@@ -3,7 +3,6 @@ package de.ncm.x3.iam.gui;
 
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -24,7 +23,6 @@ import de.ncm.x3.iam.gui.component.ComponentFactory;
 import de.ncm.x3.iam.gui.component.JMenuSeperator;
 import de.ncm.x3.iam.gui.component.universe.JUniverseMap;
 import de.ncm.x3.iam.gui.component.universe.JUniverseMapScrollContainer;
-import de.ncm.x3.iam.parser.ParserManager;
 import de.ncm.x3.iam.settings.PropertyManager;
 
 public class Mainframe extends JFrame {
@@ -76,23 +74,13 @@ public class Mainframe extends JFrame {
 		jUniverseMapScrollContainer = new JUniverseMapScrollContainer(jUniverseMap);
 		
 		tree = new JTree();
-		// tree.setModel(new DefaultTreeModel(root))
+		tree.setModel(ComponentFactory.createDummyTree());
 		scrollPane = new JScrollPane(tree);
 		
 		splitPane = ComponentFactory.createHorizontalJSplitPane(scrollPane, jUniverseMapScrollContainer, (int) (getWidth() * 0.2));
 		contentPane.add(splitPane, BorderLayout.CENTER);
 		
 		logger.info("GUI created");
-		// TODO: remove automatic start of parsing without using properties after menu is build
-		EventQueue.invokeLater(new Runnable() {
-			
-			@Override
-			public void run() {
-				ParserManager.get().startParsing();
-			}
-			
-		});
-		
 	}
 	
 	private void setupMenu() {
@@ -122,7 +110,7 @@ public class Mainframe extends JFrame {
 		mnEdit.add(mntmInstallScripts);
 		
 		mntmSettings = MenuFactory.createJMenuItem("Mainframe.mntmSettings.text"); //$NON-NLS-1$
-		MenuFactory.setupMenuItemSettings(mntmSettings);
+		MenuFactory.setupMenuItemSettings(mntmSettings, this);
 		mnEdit.add(mntmSettings);
 		
 		mnView = MenuFactory.createJMenu("Mainframe.mnView.text"); //$NON-NLS-1$
@@ -134,7 +122,7 @@ public class Mainframe extends JFrame {
 		mnView.add(mntmCenterMapAutomatically);
 		
 		mntmCenterMapOn = MenuFactory.createJMenuItem("Mainframe.mntmCenterMapOn.text"); //$NON-NLS-1$
-		MenuFactory.setupMenuItemCenterMap(mntmCenterMapOn);
+		MenuFactory.setupMenuItemCenterMap(mntmCenterMapOn, this);
 		mnView.add(mntmCenterMapOn);
 		
 		mnHelp = MenuFactory.createJMenu("Mainframe.mnHelp.text"); //$NON-NLS-1
@@ -164,7 +152,6 @@ public class Mainframe extends JFrame {
 		@Override
 		public void windowClosing(WindowEvent e) {
 			quit();
-			
 		}
 		
 		@Override
