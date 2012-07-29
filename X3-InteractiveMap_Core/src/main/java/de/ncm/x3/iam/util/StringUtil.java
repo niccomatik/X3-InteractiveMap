@@ -2,7 +2,7 @@
 package de.ncm.x3.iam.util;
 
 
-public abstract class StringUtil {
+public final class StringUtil {
 	
 	public static String removeFirstCharacter(String s, char c) {
 		StringBuffer buff = new StringBuffer(s);

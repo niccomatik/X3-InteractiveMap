@@ -69,4 +69,9 @@ public class PathBuilder {
 		}
 		return true;
 	}
+	
+	public static String getFileNameOfPath(String pathWithFile) {
+		String[] split = pathWithFile.replaceAll("\\\\", "/").split("/");
+		return split[split.length - 1];
+	}
 }

@@ -3,14 +3,12 @@ package de.ncm.x3.iam.data;
 
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Enumeration;
-import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 import org.apache.log4j.Logger;
+
+import de.ncm.x3.iam.util.ZipUtil;
 
 public class ScriptManager {
 	
@@ -20,33 +18,13 @@ public class ScriptManager {
 	
 	private ScriptManager() {}
 	
-	public void installScriptsTo(File folder) {
-		if (!folder.isDirectory()) {
+	public void installScriptsTo(File gameFolder) {
+		if (!gameFolder.isDirectory()) {
 			throw new IllegalArgumentException("The argument has to be a Folder");
 		}
 		try {
-			System.out.println(getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
 			JarFile jar = new JarFile(getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
-			
-			Enumeration<JarEntry> jarRootContent = jar.entries();
-			while (jarRootContent.hasMoreElements()) {
-				
-				JarEntry entry = jarRootContent.nextElement();
-				String[] fileEntry = entry.getName().split("/");
-				
-				if (!entry.isDirectory() && fileEntry.length == 2 && fileEntry[0].equals("xscripts")) {
-					logger.debug("Scripts found: " + fileEntry[1]);
-					File outputFile = new File(folder, fileEntry[1]);
-					// outputFile.mkdirs();
-					InputStream is = jar.getInputStream(entry);
-					FileOutputStream fos = new FileOutputStream(outputFile);
-					while (is.available() > 0) {
-						fos.write(is.read());
-					}
-					fos.close();
-					is.close();
-				}
-			}
+			ZipUtil.coppyRecursiveFromJarFile(jar, "/xscripts", gameFolder);
 			
 		} catch (IOException e) {
 			logger.error("Error while opening JarFile (maybe you run the Application in development mode): ", e);

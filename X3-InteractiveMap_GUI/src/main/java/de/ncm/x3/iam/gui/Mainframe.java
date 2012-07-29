@@ -81,6 +81,8 @@ public class Mainframe extends JFrame {
 		contentPane.add(splitPane, BorderLayout.CENTER);
 		
 		logger.info("GUI created");
+		
+		Messages.listBundle();
 	}
 	
 	private void setupMenu() {
@@ -106,7 +108,7 @@ public class Mainframe extends JFrame {
 		menuBar.add(mnEdit);
 		
 		mntmInstallScripts = MenuFactory.createJMenuItem("Mainframe.mntmInstallScripts.text"); //$NON-NLS-1$
-		MenuFactory.setupMenuItemInstallScripts(mntmInstallScripts);
+		MenuFactory.setupMenuItemInstallScripts(mntmInstallScripts, this);
 		mnEdit.add(mntmInstallScripts);
 		
 		mntmSettings = MenuFactory.createJMenuItem("Mainframe.mntmSettings.text"); //$NON-NLS-1$

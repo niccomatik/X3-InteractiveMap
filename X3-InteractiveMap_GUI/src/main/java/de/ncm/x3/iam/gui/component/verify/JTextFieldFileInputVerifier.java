@@ -10,6 +10,7 @@ import javax.swing.JComponent;
 import javax.swing.JTextField;
 import javax.swing.Popup;
 
+import de.ncm.x3.iam.gui.Messages;
 import de.ncm.x3.iam.gui.component.ComponentFactory;
 
 public class JTextFieldFileInputVerifier extends InputVerifier {
@@ -28,11 +29,15 @@ public class JTextFieldFileInputVerifier extends InputVerifier {
 		try {
 			f.getCanonicalPath();
 		} catch (IOException e) {
-			printError(fileTextField, "No valid Path: \"" + fileTextField.getText() + "\"");
+			printError(fileTextField, Messages.getString("Error.path.notValid"));
+			return false;
+		}
+		if (!f.exists()) {
+			printError(fileTextField, Messages.getString("Error.path.notExisting"));
 			return false;
 		}
 		if (!f.canRead()) {
-			printError(fileTextField, "Cannot read Path: \"" + fileTextField.getText() + "\"");
+			printError(fileTextField, Messages.getString("Error.path.notReadable"));
 			return false;
 		}
 		removeError();

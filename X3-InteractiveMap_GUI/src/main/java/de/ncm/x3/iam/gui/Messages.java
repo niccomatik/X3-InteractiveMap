@@ -3,6 +3,7 @@ package de.ncm.x3.iam.gui;
 
 
 import java.beans.Beans;
+import java.util.Enumeration;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -51,5 +52,13 @@ public class Messages {
 	
 	public static Locale getActualLocale() {
 		return RESOURCE_BUNDLE.getLocale();
+	}
+	
+	public static void listBundle() {
+		Enumeration<String> keys = RESOURCE_BUNDLE.getKeys();
+		while (keys.hasMoreElements()) {
+			String key = keys.nextElement();
+			System.out.println("Key: " + key + "\t\t\t\tValue: " + RESOURCE_BUNDLE.getString(key));
+		}
 	}
 }

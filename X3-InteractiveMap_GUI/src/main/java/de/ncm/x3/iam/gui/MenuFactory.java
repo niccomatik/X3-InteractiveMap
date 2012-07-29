@@ -9,16 +9,19 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.KeyStroke;
 
 import org.apache.log4j.Logger;
 
+import de.ncm.x3.iam.data.ScriptManager;
 import de.ncm.x3.iam.gui.component.ComponentFactory;
 import de.ncm.x3.iam.gui.component.JMenuSeperator;
 import de.ncm.x3.iam.parser.ParserManager;
@@ -137,8 +140,21 @@ public final class MenuFactory {
 		return menu;
 	}
 	
-	public static JMenuItem setupMenuItemInstallScripts(JMenuItem menuItem) {
-		// TODO Auto-generated method stub
+	public static JMenuItem setupMenuItemInstallScripts(JMenuItem menuItem, final Mainframe mf) {
+		menuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				File gameFolder = new File(PropertyManager.get().getGameFolder());
+				if (gameFolder.exists()) {
+					// TODO ScriptManager install scripts (with /scripts and /t path)
+					ScriptManager.get().installScriptsTo(gameFolder);
+				} else {
+					JOptionPane.showMessageDialog(mf, Messages.getString("Error.path.notExisting"), "Error", JOptionPane.ERROR_MESSAGE);
+				}
+				
+			}
+		});
 		
 		return menuItem;
 		
