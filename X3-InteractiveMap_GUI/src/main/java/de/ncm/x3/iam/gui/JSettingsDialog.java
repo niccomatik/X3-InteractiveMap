@@ -25,7 +25,6 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
-import de.ncm.x3.iam.gui.component.ComponentFactory;
 import de.ncm.x3.iam.gui.component.verify.JTextFieldFileInputVerifier;
 import de.ncm.x3.iam.settings.PropertyManager;
 import de.ncm.x3.iam.util.PathBuilder;
@@ -63,7 +62,7 @@ public class JSettingsDialog extends JDialog {
 						FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
 						FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, RowSpec.decode("default:grow"), }));
 		
-		lblLogfilePath = new JLabel("Logfile path:");
+		lblLogfilePath = ComponentFactory.createJLabel("JSettingsDialog.lblLogfilePath.label.text");
 		getContentPane().add(lblLogfilePath, "2, 2, right, default");
 		
 		txtLogpath = new JTextField(getLogPathDefaultText());
@@ -74,7 +73,7 @@ public class JSettingsDialog extends JDialog {
 		btnBrowseLogPath = createLogPathBrowseButton(txtLogpath);
 		getContentPane().add(btnBrowseLogPath, "6, 2");
 		
-		lblPathToGame = new JLabel("Path to Game .exe:");
+		lblPathToGame = ComponentFactory.createJLabel("JSettingsDialog.lblPathToGame.label.text");
 		getContentPane().add(lblPathToGame, "2, 4, left, default");
 		
 		txtGamePath = new JTextField(getGamePathDefaultText());

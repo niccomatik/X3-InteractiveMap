@@ -1,0 +1,94 @@
+<?xml version="1.0" standalone="yes" ?>
+<?xml-stylesheet href="x2script.xsl" type="text/xsl" ?>
+<script>
+<name>al.ncm.map.registerSignals</name>
+<version>0</version>
+<engineversion>45</engineversion>
+<description>Description</description>
+<arguments>
+<argument index="1" name="al.PluginID" type="Var/String" desc="AL Plugin ID" />
+<argument index="2" name="al.State" type="Var/String" desc="AL State Data" />
+</arguments>
+<sourcetext>
+<line linenr="001" interruptable="@" indent=""><var>=&#160;</var><var>[THIS]&#160;-&gt;</var><text>&#160;call&#160;script&#160;</text><call>al.ncm.map.LogWriterMapExport</call><text>&#160;:&#160;</text></line>
+<line linenr="002" indent=""></line>
+<line linenr="003" indent=""></line>
+<line linenr="004" indent=""><text>global&#160;secondary&#160;signal&#160;map:&#160;add&#160;signal=</text><var>SIGNAL_CHANGESECTOR</var><text>&#160;race=</text><var>Player</var><text>&#160;class=</text><var>Schiff</var><text>&#160;script=</text><call>al.ncm.map.signal.sectorChange</call><text>&#160;prio=</text><var>5</var><text>&#160;name=</text><var>'Map.SectorChange.Signal'</var></line>
+<line linenr="005" indent=""></line>
+<line linenr="006" indent=""></line>
+<line linenr="007" indent=""><text>return&#160;</text><var>null</var></line>
+</sourcetext>
+<codearray>
+
+<sval type="array" size="10">
+  <sval type="string" val="al.ncm.map.registerSignals"/>
+  <sval type="int" val="45"/>
+  <sval type="string" val="Description"/>
+  <sval type="int" val="0"/>
+  <sval type="int" val="0"/>
+  <sval type="array" size="2">
+    <sval type="string" val="al.PluginID"/>
+    <sval type="string" val="al.State"/>
+  </sval>
+  <sval type="array" size="3">
+    <sval type="array" size="6">
+      <sval type="int" val="102"/>
+      <sval type="string" val="al.ncm.map.LogWriterMapExport"/>
+      <sval type="int" val="-2147483647"/>
+      <sval type="int" val="131075"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="0"/>
+    </sval>
+    <sval type="array" size="12">
+      <sval type="int" val="1407"/>
+      <sval type="int" val="18"/>
+      <sval type="int" val="1018"/>
+      <sval type="int" val="10"/>
+      <sval type="int" val="10"/>
+      <sval type="int" val="12"/>
+      <sval type="int" val="2004"/>
+      <sval type="string" val="al.ncm.map.signal.sectorChange"/>
+      <sval type="int" val="4"/>
+      <sval type="int" val="5"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="Map.SectorChange.Signal"/>
+    </sval>
+    <sval type="array" size="3">
+      <sval type="int" val="103"/>
+      <sval type="int" val="0"/>
+      <sval type="int" val="0"/>
+    </sval>
+  </sval>
+  <sval type="array" size="2">
+    <sval type="array" size="2">
+      <sval type="int" val="11"/>
+      <sval type="string" val="AL Plugin ID"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="11"/>
+      <sval type="string" val="AL State Data"/>
+    </sval>
+  </sval>
+  <sval type="array" size="4">
+    <sval type="array" size="2">
+      <sval type="int" val="1"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="1"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="2"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="2"/>
+      <sval type="int" val="2"/>
+    </sval>
+  </sval>
+  <sval type="int" val="0"/>
+</sval>
+
+</codearray>
+</script>

@@ -10,8 +10,8 @@ import javax.swing.JComponent;
 import javax.swing.JTextField;
 import javax.swing.Popup;
 
+import de.ncm.x3.iam.gui.ComponentFactory;
 import de.ncm.x3.iam.gui.Messages;
-import de.ncm.x3.iam.gui.component.ComponentFactory;
 
 public class JTextFieldFileInputVerifier extends InputVerifier {
 	

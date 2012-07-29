@@ -19,7 +19,6 @@ import javax.swing.WindowConstants;
 
 import org.apache.log4j.Logger;
 
-import de.ncm.x3.iam.gui.component.ComponentFactory;
 import de.ncm.x3.iam.gui.component.JMenuSeperator;
 import de.ncm.x3.iam.gui.component.universe.JUniverseMap;
 import de.ncm.x3.iam.gui.component.universe.JUniverseMapScrollContainer;
@@ -74,7 +73,7 @@ public class Mainframe extends JFrame {
 		jUniverseMapScrollContainer = new JUniverseMapScrollContainer(jUniverseMap);
 		
 		tree = new JTree();
-		tree.setModel(ComponentFactory.createDummyTree());
+		tree.setModel(ComponentFactory.createDummyTreeModel());
 		scrollPane = new JScrollPane(tree);
 		
 		splitPane = ComponentFactory.createHorizontalJSplitPane(scrollPane, jUniverseMapScrollContainer, (int) (getWidth() * 0.2));
@@ -82,59 +81,49 @@ public class Mainframe extends JFrame {
 		
 		logger.info("GUI created");
 		
-		Messages.listBundle();
+		// Messages.listBundle();
 	}
 	
 	private void setupMenu() {
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		mnData = MenuFactory.createJMenu("Mainframe.mnData.text"); //$NON-NLS-1$
-		MenuFactory.setupMenuData(mnData);
+		mnData = MenuFactory.createMenuData(); //$NON-NLS-1$
+		chckbxmntmParsingFiles = MenuFactory.createMenuItemParsingFiles(); //$NON-NLS-1$
+		menuSeperator = MenuFactory.createJMenuSeperator();//$NON-NLS-1$
+		mntmQuit = MenuFactory.createMenuItemQuit();//$NON-NLS-1$
+		mnEdit = MenuFactory.createMenuEdit(); //$NON-NLS-1$
+		mntmInstallScripts = MenuFactory.createMenuItemInstallScripts(this); //$NON-NLS-1$
+		mntmSettings = MenuFactory.createMenuItemSettings(this); //$NON-NLS-1$
+		mnView = MenuFactory.createMenuView(); //$NON-NLS-1$
+		mntmCenterMapAutomatically = MenuFactory.createMenuItemCenterMapAutomatically(); //$NON-NLS-1$
+		mntmCenterMapOn = MenuFactory.createMenuItemCenterMap(this); //$NON-NLS-1$
+		mnHelp = MenuFactory.createMenuHelp(); //$NON-NLS-1
+		mntmAbout = MenuFactory.createMenuItemAbout(); //$NON-NLS-1$
+		
 		menuBar.add(mnData);
-		
-		chckbxmntmParsingFiles = MenuFactory.createJCheckBoxMenuItem("Mainframe.chckbxmntmParsingFiles.text"); //$NON-NLS-1$
-		MenuFactory.setupMenuItemParsingFiles(chckbxmntmParsingFiles);
-		mnData.add(chckbxmntmParsingFiles);
-		
-		menuSeperator = MenuFactory.createJMenuSeperator();
-		mnData.add(menuSeperator);
-		
-		mntmQuit = MenuFactory.createJMenuItem("Mainframe.mntmQuit.text");
-		MenuFactory.setupMenuItemExit(mntmQuit);
-		mnData.add(mntmQuit);
-		
-		mnEdit = MenuFactory.createJMenu("Mainframe.mnEdit.text"); //$NON-NLS-1$
-		MenuFactory.setupMenuEdit(mnEdit);
+		{
+			mnData.add(chckbxmntmParsingFiles);
+			
+			mnData.add(menuSeperator);
+			
+			mnData.add(mntmQuit);
+		}
 		menuBar.add(mnEdit);
-		
-		mntmInstallScripts = MenuFactory.createJMenuItem("Mainframe.mntmInstallScripts.text"); //$NON-NLS-1$
-		MenuFactory.setupMenuItemInstallScripts(mntmInstallScripts, this);
-		mnEdit.add(mntmInstallScripts);
-		
-		mntmSettings = MenuFactory.createJMenuItem("Mainframe.mntmSettings.text"); //$NON-NLS-1$
-		MenuFactory.setupMenuItemSettings(mntmSettings, this);
-		mnEdit.add(mntmSettings);
-		
-		mnView = MenuFactory.createJMenu("Mainframe.mnView.text"); //$NON-NLS-1$
-		MenuFactory.setupMenuView(mnView);
+		{
+			mnEdit.add(mntmInstallScripts);
+			
+			mnEdit.add(mntmSettings);
+		}
 		menuBar.add(mnView);
-		
-		mntmCenterMapAutomatically = MenuFactory.createJCheckBoxMenuItem("Mainframe.mntmCenterMapAutomatically.text"); //$NON-NLS-1$
-		MenuFactory.setupMenuItemCenterMapAutomatically(mntmCenterMapAutomatically);
-		mnView.add(mntmCenterMapAutomatically);
-		
-		mntmCenterMapOn = MenuFactory.createJMenuItem("Mainframe.mntmCenterMapOn.text"); //$NON-NLS-1$
-		MenuFactory.setupMenuItemCenterMap(mntmCenterMapOn, this);
-		mnView.add(mntmCenterMapOn);
-		
-		mnHelp = MenuFactory.createJMenu("Mainframe.mnHelp.text"); //$NON-NLS-1
-		MenuFactory.setupMenuHelp(mnHelp);
+		{
+			mnView.add(mntmCenterMapAutomatically);
+			
+			mnView.add(mntmCenterMapOn);
+		}
 		menuBar.add(mnHelp);
-		
-		mntmAbout = MenuFactory.createJMenuItem("Mainframe.mntmAbout.text"); //$NON-NLS-1$
-		MenuFactory.setupMenuItemAbout(mntmAbout);
-		mnHelp.add(mntmAbout);
-		
+		{
+			mnHelp.add(mntmAbout);
+		}
 	}
 	
 	public static void quit() {

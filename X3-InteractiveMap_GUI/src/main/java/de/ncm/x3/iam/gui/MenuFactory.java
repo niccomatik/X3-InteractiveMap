@@ -3,7 +3,6 @@ package de.ncm.x3.iam.gui;
 
 
 import java.awt.EventQueue;
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -22,7 +21,6 @@ import javax.swing.KeyStroke;
 import org.apache.log4j.Logger;
 
 import de.ncm.x3.iam.data.ScriptManager;
-import de.ncm.x3.iam.gui.component.ComponentFactory;
 import de.ncm.x3.iam.gui.component.JMenuSeperator;
 import de.ncm.x3.iam.parser.ParserManager;
 import de.ncm.x3.iam.settings.PropertyManager;
@@ -94,8 +92,17 @@ public final class MenuFactory {
 		return seperator;
 	}
 	
-	public static JMenuItem setupMenuItemExit(JMenuItem menuItem) {
+	// ************************
+	// ************************************************
+	// ************************************************************************
+	// ************************************************************************************************
+	/**
+	 * @wbp.factory
+	 */
+	public static JMenuItem createMenuItemQuit() {
+		JMenuItem menuItem = createJMenuItem("Mainframe.mntmQuit.text");
 		// menuItem.setMnemonic(KeyEvent.VK_Q);
+		
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, ActionEvent.CTRL_MASK));
 		
 		menuItem.addActionListener(new ActionListener() {
@@ -108,7 +115,11 @@ public final class MenuFactory {
 		return menuItem;
 	}
 	
-	public static JCheckBoxMenuItem setupMenuItemParsingFiles(final JCheckBoxMenuItem menuItem) {
+	/**
+	 * @wbp.factory
+	 */
+	public static JCheckBoxMenuItem createMenuItemParsingFiles() {
+		final JCheckBoxMenuItem menuItem = createJCheckBoxMenuItem("Mainframe.chckbxmntmParsingFiles.text");
 		menuItem.addItemListener(new ItemListener() {
 			
 			@Override
@@ -135,19 +146,26 @@ public final class MenuFactory {
 		
 	}
 	
-	public static JMenu setupMenuEdit(JMenu menu) {
-		// TODO Auto-generated method stub
+	/**
+	 * @wbp.factory
+	 */
+	public static JMenu createMenuEdit() {
+		JMenu menu = MenuFactory.createJMenu("Mainframe.mnEdit.text");
 		return menu;
 	}
 	
-	public static JMenuItem setupMenuItemInstallScripts(JMenuItem menuItem, final Mainframe mf) {
+	/**
+	 * @wbp.factory
+	 * @wbp.factory.parameter.source mf The Mainframe
+	 */
+	public static JMenuItem createMenuItemInstallScripts(final Mainframe mf) {
+		JMenuItem menuItem = createJMenuItem("Mainframe.mntmInstallScripts.text");
 		menuItem.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				File gameFolder = new File(PropertyManager.get().getGameFolder());
 				if (gameFolder.exists()) {
-					// TODO ScriptManager install scripts (with /scripts and /t path)
 					ScriptManager.get().installScriptsTo(gameFolder);
 				} else {
 					JOptionPane.showMessageDialog(mf, Messages.getString("Error.path.notExisting"), "Error", JOptionPane.ERROR_MESSAGE);
@@ -160,7 +178,12 @@ public final class MenuFactory {
 		
 	}
 	
-	public static JMenuItem setupMenuItemSettings(JMenuItem menuItem, final Frame comp) {
+	/**
+	 * @wbp.factory
+	 * @wbp.factory.parameter.source mf The Mainframe
+	 */
+	public static JMenuItem createMenuItemSettings(final Mainframe comp) {
+		JMenuItem menuItem = MenuFactory.createJMenuItem("Mainframe.mntmSettings.text");
 		menuItem.addActionListener(new ActionListener() {
 			
 			@Override
@@ -172,12 +195,19 @@ public final class MenuFactory {
 		return menuItem;
 	}
 	
-	public static JMenu setupMenuView(JMenu menuItem) {
-		// TODO Auto-generated method stub
+	/**
+	 * @wbp.factory
+	 */
+	public static JMenu createMenuView() {
+		JMenu menuItem = MenuFactory.createJMenu("Mainframe.mnView.text");
 		return menuItem;
 	}
 	
-	public static JCheckBoxMenuItem setupMenuItemCenterMapAutomatically(final JCheckBoxMenuItem menuItem) {
+	/**
+	 * @wbp.factory
+	 */
+	public static JCheckBoxMenuItem createMenuItemCenterMapAutomatically() {
+		final JCheckBoxMenuItem menuItem = MenuFactory.createJCheckBoxMenuItem("Mainframe.mntmCenterMapAutomatically.text");
 		menuItem.setSelected(new Boolean(PropertyManager.get().getAutomaticCenterEnabled()));
 		menuItem.addActionListener(new ActionListener() {
 			
@@ -190,7 +220,12 @@ public final class MenuFactory {
 		return menuItem;
 	}
 	
-	public static JMenuItem setupMenuItemCenterMap(JMenuItem menuItem, final Mainframe mf) {
+	/**
+	 * @wbp.factory
+	 * @wbp.factory.parameter.source mf The Mainframe
+	 */
+	public static JMenuItem createMenuItemCenterMap(final Mainframe mf) {
+		JMenuItem menuItem = MenuFactory.createJMenuItem("Mainframe.mntmCenterMapOn.text");
 		menuItem.addActionListener(new ActionListener() {
 			
 			@Override
@@ -201,18 +236,27 @@ public final class MenuFactory {
 		return menuItem;
 	}
 	
-	public static JMenu setupMenuHelp(JMenu menu) {
-		// TODO Auto-generated method stub
+	/**
+	 * @wbp.factory
+	 */
+	public static JMenu createMenuHelp() {
+		JMenu menu = MenuFactory.createJMenu("Mainframe.mnHelp.text");
 		return menu;
 	}
 	
-	public static JMenuItem setupMenuItemAbout(JMenuItem menuItem) {
-		// TODO Auto-generated method stub
+	/**
+	 * @wbp.factory
+	 */
+	public static JMenuItem createMenuItemAbout() {
+		JMenuItem menuItem = MenuFactory.createJMenuItem("Mainframe.mntmAbout.text");
 		return menuItem;
 	}
 	
-	public static JMenu setupMenuData(JMenu menu) {
-		// TODO Auto-generated method stub
+	/**
+	 * @wbp.factory
+	 */
+	public static JMenu createMenuData() {
+		JMenu menu = MenuFactory.createJMenu("Mainframe.mnData.text");
 		return menu;
 	}
 	

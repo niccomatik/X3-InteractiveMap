@@ -1,5 +1,5 @@
 
-package de.ncm.x3.iam.gui.component;
+package de.ncm.x3.iam.gui;
 
 
 import java.awt.Color;
@@ -25,8 +25,6 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
 
 import org.apache.log4j.Logger;
-
-import de.ncm.x3.iam.gui.Messages;
 
 public final class ComponentFactory {
 	
@@ -59,6 +57,19 @@ public final class ComponentFactory {
 		
 	}
 	
+	public static JLabel localise(final JLabel label, final String messageKey) {
+		label.addPropertyChangeListener("locale", new PropertyChangeListener() {
+			
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				label.setText(Messages.getString(messageKey));
+			}
+		});
+		
+		return label;
+		
+	}
+	
 	public static JSplitPane createHorizontalJSplitPane(JComponent left, JComponent right, int dividerLocation) {
 		JSplitPane pane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, left, right);
 		pane.setDividerLocation(dividerLocation);
@@ -72,7 +83,7 @@ public final class ComponentFactory {
 		return button;
 	}
 	
-	public static TreeModel createDummyTree() {
+	public static TreeModel createDummyTreeModel() {
 		DefaultMutableTreeNode rootnode = new DefaultMutableTreeNode("Universe");
 		DefaultMutableTreeNode sector1 = new DefaultMutableTreeNode("Sector1");
 		DefaultMutableTreeNode station1 = new DefaultMutableTreeNode("Station1");
@@ -107,7 +118,6 @@ public final class ComponentFactory {
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					f = fc.getSelectedFile();
 					f.mkdirs();
-					// Sele
 					changeListener.propertyChange(new PropertyChangeEvent(button, fileChooserTitle, actualPath.getAbsoluteFile(), f.getAbsoluteFile()));
 				}
 			}
@@ -124,5 +134,12 @@ public final class ComponentFactory {
 		contents.add(errorLabel);
 		return PopupFactory.getSharedInstance().getPopup(parent, contents, parent.getLocationOnScreen().x, parent.getLocationOnScreen().y + parent.getHeight());
 		
+	}
+	
+	public static JLabel createJLabel(String messageKey) {
+		JLabel label = new JLabel(Messages.getString(messageKey));
+		label.setLocale(Messages.getActualLocale());
+		localise(label, messageKey);
+		return label;
 	}
 }
