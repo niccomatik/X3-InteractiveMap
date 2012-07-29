@@ -33,46 +33,47 @@ public final class ZipUtil {
 			
 			ZipEntry entry = zipRootContent.nextElement();
 			
-			if (entry.getName().startsWith(innerPath) && !entry.getName().endsWith("/")) {
+			if (entry.getName().startsWith(innerPath)) {
 				String outputInnerPathName = entry.getName().substring(innerPath.length()); // remove the prefix "innerPath"
-				
 				File outputFile = new File(outputPath, outputInnerPathName);
-				File outputFileFolder = new File(outputPath, outputInnerPathName.replace(PathBuilder.getFileNameOfPath(outputInnerPathName), "")); // removing
-																																					// FileName
-																																					// from
-																																					// folder
-																																					// path
-				outputFileFolder.mkdirs(); // Creating Folder
-				InputStream is = null;
-				FileOutputStream fos = null;
-				try {
-					
-					is = zip.getInputStream(entry);
-					fos = new FileOutputStream(outputFile);
-					
-					while (is.available() > 0) {
-						fos.write(is.read());
-					}
-					
-				} catch (IOException e) {
-					e.printStackTrace();
-				} finally {
-					if (fos != null) {
-						try {
-							fos.close();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					}
-					if (is != null) {
-						try {
-							is.close();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					}
-				}
 				
+				if (entry.getName().endsWith("/")) { // is Folder
+				
+					outputFile.mkdirs();
+					
+				} else { // Data to copy
+				
+					InputStream is = null;
+					FileOutputStream fos = null;
+					try {
+						
+						is = zip.getInputStream(entry);
+						fos = new FileOutputStream(outputFile);
+						
+						while (is.available() > 0) {
+							fos.write(is.read());
+						}
+						
+					} catch (IOException e) {
+						e.printStackTrace();
+					} finally {
+						if (fos != null) {
+							try {
+								fos.close();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						}
+						if (is != null) {
+							try {
+								is.close();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						}
+					}
+					
+				}
 			}
 		}
 	}
