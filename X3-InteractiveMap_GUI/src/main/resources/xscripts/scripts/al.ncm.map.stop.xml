@@ -3,25 +3,25 @@
 <script>
 <name>al.ncm.map.stop</name>
 <version>0</version>
-<engineversion>52</engineversion>
+<engineversion>45</engineversion>
 <description>Description</description>
 <arguments>
 <argument index="1" name="al.PluginID" type="Var/String" desc="AL Plugin ID" />
 <argument index="2" name="al.State" type="Var/String" desc="AL State Data" />
 </arguments>
-<sourceplaintext>
-<![CDATA[
-  return null
-]]>
-</sourceplaintext>
 <sourcetext>
-<line indent=""><text>return&#160;</text><var>null</var></line>
+<line linenr="001" interruptable="@" indent=""><var>=&#160;</var><var>[THIS]&#160;-&gt;</var><text>&#160;call&#160;script&#160;</text><call>al.ncm.map.SignalRegisterManager</call><text>&#160;:&#160;</text><text>&#160;Only&#160;remove&#160;Signal&#160;Listener?=</text><var>[TRUE]</var></line>
+<line linenr="002" indent=""></line>
+<line linenr="003" indent=""></line>
+<line linenr="004" indent=""></line>
+<line linenr="005" indent=""></line>
+<line linenr="006" indent=""><text>return&#160;</text><var>null</var></line>
 </sourcetext>
 <codearray>
 
 <sval type="array" size="10">
   <sval type="string" val="al.ncm.map.stop"/>
-  <sval type="int" val="52"/>
+  <sval type="int" val="45"/>
   <sval type="string" val="Description"/>
   <sval type="int" val="0"/>
   <sval type="int" val="0"/>
@@ -29,7 +29,17 @@
     <sval type="string" val="al.PluginID"/>
     <sval type="string" val="al.State"/>
   </sval>
-  <sval type="array" size="1">
+  <sval type="array" size="2">
+    <sval type="array" size="8">
+      <sval type="int" val="102"/>
+      <sval type="string" val="al.ncm.map.SignalRegisterManager"/>
+      <sval type="int" val="-2147483647"/>
+      <sval type="int" val="131075"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="131075"/>
+      <sval type="int" val="10"/>
+    </sval>
     <sval type="array" size="3">
       <sval type="int" val="103"/>
       <sval type="int" val="0"/>
@@ -46,10 +56,26 @@
       <sval type="string" val="AL State Data"/>
     </sval>
   </sval>
-  <sval type="int" val="0"/>
+  <sval type="array" size="4">
+    <sval type="array" size="2">
+      <sval type="int" val="1"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="1"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="1"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="1"/>
+      <sval type="int" val="2"/>
+    </sval>
+  </sval>
   <sval type="int" val="0"/>
 </sval>
 
 </codearray>
-<nosignature>8922</nosignature>
 </script>

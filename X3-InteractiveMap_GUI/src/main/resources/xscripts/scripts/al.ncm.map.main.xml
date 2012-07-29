@@ -3,123 +3,70 @@
 <script>
 <name>al.ncm.map.main</name>
 <version>0</version>
-<engineversion>52</engineversion>
+<engineversion>45</engineversion>
 <description>Description</description>
 <arguments>
 <argument index="1" name="al.PluginID" type="Var/String" desc="AL Plugin ID" />
 <argument index="2" name="al.Event" type="Var/String" desc="AL Event" />
 </arguments>
-<sourceplaintext>
-<![CDATA[
-  $AL.STATE.VERSION = 0
-  $AL.STATE.ENABLED = 1
-  
-  $al.State = get global variable: name=$al.PluginID
-  if not $al.State
-    $al.State = array alloc: size=2
-    $Version = get script version
-    $al.State[$AL.STATE.VERSION] = $Version
-    $al.State[$AL.STATE.ENABLED] = [TRUE]
-    set global variable: name=$al.PluginID value=$al.State
-  end
-  
-  if $al.Event == 'init' OR $al.Event == 'reinit'
-    $Page.ID = get global variable: name='plugin.ncm.map'
-    $al.PluginDescription = sprintf: pageid=$al.PluginID textid=8, null, null, null, null, null
-    al engine: set plugin $al.PluginID description to $al.PluginDescription
-    al engine: set plugin $al.PluginID timer interval to 1 s
-@   = [THIS] -> call script al.ncm.map.init :  AL Plugin ID=$al.PluginID  AL State Data=$al.State
-    
-  else if $al.Event == 'start'
-    $al.State[$AL.STATE.ENABLED] = [TRUE]
-@   = [THIS] -> call script al.ncm.map.start :  Al Plugin ID=$al.PluginID  AL State Data=$al.State
-    
-  else if $al.Event == 'stop'
-    $al.State[$AL.STATE.ENABLED] = [FALSE]
-@   = [THIS] -> call script al.ncm.map.stop :  AL Plugin ID=$al.PluginID  AL State Data=$al.State
-    
-  else if $al.Event == 'isenabled'
-    $al.Retval = $al.State[$AL.STATE.ENABLED]
-    return $al.Retval
-    
-  else if $al.Event == 'timer'
-    $enabled = $al.State[$AL.STATE.ENABLED]
-    skip if [FALSE] == $enabled
-@     = [THIS] -> call script al.ncm.map.timer.fast :  AL Plugin ID=$al.PluginID  AL State Data=$al.State
-    
-    
-  end
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  return null
-]]>
-</sourceplaintext>
 <sourcetext>
-<line indent=""><var>$AL.STATE.VERSION&#160;=&#160;</var><var>0</var></line>
-<line indent=""><var>$AL.STATE.ENABLED&#160;=&#160;</var><var>1</var></line>
-<line indent=""></line>
-<line indent=""><var>$al.State&#160;=&#160;</var><text>get&#160;global&#160;variable:&#160;name=</text><var>$al.PluginID</var></line>
-<line indent=""><var>if&#160;not&#160;</var><var>$al.State</var></line>
-<line indent="&#160;"><var>$al.State&#160;=&#160;</var><text>array&#160;alloc:&#160;size=</text><var>2</var></line>
-<line indent="&#160;"><var>$Version&#160;=&#160;</var><text>get&#160;script&#160;version</text></line>
-<line indent="&#160;"><var>$al.State</var><text>[</text><var>$AL.STATE.VERSION</var><text>]&#160;=&#160;</text><var>$Version</var></line>
-<line indent="&#160;"><var>$al.State</var><text>[</text><var>$AL.STATE.ENABLED</var><text>]&#160;=&#160;</text><var>[TRUE]</var></line>
-<line indent="&#160;"><text>set&#160;global&#160;variable:&#160;name=</text><var>$al.PluginID</var><text>&#160;value=</text><var>$al.State</var></line>
-<line indent=""><text>end</text></line>
-<line indent=""></line>
-<line indent=""><var>if&#160;</var><var>$al.Event</var><text>&#160;</text><var>==</var><text>&#160;</text><var>'init'</var><text>&#160;</text><var>OR</var><text>&#160;</text><var>$al.Event</var><text>&#160;</text><var>==</var><text>&#160;</text><var>'reinit'</var></line>
-<line indent="&#160;"><var>$Page.ID&#160;=&#160;</var><text>get&#160;global&#160;variable:&#160;name=</text><var>'plugin.ncm.map'</var></line>
-<line indent="&#160;"><var>$al.PluginDescription&#160;=&#160;</var><text>sprintf:&#160;pageid=</text><var>$al.PluginID</var><text>&#160;textid=</text><var>8</var><text>,&#160;</text><var>null</var><text>,&#160;</text><var>null</var><text>,&#160;</text><var>null</var><text>,&#160;</text><var>null</var><text>,&#160;</text><var>null</var></line>
-<line indent="&#160;"><text>al&#160;engine:&#160;set&#160;plugin&#160;</text><var>$al.PluginID</var><text>&#160;description&#160;to&#160;</text><var>$al.PluginDescription</var></line>
-<line indent="&#160;"><text>al&#160;engine:&#160;set&#160;plugin&#160;</text><var>$al.PluginID</var><text>&#160;timer&#160;interval&#160;to&#160;</text><var>1</var><text>&#160;s</text></line>
-<line interruptable="@" indent="&#160;"><var>=&#160;</var><var>[THIS]&#160;-&gt;</var><text>&#160;call&#160;script&#160;</text><call>al.ncm.map.init</call><text>&#160;:&#160;</text><text>&#160;AL&#160;Plugin&#160;ID=</text><var>$al.PluginID</var><text>&#160;</text><text>&#160;AL&#160;State&#160;Data=</text><var>$al.State</var></line>
-<line indent="&#160;"></line>
-<line indent=""><var>else&#160;if&#160;</var><var>$al.Event</var><text>&#160;</text><var>==</var><text>&#160;</text><var>'start'</var></line>
-<line indent="&#160;"><var>$al.State</var><text>[</text><var>$AL.STATE.ENABLED</var><text>]&#160;=&#160;</text><var>[TRUE]</var></line>
-<line interruptable="@" indent="&#160;"><var>=&#160;</var><var>[THIS]&#160;-&gt;</var><text>&#160;call&#160;script&#160;</text><call>al.ncm.map.start</call><text>&#160;:&#160;</text><text>&#160;Al&#160;Plugin&#160;ID=</text><var>$al.PluginID</var><text>&#160;</text><text>&#160;AL&#160;State&#160;Data=</text><var>$al.State</var></line>
-<line indent="&#160;"></line>
-<line indent=""><var>else&#160;if&#160;</var><var>$al.Event</var><text>&#160;</text><var>==</var><text>&#160;</text><var>'stop'</var></line>
-<line indent="&#160;"><var>$al.State</var><text>[</text><var>$AL.STATE.ENABLED</var><text>]&#160;=&#160;</text><var>[FALSE]</var></line>
-<line interruptable="@" indent="&#160;"><var>=&#160;</var><var>[THIS]&#160;-&gt;</var><text>&#160;call&#160;script&#160;</text><call>al.ncm.map.stop</call><text>&#160;:&#160;</text><text>&#160;AL&#160;Plugin&#160;ID=</text><var>$al.PluginID</var><text>&#160;</text><text>&#160;AL&#160;State&#160;Data=</text><var>$al.State</var></line>
-<line indent="&#160;"></line>
-<line indent=""><var>else&#160;if&#160;</var><var>$al.Event</var><text>&#160;</text><var>==</var><text>&#160;</text><var>'isenabled'</var></line>
-<line indent="&#160;"><var>$al.Retval&#160;=&#160;</var><var>$al.State</var><text>[</text><var>$AL.STATE.ENABLED</var><text>]</text></line>
-<line indent="&#160;"><text>return&#160;</text><var>$al.Retval</var></line>
-<line indent="&#160;"></line>
-<line indent=""><var>else&#160;if&#160;</var><var>$al.Event</var><text>&#160;</text><var>==</var><text>&#160;</text><var>'timer'</var></line>
-<line indent="&#160;"><var>$enabled&#160;=&#160;</var><var>$al.State</var><text>[</text><var>$AL.STATE.ENABLED</var><text>]</text></line>
-<line indent="&#160;"><var>skip&#160;if&#160;</var><var>[FALSE]</var><text>&#160;</text><var>==</var><text>&#160;</text><var>$enabled</var></line>
-<line interruptable="@" indent="&#160;&#160;"><var>=&#160;</var><var>[THIS]&#160;-&gt;</var><text>&#160;call&#160;script&#160;</text><call>al.ncm.map.timer.fast</call><text>&#160;:&#160;</text><text>&#160;AL&#160;Plugin&#160;ID=</text><var>$al.PluginID</var><text>&#160;</text><text>&#160;AL&#160;State&#160;Data=</text><var>$al.State</var></line>
-<line indent="&#160;"></line>
-<line indent="&#160;"></line>
-<line indent=""><text>end</text></line>
-<line indent=""></line>
-<line indent=""></line>
-<line indent=""></line>
-<line indent=""></line>
-<line indent=""></line>
-<line indent=""></line>
-<line indent=""></line>
-<line indent=""></line>
-<line indent=""></line>
-<line indent=""></line>
-<line indent=""></line>
-<line indent=""><text>return&#160;</text><var>null</var></line>
+<line linenr="001" indent=""><var>$AL.STATE.VERSION&#160;=&#160;</var><var>0</var></line>
+<line linenr="002" indent=""><var>$AL.STATE.ENABLED&#160;=&#160;</var><var>1</var></line>
+<line linenr="003" indent=""></line>
+<line linenr="004" indent=""><var>$al.State&#160;=&#160;</var><text>get&#160;global&#160;variable:&#160;name=</text><var>$al.PluginID</var></line>
+<line linenr="005" indent=""><var>if&#160;not&#160;</var><var>$al.State</var></line>
+<line linenr="006" indent="&#160;"><var>$al.State&#160;=&#160;</var><text>array&#160;alloc:&#160;size=</text><var>2</var></line>
+<line linenr="007" indent="&#160;"><var>$Version&#160;=&#160;</var><text>get&#160;script&#160;version</text></line>
+<line linenr="008" indent="&#160;"><var>$al.State</var><text>[</text><var>$AL.STATE.VERSION</var><text>]&#160;=&#160;</text><var>$Version</var></line>
+<line linenr="009" indent="&#160;"><var>$al.State</var><text>[</text><var>$AL.STATE.ENABLED</var><text>]&#160;=&#160;</text><var>[TRUE]</var></line>
+<line linenr="010" indent="&#160;"><text>set&#160;global&#160;variable:&#160;name=</text><var>$al.PluginID</var><text>&#160;value=</text><var>$al.State</var></line>
+<line linenr="011" indent=""><text>end</text></line>
+<line linenr="012" indent=""></line>
+<line linenr="013" indent=""><var>if&#160;</var><var>$al.Event</var><text>&#160;</text><var>==</var><text>&#160;</text><var>'init'</var><text>&#160;</text><var>OR</var><text>&#160;</text><var>$al.Event</var><text>&#160;</text><var>==</var><text>&#160;</text><var>'reinit'</var></line>
+<line linenr="014" indent="&#160;"><var>$Page.ID&#160;=&#160;</var><text>get&#160;global&#160;variable:&#160;name=</text><var>'plugin.ncm.map'</var></line>
+<line linenr="015" indent="&#160;"><var>$al.PluginDescription&#160;=&#160;</var><text>sprintf:&#160;pageid=</text><var>$al.PluginID</var><text>&#160;textid=</text><var>8</var><text>,&#160;</text><var>null</var><text>,&#160;</text><var>null</var><text>,&#160;</text><var>null</var><text>,&#160;</text><var>null</var><text>,&#160;</text><var>null</var></line>
+<line linenr="016" indent="&#160;"><text>al&#160;engine:&#160;set&#160;plugin&#160;</text><var>$al.PluginID</var><text>&#160;description&#160;to&#160;</text><var>$al.PluginDescription</var></line>
+<line linenr="017" indent="&#160;"><text>al&#160;engine:&#160;set&#160;plugin&#160;</text><var>$al.PluginID</var><text>&#160;timer&#160;interval&#160;to&#160;</text><var>1</var><text>&#160;s</text></line>
+<line linenr="018" interruptable="@" indent="&#160;"><var>=&#160;</var><var>[THIS]&#160;-&gt;</var><text>&#160;call&#160;script&#160;</text><call>al.ncm.map.init</call><text>&#160;:&#160;</text><text>&#160;AL&#160;Plugin&#160;ID=</text><var>$al.PluginID</var><text>&#160;</text><text>&#160;AL&#160;State&#160;Data=</text><var>$al.State</var></line>
+<line linenr="019" interruptable="@" indent="&#160;"><var>=&#160;</var><var>[THIS]&#160;-&gt;</var><text>&#160;call&#160;script&#160;</text><call>al.ncm.map.start</call><text>&#160;:&#160;</text><text>&#160;Al&#160;Plugin&#160;ID=</text><var>$al.PluginID</var><text>&#160;</text><text>&#160;AL&#160;State&#160;Data=</text><var>$al.State</var></line>
+<line linenr="020" indent="&#160;"></line>
+<line linenr="021" indent=""><var>else&#160;if&#160;</var><var>$al.Event</var><text>&#160;</text><var>==</var><text>&#160;</text><var>'start'</var></line>
+<line linenr="022" indent="&#160;"><var>$al.State</var><text>[</text><var>$AL.STATE.ENABLED</var><text>]&#160;=&#160;</text><var>[TRUE]</var></line>
+<line linenr="023" interruptable="@" indent="&#160;"><var>=&#160;</var><var>[THIS]&#160;-&gt;</var><text>&#160;call&#160;script&#160;</text><call>al.ncm.map.start</call><text>&#160;:&#160;</text><text>&#160;Al&#160;Plugin&#160;ID=</text><var>$al.PluginID</var><text>&#160;</text><text>&#160;AL&#160;State&#160;Data=</text><var>$al.State</var></line>
+<line linenr="024" indent="&#160;"></line>
+<line linenr="025" indent=""><var>else&#160;if&#160;</var><var>$al.Event</var><text>&#160;</text><var>==</var><text>&#160;</text><var>'stop'</var></line>
+<line linenr="026" indent="&#160;"><var>$al.State</var><text>[</text><var>$AL.STATE.ENABLED</var><text>]&#160;=&#160;</text><var>[FALSE]</var></line>
+<line linenr="027" interruptable="@" indent="&#160;"><var>=&#160;</var><var>[THIS]&#160;-&gt;</var><text>&#160;call&#160;script&#160;</text><call>al.ncm.map.stop</call><text>&#160;:&#160;</text><text>&#160;AL&#160;Plugin&#160;ID=</text><var>$al.PluginID</var><text>&#160;</text><text>&#160;AL&#160;State&#160;Data=</text><var>$al.State</var></line>
+<line linenr="028" indent="&#160;"></line>
+<line linenr="029" indent=""><var>else&#160;if&#160;</var><var>$al.Event</var><text>&#160;</text><var>==</var><text>&#160;</text><var>'isenabled'</var></line>
+<line linenr="030" indent="&#160;"><var>$al.Retval&#160;=&#160;</var><var>$al.State</var><text>[</text><var>$AL.STATE.ENABLED</var><text>]</text></line>
+<line linenr="031" indent="&#160;"><text>return&#160;</text><var>$al.Retval</var></line>
+<line linenr="032" indent="&#160;"></line>
+<line linenr="033" indent=""><var>else&#160;if&#160;</var><var>$al.Event</var><text>&#160;</text><var>==</var><text>&#160;</text><var>'timer'</var></line>
+<line linenr="034" indent="&#160;"><var>$enabled&#160;=&#160;</var><var>$al.State</var><text>[</text><var>$AL.STATE.ENABLED</var><text>]</text></line>
+<line linenr="035" indent="&#160;"><var>skip&#160;if&#160;</var><var>[FALSE]</var><text>&#160;</text><var>==</var><text>&#160;</text><var>$enabled</var></line>
+<line linenr="036" interruptable="@" indent="&#160;&#160;"><var>=&#160;</var><var>[THIS]&#160;-&gt;</var><text>&#160;call&#160;script&#160;</text><call>al.ncm.map.timer.fast</call><text>&#160;:&#160;</text><text>&#160;AL&#160;Plugin&#160;ID=</text><var>$al.PluginID</var><text>&#160;</text><text>&#160;AL&#160;State&#160;Data=</text><var>$al.State</var></line>
+<line linenr="037" indent="&#160;"></line>
+<line linenr="038" indent="&#160;"></line>
+<line linenr="039" indent=""><text>end</text></line>
+<line linenr="040" indent=""></line>
+<line linenr="041" indent=""></line>
+<line linenr="042" indent=""></line>
+<line linenr="043" indent=""></line>
+<line linenr="044" indent=""></line>
+<line linenr="045" indent=""></line>
+<line linenr="046" indent=""></line>
+<line linenr="047" indent=""></line>
+<line linenr="048" indent=""></line>
+<line linenr="049" indent=""></line>
+<line linenr="050" indent=""></line>
+<line linenr="051" indent=""><text>return&#160;</text><var>null</var></line>
 </sourcetext>
 <codearray>
 
 <sval type="array" size="10">
   <sval type="string" val="al.ncm.map.main"/>
-  <sval type="int" val="52"/>
+  <sval type="int" val="45"/>
   <sval type="string" val="Description"/>
   <sval type="int" val="0"/>
   <sval type="int" val="0"/>
@@ -135,7 +82,7 @@
     <sval type="string" val="al.Retval"/>
     <sval type="string" val="enabled"/>
   </sval>
-  <sval type="array" size="33">
+  <sval type="array" size="34">
     <sval type="array" size="7">
       <sval type="int" val="104"/>
       <sval type="int" val="2"/>
@@ -206,7 +153,7 @@
     </sval>
     <sval type="array" size="25">
       <sval type="int" val="104"/>
-      <sval type="int" val="-1610608637"/>
+      <sval type="int" val="-1610608381"/>
       <sval type="int" val="7"/>
       <sval type="int" val="131074"/>
       <sval type="int" val="1"/>
@@ -281,13 +228,25 @@
       <sval type="int" val="131074"/>
       <sval type="int" val="4"/>
     </sval>
+    <sval type="array" size="10">
+      <sval type="int" val="102"/>
+      <sval type="string" val="al.ncm.map.start"/>
+      <sval type="int" val="-2147483647"/>
+      <sval type="int" val="131075"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="2"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="0"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="4"/>
+    </sval>
     <sval type="array" size="2">
       <sval type="int" val="112"/>
-      <sval type="int" val="32"/>
+      <sval type="int" val="33"/>
     </sval>
     <sval type="array" size="13">
       <sval type="int" val="104"/>
-      <sval type="int" val="-1610607611"/>
+      <sval type="int" val="-1610607355"/>
       <sval type="int" val="3"/>
       <sval type="int" val="131074"/>
       <sval type="int" val="1"/>
@@ -323,11 +282,11 @@
     </sval>
     <sval type="array" size="2">
       <sval type="int" val="112"/>
-      <sval type="int" val="32"/>
+      <sval type="int" val="33"/>
     </sval>
     <sval type="array" size="13">
       <sval type="int" val="104"/>
-      <sval type="int" val="-1610606587"/>
+      <sval type="int" val="-1610606331"/>
       <sval type="int" val="3"/>
       <sval type="int" val="131074"/>
       <sval type="int" val="1"/>
@@ -363,11 +322,11 @@
     </sval>
     <sval type="array" size="2">
       <sval type="int" val="112"/>
-      <sval type="int" val="32"/>
+      <sval type="int" val="33"/>
     </sval>
     <sval type="array" size="13">
       <sval type="int" val="104"/>
-      <sval type="int" val="-1610605563"/>
+      <sval type="int" val="-1610605307"/>
       <sval type="int" val="3"/>
       <sval type="int" val="131074"/>
       <sval type="int" val="1"/>
@@ -395,11 +354,11 @@
     </sval>
     <sval type="array" size="2">
       <sval type="int" val="112"/>
-      <sval type="int" val="32"/>
+      <sval type="int" val="33"/>
     </sval>
     <sval type="array" size="13">
       <sval type="int" val="104"/>
-      <sval type="int" val="-1610604539"/>
+      <sval type="int" val="-1610604283"/>
       <sval type="int" val="3"/>
       <sval type="int" val="131074"/>
       <sval type="int" val="1"/>
@@ -422,7 +381,7 @@
     </sval>
     <sval type="array" size="13">
       <sval type="int" val="104"/>
-      <sval type="int" val="-536862713"/>
+      <sval type="int" val="-536862457"/>
       <sval type="int" val="3"/>
       <sval type="int" val="131075"/>
       <sval type="int" val="9"/>
@@ -477,75 +436,75 @@
       <sval type="int" val="2"/>
     </sval>
     <sval type="array" size="2">
-      <sval type="int" val="15"/>
+      <sval type="int" val="16"/>
       <sval type="int" val="2"/>
     </sval>
     <sval type="array" size="2">
-      <sval type="int" val="19"/>
+      <sval type="int" val="20"/>
       <sval type="int" val="2"/>
     </sval>
     <sval type="array" size="2">
-      <sval type="int" val="23"/>
+      <sval type="int" val="24"/>
       <sval type="int" val="2"/>
     </sval>
     <sval type="array" size="2">
-      <sval type="int" val="27"/>
+      <sval type="int" val="28"/>
       <sval type="int" val="2"/>
     </sval>
     <sval type="array" size="2">
-      <sval type="int" val="32"/>
+      <sval type="int" val="33"/>
       <sval type="int" val="2"/>
     </sval>
     <sval type="array" size="2">
-      <sval type="int" val="32"/>
+      <sval type="int" val="33"/>
       <sval type="int" val="2"/>
     </sval>
     <sval type="array" size="2">
-      <sval type="int" val="32"/>
+      <sval type="int" val="33"/>
       <sval type="int" val="4"/>
     </sval>
     <sval type="array" size="2">
-      <sval type="int" val="32"/>
+      <sval type="int" val="33"/>
       <sval type="int" val="2"/>
     </sval>
     <sval type="array" size="2">
-      <sval type="int" val="32"/>
+      <sval type="int" val="33"/>
       <sval type="int" val="2"/>
     </sval>
     <sval type="array" size="2">
-      <sval type="int" val="32"/>
+      <sval type="int" val="33"/>
       <sval type="int" val="2"/>
     </sval>
     <sval type="array" size="2">
-      <sval type="int" val="32"/>
+      <sval type="int" val="33"/>
       <sval type="int" val="2"/>
     </sval>
     <sval type="array" size="2">
-      <sval type="int" val="32"/>
+      <sval type="int" val="33"/>
       <sval type="int" val="2"/>
     </sval>
     <sval type="array" size="2">
-      <sval type="int" val="32"/>
+      <sval type="int" val="33"/>
       <sval type="int" val="2"/>
     </sval>
     <sval type="array" size="2">
-      <sval type="int" val="32"/>
+      <sval type="int" val="33"/>
       <sval type="int" val="2"/>
     </sval>
     <sval type="array" size="2">
-      <sval type="int" val="32"/>
+      <sval type="int" val="33"/>
       <sval type="int" val="2"/>
     </sval>
     <sval type="array" size="2">
-      <sval type="int" val="32"/>
+      <sval type="int" val="33"/>
       <sval type="int" val="2"/>
     </sval>
     <sval type="array" size="2">
-      <sval type="int" val="32"/>
+      <sval type="int" val="33"/>
       <sval type="int" val="2"/>
     </sval>
     <sval type="array" size="2">
-      <sval type="int" val="32"/>
+      <sval type="int" val="33"/>
       <sval type="int" val="2"/>
     </sval>
   </sval>
@@ -553,5 +512,4 @@
 </sval>
 
 </codearray>
-<nosignature>0182</nosignature>
 </script>
