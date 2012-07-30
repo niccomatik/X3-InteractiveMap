@@ -13,6 +13,7 @@ import org.w3c.dom.NodeList;
 import de.ncm.x3.iam.data.universe.GridPos;
 import de.ncm.x3.iam.data.universe.Race;
 import de.ncm.x3.iam.data.universe.Sector;
+import de.ncm.x3.iam.data.universe.SpaceStation;
 import de.ncm.x3.iam.data.universe.UniverseMap;
 import de.ncm.x3.iam.data.universe.WarpGate;
 import de.ncm.x3.iam.data.universe.WarpGateConstants;
@@ -102,10 +103,33 @@ public class UniverseMapParser extends XMLParser<UniverseMap> {
 				sector.setRace(raceMap.get(raceID));
 			} else if (children.item(i).getNodeName().equalsIgnoreCase("GateConnections")) {
 				parseGateConnections(sector, children.item(i));
+			} else if (children.item(i).getNodeName().equalsIgnoreCase("Stations")) {
+				parseStations(sector, children.item(i));
 			}
 		}
 		map.putSector(gc, sector);
 		
+	}
+	
+	private void parseStations(Sector sector, Node item) {
+		NodeList children = item.getChildNodes();
+		
+		for (int i = 0; i < children.getLength(); i++) {
+			SpaceStation station = new SpaceStation();
+			Node child = children.item(i);
+			if (child.getNodeName().equalsIgnoreCase("Name")) {
+				station.setName(getStringValueOf(child));
+			} else if (child.getNodeName().equalsIgnoreCase("X")) {
+				station.setPosX(getIntValueOf(child));
+			} else if (child.getNodeName().equalsIgnoreCase("Y")) {
+				station.setPosY(getIntValueOf(child));
+			} else if (child.getNodeName().equalsIgnoreCase("Z")) {
+				station.setPosZ(getIntValueOf(child));
+			} else if (child.getNodeName().equalsIgnoreCase("Type")) {
+				station.setType(getStringValueOf(child));
+			}
+			sector.addSpaceStation(station);
+		}
 	}
 	
 	private void parseGateConnections(Sector sector, Node item) {

@@ -7,16 +7,16 @@ import java.util.LinkedHashMap;
 
 import org.apache.log4j.Logger;
 
-public class ParserManager {
+public class ParserControl {
 	
-	private static Logger logger = Logger.getLogger(ParserManager.class);
-	private static ParserManager instance;
+	private static Logger logger = Logger.getLogger(ParserControl.class);
+	private static ParserControl instance;
 	protected HashMap<Parser, Long> parserMap = new LinkedHashMap<Parser, Long>(); // Parser, LastTimeInvoked
 	protected Thread parseThread = null;
 	protected long waitTime = 100;
 	protected boolean active = false;
 	
-	private ParserManager() {
+	private ParserControl() {
 		addParser(ParserFactory.getUniverseMapParser());
 		addParser(ParserFactory.getActualPlayerPositionParser());
 	}
@@ -78,9 +78,9 @@ public class ParserManager {
 		
 	}
 	
-	public static ParserManager get() {
+	public static ParserControl get() {
 		if (instance == null) {
-			instance = new ParserManager();
+			instance = new ParserControl();
 		}
 		return instance;
 	}

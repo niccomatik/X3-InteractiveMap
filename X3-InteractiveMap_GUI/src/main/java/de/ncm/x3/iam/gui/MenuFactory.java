@@ -22,7 +22,7 @@ import org.apache.log4j.Logger;
 
 import de.ncm.x3.iam.data.ScriptManager;
 import de.ncm.x3.iam.gui.component.JMenuSeperator;
-import de.ncm.x3.iam.parser.ParserManager;
+import de.ncm.x3.iam.parser.ParserControl;
 import de.ncm.x3.iam.settings.PropertyManager;
 
 public final class MenuFactory {
@@ -125,9 +125,9 @@ public final class MenuFactory {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if (menuItem.isSelected()) {
-					ParserManager.get().startParsing();
+					ParserControl.get().startParsing();
 				} else {
-					ParserManager.get().stopParsing();
+					ParserControl.get().stopParsing();
 				}
 				PropertyManager.get().setContinousParsingEnabled(menuItem.isSelected());
 			}

@@ -2,6 +2,8 @@
 package de.ncm.x3.iam.data.universe;
 
 
+import java.util.ArrayList;
+
 import org.apache.log4j.Logger;
 
 public class Sector implements WarpGateConstants {
@@ -10,6 +12,7 @@ public class Sector implements WarpGateConstants {
 	private String name = "";
 	private Race race = null;
 	private WarpGate[] warpGates = new WarpGate[4];
+	private ArrayList<SpaceStation> stations = new ArrayList<SpaceStation>();
 	
 	public Sector(String name, Race race, WarpGate[] warpGates) {
 		super();
@@ -57,6 +60,14 @@ public class Sector implements WarpGateConstants {
 			return false;
 		}
 		return warpGate.equals(getWarpGate(id));
+	}
+	
+	public void addSpaceStation(SpaceStation station) {
+		this.stations.add(station);
+	}
+	
+	public ArrayList<SpaceStation> getSpaceStations() {
+		return stations;
 	}
 	
 }
