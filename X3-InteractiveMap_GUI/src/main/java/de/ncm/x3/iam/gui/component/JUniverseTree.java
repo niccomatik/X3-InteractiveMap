@@ -3,7 +3,7 @@ package de.ncm.x3.iam.gui.component;
 
 
 import java.awt.EventQueue;
-import java.util.Comparator;
+import java.util.List;
 import java.util.TreeSet;
 
 import javax.swing.JTree;
@@ -12,6 +12,7 @@ import javax.swing.tree.DefaultTreeModel;
 
 import de.ncm.x3.iam.data.universe.GridPos;
 import de.ncm.x3.iam.data.universe.Sector;
+import de.ncm.x3.iam.data.universe.SpaceStation;
 import de.ncm.x3.iam.data.universe.UniverseMap;
 import de.ncm.x3.iam.data.universe.WarpGate;
 import de.ncm.x3.iam.data.universe.WarpGateConstants;
@@ -58,7 +59,17 @@ public class JUniverseTree extends JTree {
 					label += universeMap.getSectorName(gate.getTargetGridPos());
 				}
 				
+			} else if (value instanceof List) {
+				List list = ((List) value);
+				if (list.size() > 0 && list.get(0) instanceof SpaceStation) {
+					label = "Space Stations";
+				}
+			} else if (value instanceof SpaceStation) {
+				label = ((SpaceStation) value).getName();
+			} else {
+				System.out.println(value.getClass());
 			}
+			
 		}
 		
 		return label;
@@ -68,13 +79,7 @@ public class JUniverseTree extends JTree {
 		this.universeMap = universeMap;
 		DefaultMutableTreeNode universeNode = new DefaultMutableTreeNode(universeMap);
 		// Start Sector Sorting
-		TreeSet<Sector> sectors = new TreeSet<Sector>(new Comparator<Sector>() {
-			
-			@Override
-			public int compare(Sector s1, Sector s2) {
-				return s1.getName().compareTo(s2.getName());
-			}
-		});
+		TreeSet<Sector> sectors = new TreeSet<Sector>();
 		
 		for (GridPos gp : universeMap.getSectors().keySet()) {
 			sectors.add(universeMap.getSectors().get(gp));
@@ -102,6 +107,26 @@ public class JUniverseTree extends JTree {
 			if (sector.getWarpGates()[WarpGateConstants.WARPGATE_WEST] != null) {
 				warpGateNode.add(new DefaultMutableTreeNode(new Object[] { sector.getWarpGates()[WarpGateConstants.WARPGATE_WEST],
 						WarpGateConstants.WARPGATE_WEST }, false));
+			}
+			
+			DefaultMutableTreeNode stationsNode = new DefaultMutableTreeNode(sector.getSpaceStations());
+			sectorNode.add(stationsNode);
+			
+			TreeSet<SpaceStation> docks = new TreeSet<SpaceStation>();
+			TreeSet<SpaceStation> factories = new TreeSet<SpaceStation>();
+			
+			for (SpaceStation station : sector.getSpaceStations()) { // Sort Factories
+				if (station.isFactory()) {
+					factories.add(station);
+				} else if (station.isDock()) {
+					docks.add(station);
+				}
+			}
+			for (SpaceStation station : docks) {
+				stationsNode.add(new DefaultMutableTreeNode(station, false));
+			}
+			for (SpaceStation station : factories) {
+				stationsNode.add(new DefaultMutableTreeNode(station, false));
 			}
 			
 		}

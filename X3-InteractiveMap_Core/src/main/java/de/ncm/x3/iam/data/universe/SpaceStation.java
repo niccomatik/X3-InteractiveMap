@@ -2,8 +2,10 @@
 package de.ncm.x3.iam.data.universe;
 
 
-public class SpaceStation {
+public class SpaceStation implements Comparable<SpaceStation> {
 	
+	public static final String TYPE_FACTORY = "Factory";
+	public static final String TYPE_Dock = "Dock";
 	private String type = "";
 	private int posZ = 0;
 	private int posY = 0;
@@ -64,6 +66,24 @@ public class SpaceStation {
 	
 	public String getName() {
 		return name;
+	}
+	
+	@Override
+	public int compareTo(SpaceStation station) {
+		return getName().compareTo(station.getName());
+	}
+	
+	public boolean isFactory() {
+		return getType().equalsIgnoreCase(TYPE_FACTORY);
+	}
+	
+	public boolean isDock() {
+		return getType().equalsIgnoreCase(TYPE_Dock);
+	}
+	
+	@Override
+	public String toString() {
+		return "SpaceStation [type=" + type + ", posZ=" + posZ + ", posY=" + posY + ", posX=" + posX + ", name=" + name + "]";
 	}
 	
 }

@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 import org.apache.log4j.Logger;
 
-public class Sector implements WarpGateConstants {
+public class Sector implements WarpGateConstants, Comparable<Sector> {
 	
 	private static final Logger logger = Logger.getLogger(Sector.class);
 	private String name = "";
@@ -74,6 +74,11 @@ public class Sector implements WarpGateConstants {
 	@Override
 	public String toString() {
 		return "Sector [name=" + name + ", race=" + race + ", warpGates=" + Arrays.toString(warpGates) + ", stations=" + stations + "]";
+	}
+	
+	@Override
+	public int compareTo(Sector sector) {
+		return getName().compareTo(sector.getName());
 	}
 	
 }

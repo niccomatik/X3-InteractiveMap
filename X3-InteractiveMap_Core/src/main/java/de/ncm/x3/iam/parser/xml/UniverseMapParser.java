@@ -117,6 +117,16 @@ public class UniverseMapParser extends XMLParser<UniverseMap> {
 		for (int i = 0; i < children.getLength(); i++) {
 			SpaceStation station = new SpaceStation();
 			Node child = children.item(i);
+			parseStation(station, child);
+			sector.addSpaceStation(station);
+		}
+	}
+	
+	private void parseStation(SpaceStation station, Node item) {
+		NodeList children = item.getChildNodes();
+		
+		for (int i = 0; i < children.getLength(); i++) {
+			Node child = children.item(i);
 			if (child.getNodeName().equalsIgnoreCase("Name")) {
 				station.setName(getStringValueOf(child));
 			} else if (child.getNodeName().equalsIgnoreCase("X")) {
@@ -128,7 +138,6 @@ public class UniverseMapParser extends XMLParser<UniverseMap> {
 			} else if (child.getNodeName().equalsIgnoreCase("Type")) {
 				station.setType(getStringValueOf(child));
 			}
-			sector.addSpaceStation(station);
 		}
 	}
 	
