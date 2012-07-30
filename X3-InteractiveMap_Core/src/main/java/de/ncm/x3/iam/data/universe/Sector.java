@@ -3,6 +3,7 @@ package de.ncm.x3.iam.data.universe;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.apache.log4j.Logger;
 
@@ -68,6 +69,11 @@ public class Sector implements WarpGateConstants {
 	
 	public ArrayList<SpaceStation> getSpaceStations() {
 		return stations;
+	}
+	
+	@Override
+	public String toString() {
+		return "Sector [name=" + name + ", race=" + race + ", warpGates=" + Arrays.toString(warpGates) + ", stations=" + stations + "]";
 	}
 	
 }

@@ -20,6 +20,7 @@ import javax.swing.WindowConstants;
 import org.apache.log4j.Logger;
 
 import de.ncm.x3.iam.gui.component.JMenuSeperator;
+import de.ncm.x3.iam.gui.component.JUniverseTree;
 import de.ncm.x3.iam.gui.component.universe.JUniverseMap;
 import de.ncm.x3.iam.gui.component.universe.JUniverseMapScrollContainer;
 import de.ncm.x3.iam.settings.PropertyManager;
@@ -72,8 +73,8 @@ public class Mainframe extends JFrame {
 		jUniverseMap = new JUniverseMap();
 		jUniverseMapScrollContainer = new JUniverseMapScrollContainer(jUniverseMap);
 		
-		tree = new JTree();
-		tree.setModel(ComponentFactory.createDummyTreeModel());
+		tree = new JUniverseTree();
+		// tree.setModel(ComponentFactory.createDummyTreeModel());
 		scrollPane = new JScrollPane(tree);
 		
 		splitPane = ComponentFactory.createHorizontalJSplitPane(scrollPane, jUniverseMapScrollContainer, (int) (getWidth() * 0.2));

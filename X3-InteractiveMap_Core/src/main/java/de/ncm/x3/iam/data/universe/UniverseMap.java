@@ -34,4 +34,14 @@ public class UniverseMap {
 		return races;
 	}
 	
+	public String getSectorName(GridPos gp) {
+		Sector sector = sectors.get(gp);
+		if (sector == null) {
+			return "";
+		} else {
+			return sector.getName();
+		}
+		
+	}
+	
 }
