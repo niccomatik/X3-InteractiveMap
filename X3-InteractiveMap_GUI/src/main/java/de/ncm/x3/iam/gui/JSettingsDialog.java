@@ -2,9 +2,7 @@
 package de.ncm.x3.iam.gui;
 
 
-import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -40,7 +38,6 @@ public class JSettingsDialog extends JDialog {
 	private JPanel saveButtonPanel;
 	private JButton btnSave;
 	private JButton btnCancel;
-	private JLabel lblErrorLabel;
 	
 	public JSettingsDialog(Frame comp) {
 		super(comp);
@@ -95,11 +92,6 @@ public class JSettingsDialog extends JDialog {
 		btnCancel = ComponentFactory.createJButton("CancelButton.text");
 		setupCancelButton(btnCancel);
 		saveButtonPanel.add(btnCancel);
-		
-		lblErrorLabel = new JLabel("");
-		lblErrorLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblErrorLabel.setForeground(Color.RED);
-		getContentPane().add(lblErrorLabel, "2, 20, 5, 1");
 	}
 	
 	/**
@@ -192,15 +184,7 @@ public class JSettingsDialog extends JDialog {
 	
 	private void setupFileTextField(JTextField textField) {
 		textField.setInputVerifier(new JTextFieldFileInputVerifier());
-	}
-	
-	private void printError(String error) {
-		lblErrorLabel.setText(error);
-		lblErrorLabel.setText(error);
-	}
-	
-	private void removeError() {
-		printError("");
+		
 	}
 	
 }
