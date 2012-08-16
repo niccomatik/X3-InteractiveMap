@@ -14,7 +14,7 @@
 	        <groupId>com.jgoodies</groupId>
 	        <artifactId>jgoodies-common</artifactId>
 	        <version>1.4.0</version>
-	        <scope>runtime</scope>
+	        <scope>compile</scope>
 	    </dependency>
 	    <dependency>
 	    	<groupId>junit</groupId>

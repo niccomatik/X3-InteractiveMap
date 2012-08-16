@@ -7,8 +7,14 @@ import java.util.Arrays;
 
 import org.apache.log4j.Logger;
 
-public class Sector implements WarpGateConstants, Comparable<Sector> {
+import com.jgoodies.binding.beans.Model;
+
+public class Sector extends Model implements WarpGateConstants, Comparable<Sector> {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6684121054569984002L;
 	private static final Logger logger = Logger.getLogger(Sector.class);
 	private String name = "";
 	private Race race = null;
