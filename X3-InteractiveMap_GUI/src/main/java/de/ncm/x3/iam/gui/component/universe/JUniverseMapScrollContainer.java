@@ -10,6 +10,7 @@ import javax.swing.JViewport;
 
 import de.ncm.x3.iam.data.ActualPlayerInfo;
 import de.ncm.x3.iam.data.universe.GridPos;
+import de.ncm.x3.iam.gui.component.JUniverseTree;
 import de.ncm.x3.iam.gui.layout.UniverseLayout;
 import de.ncm.x3.iam.gui.listener.universe.HandScrollListener;
 import de.ncm.x3.iam.parser.ParseEvent;
@@ -20,9 +21,11 @@ import de.ncm.x3.iam.settings.PropertyManager;
 public class JUniverseMapScrollContainer extends JScrollPane {
 	
 	private JUniverseMap map;
+	private JUniverseTree tree;
 	
-	public JUniverseMapScrollContainer(JUniverseMap map) {
+	public JUniverseMapScrollContainer(JUniverseMap map, JUniverseTree tree) {
 		super(map);
+		this.tree = tree; // TODO: remove JTree quickhack
 		this.map = map;
 		if (!(map.getLayout() instanceof UniverseLayout)) {
 			throw new IllegalStateException("No supported Layoutmanager in " + map.getClass().getName());
@@ -50,6 +53,7 @@ public class JUniverseMapScrollContainer extends JScrollPane {
 		
 		setViewPosition(vPos);
 		setAutoscrolls(false);
+		tree.selectSector(map.getUniverseMap().getSectors().get(gridpos));
 	}
 	
 	public Point getViewPosition() {

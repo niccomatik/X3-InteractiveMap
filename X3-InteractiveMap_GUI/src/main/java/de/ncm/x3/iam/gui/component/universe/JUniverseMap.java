@@ -307,4 +307,8 @@ public class JUniverseMap extends JRenderPanel {
 		
 		return false;
 	}
+	
+	public UniverseMap getUniverseMap() {
+		return universeMap;
+	}
 }

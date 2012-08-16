@@ -15,6 +15,7 @@
 	<modules>
 		<module>X3-InteractiveMap_Core</module>
 		<module>X3-InteractiveMap_GUI</module>
+		<module>X3-InteractiveMap_non-maven-dependencies</module>
 	</modules>
 
 	<dependencies>
@@ -29,6 +30,6 @@
 			<artifactId>junit</artifactId>
 			<version>4.0</version>
 			<scope>test</scope>
-		</dependency>
+		</dependency>	
 	</dependencies>
 </project>

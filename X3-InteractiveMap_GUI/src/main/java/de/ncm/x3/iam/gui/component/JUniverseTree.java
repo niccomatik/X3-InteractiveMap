@@ -3,13 +3,22 @@ package de.ncm.x3.iam.gui.component;
 
 
 import java.awt.EventQueue;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.TreeSet;
 
 import javax.swing.JTree;
+import javax.swing.event.TreeExpansionEvent;
+import javax.swing.event.TreeExpansionListener;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
 
+import de.ncm.x3.iam.data.ActualPlayerInfo;
 import de.ncm.x3.iam.data.universe.GridPos;
 import de.ncm.x3.iam.data.universe.Sector;
 import de.ncm.x3.iam.data.universe.SpaceStation;
@@ -22,11 +31,18 @@ import de.ncm.x3.iam.parser.ParserFactory;
 
 public class JUniverseTree extends JTree {
 	
+	private static final long serialVersionUID = 4593574589859462379L;
+	
 	private UniverseMap universeMap;
+	private TSListener treeListener = new TSListener();
 	
 	public JUniverseTree() {
 		super(new DefaultTreeModel(new DefaultMutableTreeNode("Universe")));
 		ParserFactory.getUniverseMapParser().addParseListener(new PListener());
+		getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+		
+		addTreeSelectionListener(treeListener);
+		addTreeExpansionListener(treeListener);
 	}
 	
 	@Override
@@ -66,8 +82,6 @@ public class JUniverseTree extends JTree {
 				}
 			} else if (value instanceof SpaceStation) {
 				label = ((SpaceStation) value).getName();
-			} else {
-				System.out.println(value.getClass());
 			}
 			
 		}
@@ -130,7 +144,65 @@ public class JUniverseTree extends JTree {
 			}
 			
 		}
-		setModel(new DefaultTreeModel(universeNode));
+		getModelCasted().setRoot(universeNode);
+		
+	}
+	
+	public void expandAll(JTree tree, TreePath parent, boolean expand) {
+		// Traverse children
+		TreeNode node = (TreeNode) parent.getLastPathComponent();
+		if (node.getChildCount() >= 0) {
+			@SuppressWarnings("rawtypes")
+			Enumeration e = node.children();
+			while (e.hasMoreElements()) {
+				TreeNode n = (TreeNode) e.nextElement();
+				TreePath path = parent.pathByAddingChild(n);
+				expandAll(tree, path, expand);
+			}
+		}
+		// Expansion or collapse must be done bottom-up
+		if (expand) {
+			tree.expandPath(parent);
+		} else {
+			tree.collapsePath(parent);
+		}
+	}
+	
+	private DefaultTreeModel getModelCasted() {
+		return (DefaultTreeModel) getModel();
+	}
+	
+	public void selectSector(Sector sector) {
+		if (sector == null) {
+			return;
+		}
+		DefaultMutableTreeNode rootNode = (DefaultMutableTreeNode) getModelCasted().getRoot();
+		
+		for (int i = 0; i < rootNode.getChildCount(); i++) {
+			DefaultMutableTreeNode sectorNode = (DefaultMutableTreeNode) rootNode.getChildAt(i);
+			
+			if (sector.equals(sectorNode.getUserObject())) {
+				TreePath path = new TreePath(sectorNode.getPath());
+				this.expandAll(this, path, true);
+				this.setSelectionPath(path);
+				this.scrollPathToVisible(path); // First ensure SectorNode is in view
+				if (rootNode.getChildCount() > i + 1) { // then show last Node
+					DefaultMutableTreeNode nextRow = (DefaultMutableTreeNode) rootNode.getChildAt(i + 1);
+					this.scrollPathToVisible(new TreePath(nextRow.getPath()));
+				} else {
+					this.scrollPathToVisible(getVeryLastChildOf(sectorNode));
+				}
+				
+				return;
+			}
+		}
+	}
+	
+	public TreePath getVeryLastChildOf(DefaultMutableTreeNode node) {
+		while (node.getChildCount() > 0) {
+			node = (DefaultMutableTreeNode) node.getLastChild();
+		}
+		return new TreePath(node.getPath());
 	}
 	
 	private class PListener implements ParseListener {
@@ -140,17 +212,57 @@ public class JUniverseTree extends JTree {
 		
 		@Override
 		public void onParseEnd(final ParseEvent e) {
-			if (!(e.getParsedValue() instanceof UniverseMap)) {
+			if (e.getParsedValue() instanceof UniverseMap) {
+				EventQueue.invokeLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						JUniverseTree.this.universeMapChanged((UniverseMap) e.getParsedValue());
+						
+					}
+				});
+			} else if (e.getParsedValue() instanceof ActualPlayerInfo) {
+				EventQueue.invokeLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						// setSelectionPath(new TreePath(lastPathComponent))
+						
+					}
+				});
+			}
+			
+		}
+	}
+	
+	private class TSListener implements TreeSelectionListener, TreeExpansionListener {
+		
+		@Override
+		public void valueChanged(TreeSelectionEvent e) {
+			DefaultMutableTreeNode node = (DefaultMutableTreeNode) getLastSelectedPathComponent();
+			// if (e.getOldLeadSelectionPath() != null) {
+			// expandAll(JUniverseTree.this, e.getOldLeadSelectionPath(), false);
+			// }
+			
+			if (node == null) {
+				// Nothing is selected.
 				return;
 			}
-			EventQueue.invokeLater(new Runnable() {
-				
-				@Override
-				public void run() {
-					JUniverseTree.this.universeMapChanged((UniverseMap) e.getParsedValue());
-					
-				}
-			});
+			
+		}
+		
+		@Override
+		public void treeExpanded(TreeExpansionEvent event) {
+			DefaultMutableTreeNode node = (DefaultMutableTreeNode) event.getPath().getLastPathComponent();
+			if (node.getUserObject() instanceof Sector) {
+				expandAll(JUniverseTree.this, event.getPath(), true);
+			}
+			
+		}
+		
+		@Override
+		public void treeCollapsed(TreeExpansionEvent event) {
+			// TODO Auto-generated method stub
 			
 		}
 	}

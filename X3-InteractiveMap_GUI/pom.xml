@@ -123,7 +123,12 @@
 		<dependency>
 			<groupId>com.jgoodies</groupId>
 			<artifactId>forms</artifactId>
-			<version>1.2.1</version>
+			<version>1.2.1</version><!-- Has to be the old version dueto using Windowbuilder -->
+		</dependency>
+		<dependency>
+			<groupId>com.jgoodies</groupId>
+			<artifactId>jgoodies-binding</artifactId>
+			<version>2.7.0</version>
 		</dependency>
 	</dependencies>
 	<parent>

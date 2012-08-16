@@ -14,7 +14,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.JTree;
 import javax.swing.WindowConstants;
 
 import org.apache.log4j.Logger;
@@ -47,7 +46,7 @@ public class Mainframe extends JFrame {
 	private JMenuItem mntmCenterMapOn;
 	private JMenuItem mntmAbout;
 	private JScrollPane scrollPane;
-	private JTree tree;
+	private JUniverseTree tree;
 	private JSplitPane splitPane;
 	
 	/**
@@ -70,12 +69,11 @@ public class Mainframe extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
-		jUniverseMap = new JUniverseMap();
-		jUniverseMapScrollContainer = new JUniverseMapScrollContainer(jUniverseMap);
-		
 		tree = new JUniverseTree();
-		// tree.setModel(ComponentFactory.createDummyTreeModel());
 		scrollPane = new JScrollPane(tree);
+		
+		jUniverseMap = new JUniverseMap();
+		jUniverseMapScrollContainer = new JUniverseMapScrollContainer(jUniverseMap, tree);
 		
 		splitPane = ComponentFactory.createHorizontalJSplitPane(scrollPane, jUniverseMapScrollContainer, (int) (getWidth() * 0.2));
 		contentPane.add(splitPane, BorderLayout.CENTER);

@@ -1,0 +1,47 @@
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.jgoodies</groupId>
+	<artifactId>jgoodies-common</artifactId>
+	<version>1.4.0</version>
+	<packaging>jar</packaging>
+	<name>JGoodies Common</name>
+	<url>http://www.jgoodies.com/downloads/libraries.html</url>
+	<description>The JGoodies Common library provides convenience code
+	for other JGoodies libraries and applications.</description>
+	<licenses>
+		<license>
+			<name>The BSD License</name>
+			<url>http://www.opensource.org/licenses/bsd-license.html</url>
+		</license>
+	</licenses>
+	<dependencies>
+	    <dependency>
+	    	<groupId>junit</groupId>
+	    	<artifactId>junit</artifactId>
+	    	<version>4.8</version>
+	    	<scope>test</scope>
+	    </dependency>
+	</dependencies>
+	<organization>
+		<name>JGoodies</name>
+		<url>http://www.jgoodies.com/</url>
+	</organization>
+	<developers>
+		<developer>
+			<id>karsten</id>
+			<name>Karsten Lentzsch</name>
+			<organization>JGoodies</organization>
+			<organizationUrl>http://www.jgoodies.com/</organizationUrl>
+			<timezone>+0100</timezone>
+			<roles>
+			    <role>Project owner</role>
+			    <role>Developer</role>
+			</roles>
+		</developer>
+	</developers>
+	<parent>
+		<groupId>de.ncm.x3.iam</groupId>
+		<artifactId>jgoodies</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+</project>

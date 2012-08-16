@@ -20,9 +20,6 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.Popup;
 import javax.swing.PopupFactory;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeModel;
 
 import org.apache.log4j.Logger;
 
@@ -81,21 +78,6 @@ public final class ComponentFactory {
 		button.setLocale(Messages.getActualLocale());
 		localise(button, messageKey);
 		return button;
-	}
-	
-	public static TreeModel createDummyTreeModel() {
-		DefaultMutableTreeNode rootnode = new DefaultMutableTreeNode("Universe");
-		DefaultMutableTreeNode sector1 = new DefaultMutableTreeNode("Sector1");
-		DefaultMutableTreeNode station1 = new DefaultMutableTreeNode("Station1");
-		DefaultMutableTreeNode ship1 = new DefaultMutableTreeNode("Ship1");
-		
-		station1.setAllowsChildren(false);
-		ship1.setAllowsChildren(false);
-		
-		rootnode.add(sector1);
-		sector1.add(station1);
-		sector1.add(ship1);
-		return new DefaultTreeModel(rootnode);
 	}
 	
 	public static JButton createBrowseButtonTextFieldBinding(final JTextField textField, final String fileChooserTitle, final int fileSelectionMode,

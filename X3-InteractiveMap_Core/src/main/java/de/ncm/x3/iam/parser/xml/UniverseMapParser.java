@@ -124,7 +124,7 @@ public class UniverseMapParser extends XMLParser<UniverseMap> {
 	
 	private void parseStation(SpaceStation station, Node item) {
 		NodeList children = item.getChildNodes();
-		
+		String clazz = "";
 		for (int i = 0; i < children.getLength(); i++) {
 			Node child = children.item(i);
 			if (child.getNodeName().equalsIgnoreCase("Name")) {
@@ -137,7 +137,12 @@ public class UniverseMapParser extends XMLParser<UniverseMap> {
 				station.setPosZ(getIntValueOf(child));
 			} else if (child.getNodeName().equalsIgnoreCase("Type")) {
 				station.setType(getStringValueOf(child));
+			} else if (child.getNodeName().equalsIgnoreCase("StationClass")) {
+				clazz = getStringValueOf(child);
 			}
+		}
+		if (!station.getName().trim().equals("")) {
+			System.out.println(station.getName() + "\t: " + clazz);
 		}
 	}
 	
