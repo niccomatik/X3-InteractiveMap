@@ -1,0 +1,190 @@
+<?xml version="1.0" standalone="yes" ?>
+<?xml-stylesheet href="x2script.xsl" type="text/xsl" ?>
+<script>
+<name>al.ncm.map.parseStations</name>
+<version>0</version>
+<engineversion>45</engineversion>
+<description>Description</description>
+<arguments>
+<argument index="1" name="sector" type="Var/Sector" desc="Sector for Stations to list" />
+</arguments>
+<sourcetext>
+<line linenr="001" indent=""></line>
+<line linenr="002" indent=""><var>$output&#160;=&#160;</var><var>'&lt;Stations&gt;'</var></line>
+<line linenr="003" indent=""></line>
+<line linenr="004" indent=""></line>
+<line linenr="005" indent=""><var>$stations&#160;=&#160;</var><var>$sector&#160;-&gt;</var><text>&#160;get&#160;dock&#160;array&#160;from&#160;sector</text></line>
+<line linenr="006" interruptable="@" indent=""><var>$logString&#160;=&#160;</var><var>[THIS]&#160;-&gt;</var><text>&#160;call&#160;script&#160;</text><call>al.ncm.map.StationArrayToString</call><text>&#160;:&#160;</text><text>&#160;StationArray=</text><var>$stations</var><text>&#160;</text><text>&#160;The&#160;Station&#160;Type=</text><var>'Dock'</var></line>
+<line linenr="007" indent=""></line>
+<line linenr="008" indent=""><var>$output&#160;=&#160;</var><var>$output</var><text>&#160;</text><var>+</var><text>&#160;</text><var>$logString</var></line>
+<line linenr="009" indent=""></line>
+<line linenr="010" indent=""></line>
+<line linenr="011" indent=""><var>$stations&#160;=&#160;</var><var>$sector&#160;-&gt;</var><text>&#160;get&#160;factory&#160;array&#160;from&#160;sector</text></line>
+<line linenr="012" interruptable="@" indent=""><var>$logString&#160;=&#160;</var><var>[THIS]&#160;-&gt;</var><text>&#160;call&#160;script&#160;</text><call>al.ncm.map.StationArrayToString</call><text>&#160;:&#160;</text><text>&#160;StationArray=</text><var>$stations</var><text>&#160;</text><text>&#160;The&#160;Station&#160;Type=</text><var>'Factory'</var></line>
+<line linenr="013" indent=""></line>
+<line linenr="014" indent=""><var>$output&#160;=&#160;</var><var>$output</var><text>&#160;</text><var>+</var><text>&#160;</text><var>$logString</var></line>
+<line linenr="015" indent=""></line>
+<line linenr="016" indent=""><var>$output&#160;=&#160;</var><var>$output</var><text>&#160;</text><var>+</var><text>&#160;</text><var>'&lt;/Stations&gt;'</var></line>
+<line linenr="017" indent=""></line>
+<line linenr="018" indent=""><text>return&#160;</text><var>$output</var></line>
+</sourcetext>
+<codearray>
+
+<sval type="array" size="10">
+  <sval type="string" val="al.ncm.map.parseStations"/>
+  <sval type="int" val="45"/>
+  <sval type="string" val="Description"/>
+  <sval type="int" val="0"/>
+  <sval type="int" val="0"/>
+  <sval type="array" size="4">
+    <sval type="string" val="sector"/>
+    <sval type="string" val="output"/>
+    <sval type="string" val="stations"/>
+    <sval type="string" val="logString"/>
+  </sval>
+  <sval type="array" size="9">
+    <sval type="array" size="7">
+      <sval type="int" val="104"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="&lt;Stations&gt;"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="-1"/>
+    </sval>
+    <sval type="array" size="4">
+      <sval type="int" val="1011"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="0"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="10">
+      <sval type="int" val="102"/>
+      <sval type="string" val="al.ncm.map.StationArrayToString"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="131075"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="2"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="2"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="Dock"/>
+    </sval>
+    <sval type="array" size="13">
+      <sval type="int" val="104"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="-1"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-2"/>
+    </sval>
+    <sval type="array" size="4">
+      <sval type="int" val="1010"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="0"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="10">
+      <sval type="int" val="102"/>
+      <sval type="string" val="al.ncm.map.StationArrayToString"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="131075"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="2"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="2"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="Factory"/>
+    </sval>
+    <sval type="array" size="13">
+      <sval type="int" val="104"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="-1"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-2"/>
+    </sval>
+    <sval type="array" size="13">
+      <sval type="int" val="104"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="&lt;/Stations&gt;"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="-1"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-2"/>
+    </sval>
+    <sval type="array" size="3">
+      <sval type="int" val="103"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="1"/>
+    </sval>
+  </sval>
+  <sval type="array" size="1">
+    <sval type="array" size="2">
+      <sval type="int" val="14"/>
+      <sval type="string" val="Sector for Stations to list"/>
+    </sval>
+  </sval>
+  <sval type="array" size="9">
+    <sval type="array" size="2">
+      <sval type="int" val="0"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="1"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="1"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="3"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="4"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="4"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="6"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="7"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="8"/>
+      <sval type="int" val="2"/>
+    </sval>
+  </sval>
+  <sval type="int" val="0"/>
+</sval>
+
+</codearray>
+</script>

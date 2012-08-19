@@ -2,15 +2,19 @@
 package de.ncm.x3.iam.data.universe;
 
 
-import java.util.HashMap;
-
 import org.apache.log4j.Logger;
 
-public class UniverseMap {
+import com.jgoodies.binding.beans.Model;
+
+import de.ncm.jgoodies.model.HashMapModel;
+
+public class UniverseMap extends Model {
 	
 	private static Logger logger = Logger.getLogger(UniverseMap.class);
-	private HashMap<GridPos, Sector> sectors = new HashMap<GridPos, Sector>();
-	private HashMap<Integer, Race> races;
+	public static final String UNIVERSEMAP_SECTOR_CHANGE = "UniverseMap_Sector_Change";
+	public static final String UNIVERSEMAP_ALL_SECTORS_CHANGE = "UniverseMap_All_Sectors_Change";
+	private HashMapModel<GridPos, Sector> sectors = new HashMapModel<GridPos, Sector>();
+	private HashMapModel<Integer, Race> races;
 	
 	public UniverseMap() {}
 	
@@ -19,18 +23,19 @@ public class UniverseMap {
 		if (ret != null) {
 			logger.warn("Map value at " + gridPos + " has been replaced");
 		}
+		firePropertyChange(UNIVERSEMAP_SECTOR_CHANGE, ret, sec);
 	}
 	
-	public HashMap<GridPos, Sector> getSectors() {
+	public HashMapModel<GridPos, Sector> getSectors() {
 		return sectors;
 	}
 	
-	public void setRaces(HashMap<Integer, Race> raceMap) {
+	public void setRaces(HashMapModel<Integer, Race> raceMap) {
 		this.races = raceMap;
 		
 	}
 	
-	public HashMap<Integer, Race> getRaces() {
+	public HashMapModel<Integer, Race> getRaces() {
 		return races;
 	}
 	

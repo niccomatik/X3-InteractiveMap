@@ -3,13 +3,13 @@ package de.ncm.x3.iam.parser.xml;
 
 
 import java.io.File;
-import java.util.HashMap;
 
 import org.apache.log4j.Logger;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import de.ncm.jgoodies.model.HashMapModel;
 import de.ncm.x3.iam.data.universe.GridPos;
 import de.ncm.x3.iam.data.universe.Race;
 import de.ncm.x3.iam.data.universe.Sector;
@@ -40,13 +40,13 @@ public class UniverseMapParser extends XMLParser<UniverseMap> {
 			}
 		}
 		
-		HashMap<Integer, Race> raceMap = parseRaces(racesNode);
+		HashMapModel<Integer, Race> raceMap = parseRaces(racesNode);
 		return parseMap(raceMap, mapNode);
 	}
 	
-	private HashMap<Integer, Race> parseRaces(Node item) {
+	private HashMapModel<Integer, Race> parseRaces(Node item) {
 		
-		HashMap<Integer, Race> raceMap = new HashMap<Integer, Race>();
+		HashMapModel<Integer, Race> raceMap = new HashMapModel<Integer, Race>();
 		NodeList children = item.getChildNodes();
 		for (int i = 0; i < children.getLength(); i++) {
 			if (children.item(i).getNodeName().equalsIgnoreCase("Race")) {
@@ -56,7 +56,7 @@ public class UniverseMapParser extends XMLParser<UniverseMap> {
 		return raceMap;
 	}
 	
-	private void parseRace(HashMap<Integer, Race> raceMap, Node mapNode) {
+	private void parseRace(HashMapModel<Integer, Race> raceMap, Node mapNode) {
 		NodeList children = mapNode.getChildNodes();
 		
 		Integer id = 0;
@@ -72,7 +72,7 @@ public class UniverseMapParser extends XMLParser<UniverseMap> {
 		raceMap.put(id, new Race(id, name));
 	}
 	
-	private UniverseMap parseMap(HashMap<Integer, Race> raceMap, Node item) {
+	private UniverseMap parseMap(HashMapModel<Integer, Race> raceMap, Node item) {
 		NodeList children = item.getChildNodes();
 		UniverseMap map = new UniverseMap();
 		map.setRaces(raceMap);
@@ -84,7 +84,7 @@ public class UniverseMapParser extends XMLParser<UniverseMap> {
 		return map;
 	}
 	
-	private void parseSector(HashMap<Integer, Race> raceMap, UniverseMap map, Node item) {
+	private void parseSector(HashMapModel<Integer, Race> raceMap, UniverseMap map, Node item) {
 		
 		NodeList children = item.getChildNodes();
 		

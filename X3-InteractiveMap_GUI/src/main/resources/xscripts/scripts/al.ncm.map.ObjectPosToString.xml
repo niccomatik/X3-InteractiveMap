@@ -1,0 +1,142 @@
+<?xml version="1.0" standalone="yes" ?>
+<?xml-stylesheet href="x2script.xsl" type="text/xsl" ?>
+<script>
+<name>al.ncm.map.ObjectPosToString</name>
+<version>0</version>
+<engineversion>45</engineversion>
+<description>Description</description>
+<arguments>
+<argument index="1" name="obj" type="Var/Ship/Station" desc="The Object (x,y,z)" />
+</arguments>
+<sourcetext>
+<line linenr="001" indent=""></line>
+<line linenr="002" indent=""><var>$x&#160;=&#160;</var><var>$obj&#160;-&gt;</var><text>&#160;get&#160;x&#160;position</text></line>
+<line linenr="003" indent=""><var>$y&#160;=&#160;</var><var>$obj&#160;-&gt;</var><text>&#160;get&#160;y&#160;position</text></line>
+<line linenr="004" indent=""><var>$z&#160;=&#160;</var><var>$obj&#160;-&gt;</var><text>&#160;get&#160;z&#160;position</text></line>
+<line linenr="005" indent=""></line>
+<line linenr="006" indent=""><var>$logString&#160;=&#160;</var><var>'&lt;X&gt;'</var><text>&#160;</text><var>+</var><text>&#160;</text><var>$x</var><text>&#160;</text><var>+</var><text>&#160;</text><var>'&lt;/X&gt;'</var><text>&#160;</text><var>+</var><text>&#160;</text><var>'&lt;Y&gt;'</var><text>&#160;</text><var>+</var><text>&#160;</text><var>$y</var><text>&#160;</text><var>+</var><text>&#160;</text><var>'&lt;/Y&gt;'</var><text>&#160;</text><var>+</var><text>&#160;</text><var>'&lt;Z&gt;'</var><text>&#160;</text><var>+</var><text>&#160;</text><var>$z</var><text>&#160;</text><var>+</var><text>&#160;</text><var>'&lt;/Z&gt;'</var></line>
+<line linenr="007" indent=""></line>
+<line linenr="008" indent=""><text>return&#160;</text><var>$logString</var></line>
+</sourcetext>
+<codearray>
+
+<sval type="array" size="10">
+  <sval type="string" val="al.ncm.map.ObjectPosToString"/>
+  <sval type="int" val="45"/>
+  <sval type="string" val="Description"/>
+  <sval type="int" val="0"/>
+  <sval type="int" val="0"/>
+  <sval type="array" size="5">
+    <sval type="string" val="obj"/>
+    <sval type="string" val="x"/>
+    <sval type="string" val="y"/>
+    <sval type="string" val="z"/>
+    <sval type="string" val="logString"/>
+  </sval>
+  <sval type="array" size="5">
+    <sval type="array" size="4">
+      <sval type="int" val="740"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="0"/>
+      <sval type="int" val="1"/>
+    </sval>
+    <sval type="array" size="4">
+      <sval type="int" val="741"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="0"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="4">
+      <sval type="int" val="742"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="0"/>
+      <sval type="int" val="3"/>
+    </sval>
+    <sval type="array" size="55">
+      <sval type="int" val="104"/>
+      <sval type="int" val="4"/>
+      <sval type="int" val="17"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="&lt;X&gt;"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="&lt;/X&gt;"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="&lt;Y&gt;"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="2"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="&lt;/Y&gt;"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="&lt;Z&gt;"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="&lt;/Z&gt;"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="17"/>
+      <sval type="int" val="-1"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-2"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-4"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-6"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-8"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-10"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-12"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-14"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-16"/>
+    </sval>
+    <sval type="array" size="3">
+      <sval type="int" val="103"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="4"/>
+    </sval>
+  </sval>
+  <sval type="array" size="1">
+    <sval type="array" size="2">
+      <sval type="int" val="22"/>
+      <sval type="string" val="The Object (x,y,z)"/>
+    </sval>
+  </sval>
+  <sval type="array" size="3">
+    <sval type="array" size="2">
+      <sval type="int" val="0"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="3"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="4"/>
+      <sval type="int" val="2"/>
+    </sval>
+  </sval>
+  <sval type="int" val="0"/>
+</sval>
+
+</codearray>
+</script>

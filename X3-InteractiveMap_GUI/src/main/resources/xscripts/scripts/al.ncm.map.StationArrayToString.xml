@@ -1,0 +1,339 @@
+<?xml version="1.0" standalone="yes" ?>
+<?xml-stylesheet href="x2script.xsl" type="text/xsl" ?>
+<script>
+<name>al.ncm.map.StationArrayToString</name>
+<version>0</version>
+<engineversion>45</engineversion>
+<description>Description</description>
+<arguments>
+<argument index="1" name="stations" type="Value" desc="StationArray" />
+<argument index="2" name="type" type="Var/String" desc="The Station Type" />
+</arguments>
+<sourcetext>
+<line linenr="001" indent=""></line>
+<line linenr="002" indent=""><var>$output&#160;=&#160;</var><var>'&#160;'</var></line>
+<line linenr="003" indent=""></line>
+<line linenr="004" indent=""><var>$arraySize&#160;=&#160;</var><text>size&#160;of&#160;array&#160;</text><var>$stations</var></line>
+<line linenr="005" indent=""><var>$i&#160;=&#160;</var><var>0</var></line>
+<line linenr="006" indent=""></line>
+<line linenr="007" indent=""><var>while&#160;</var><var>$i</var><text>&#160;</text><var>&lt;</var><text>&#160;</text><var>$arraySize</var></line>
+<line linenr="008" indent="&#160;"></line>
+<line linenr="009" indent="&#160;"><var>$output&#160;=&#160;</var><var>$output</var><text>&#160;</text><var>+</var><text>&#160;</text><var>'&lt;Station&gt;'</var></line>
+<line linenr="010" indent="&#160;"><var>$station&#160;=&#160;</var><var>$stations</var><text>[</text><var>$i</var><text>]</text></line>
+<line linenr="011" indent="&#160;"><var>$station.name&#160;=&#160;</var><var>$station&#160;-&gt;</var><text>&#160;get&#160;name</text></line>
+<line linenr="012" indent="&#160;"><var>$station.class&#160;=&#160;</var><var>$station&#160;-&gt;</var><text>&#160;get&#160;object&#160;class</text></line>
+<line linenr="013" indent="&#160;"><var>$station.class.id&#160;=&#160;</var><var>$station.class&#160;-&gt;</var><text>&#160;get&#160;ID&#160;code</text></line>
+<line linenr="014" indent="&#160;"></line>
+<line linenr="015" indent="&#160;"></line>
+<line linenr="016" indent="&#160;"></line>
+<line linenr="017" indent="&#160;"></line>
+<line linenr="018" indent="&#160;"></line>
+<line linenr="019" interruptable="@" indent="&#160;"><var>$station.posString&#160;=&#160;</var><var>[THIS]&#160;-&gt;</var><text>&#160;call&#160;script&#160;</text><call>al.ncm.map.ObjectPosToString</call><text>&#160;:&#160;</text><text>&#160;The&#160;Object&#160;(x,y,z)=</text><var>$station</var></line>
+<line linenr="020" indent="&#160;"></line>
+<line linenr="021" indent="&#160;"><var>$output&#160;=&#160;</var><var>$output</var><text>&#160;</text><var>+</var><text>&#160;</text><var>'&lt;Name&gt;'</var><text>&#160;</text><var>+</var><text>&#160;</text><var>$station.name</var><text>&#160;</text><var>+</var><text>&#160;</text><var>'&lt;/Name&gt;'</var><text>&#160;</text><var>+</var><text>&#160;</text><var>$station.posString</var><text>&#160;</text><var>+</var><text>&#160;</text><var>'&lt;Type&gt;'</var><text>&#160;</text><var>+</var><text>&#160;</text><var>$type</var><text>&#160;</text><var>+</var><text>&#160;</text><var>'&lt;/Type&gt;'</var><text>&#160;</text><var>+</var><text>&#160;</text><var>'&lt;StationClass&gt;'</var><text>&#160;</text><var>+</var><text>&#160;</text><var>$station.class.id</var><text>&#160;</text><var>+</var><text>&#160;</text><var>'&lt;/StationClass&gt;'</var></line>
+<line linenr="022" indent="&#160;"></line>
+<line linenr="023" indent="&#160;"></line>
+<line linenr="024" indent="&#160;"><var>$output&#160;=&#160;</var><var>$output</var><text>&#160;</text><var>+</var><text>&#160;</text><var>'&lt;/Station&gt;'</var></line>
+<line linenr="025" indent="&#160;"><var>$i&#160;=&#160;</var><var>$i</var><text>&#160;</text><var>+</var><text>&#160;</text><var>1</var></line>
+<line linenr="026" indent=""><text>end</text></line>
+<line linenr="027" indent=""></line>
+<line linenr="028" indent=""></line>
+<line linenr="029" indent=""><text>return&#160;</text><var>$output</var></line>
+</sourcetext>
+<codearray>
+
+<sval type="array" size="10">
+  <sval type="string" val="al.ncm.map.StationArrayToString"/>
+  <sval type="int" val="45"/>
+  <sval type="string" val="Description"/>
+  <sval type="int" val="0"/>
+  <sval type="int" val="0"/>
+  <sval type="array" size="10">
+    <sval type="string" val="stations"/>
+    <sval type="string" val="type"/>
+    <sval type="string" val="output"/>
+    <sval type="string" val="arraySize"/>
+    <sval type="string" val="i"/>
+    <sval type="string" val="station"/>
+    <sval type="string" val="station.name"/>
+    <sval type="string" val="station.class"/>
+    <sval type="string" val="station.class.id"/>
+    <sval type="string" val="station.posString"/>
+  </sval>
+  <sval type="array" size="15">
+    <sval type="array" size="7">
+      <sval type="int" val="104"/>
+      <sval type="int" val="2"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val=" "/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="-1"/>
+    </sval>
+    <sval type="array" size="4">
+      <sval type="int" val="131"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="0"/>
+    </sval>
+    <sval type="array" size="7">
+      <sval type="int" val="104"/>
+      <sval type="int" val="4"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="4"/>
+      <sval type="int" val="0"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="-1"/>
+    </sval>
+    <sval type="array" size="13">
+      <sval type="int" val="104"/>
+      <sval type="int" val="-1610609143"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="4"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="-1"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="-2"/>
+    </sval>
+    <sval type="array" size="13">
+      <sval type="int" val="104"/>
+      <sval type="int" val="2"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="2"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="&lt;Station&gt;"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="-1"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-2"/>
+    </sval>
+    <sval type="array" size="6">
+      <sval type="int" val="129"/>
+      <sval type="int" val="5"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="0"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="4"/>
+    </sval>
+    <sval type="array" size="4">
+      <sval type="int" val="1028"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="5"/>
+      <sval type="int" val="6"/>
+    </sval>
+    <sval type="array" size="4">
+      <sval type="int" val="700"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="5"/>
+      <sval type="int" val="7"/>
+    </sval>
+    <sval type="array" size="4">
+      <sval type="int" val="1036"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="7"/>
+      <sval type="int" val="8"/>
+    </sval>
+    <sval type="array" size="8">
+      <sval type="int" val="102"/>
+      <sval type="string" val="al.ncm.map.ObjectPosToString"/>
+      <sval type="int" val="9"/>
+      <sval type="int" val="131075"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="5"/>
+    </sval>
+    <sval type="array" size="67">
+      <sval type="int" val="104"/>
+      <sval type="int" val="2"/>
+      <sval type="int" val="21"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="2"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="&lt;Name&gt;"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="6"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="&lt;/Name&gt;"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="9"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="&lt;Type&gt;"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="&lt;/Type&gt;"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="&lt;StationClass&gt;"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="8"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="&lt;/StationClass&gt;"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="21"/>
+      <sval type="int" val="-1"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-2"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-4"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-6"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-8"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-10"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-12"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-14"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-16"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-18"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-20"/>
+    </sval>
+    <sval type="array" size="13">
+      <sval type="int" val="104"/>
+      <sval type="int" val="2"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="2"/>
+      <sval type="int" val="5"/>
+      <sval type="string" val="&lt;/Station&gt;"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="-1"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-2"/>
+    </sval>
+    <sval type="array" size="13">
+      <sval type="int" val="104"/>
+      <sval type="int" val="4"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="4"/>
+      <sval type="int" val="4"/>
+      <sval type="int" val="1"/>
+      <sval type="int" val="15"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="3"/>
+      <sval type="int" val="-1"/>
+      <sval type="int" val="11"/>
+      <sval type="int" val="-2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="112"/>
+      <sval type="int" val="3"/>
+    </sval>
+    <sval type="array" size="3">
+      <sval type="int" val="103"/>
+      <sval type="int" val="131074"/>
+      <sval type="int" val="2"/>
+    </sval>
+  </sval>
+  <sval type="array" size="2">
+    <sval type="array" size="2">
+      <sval type="int" val="9"/>
+      <sval type="string" val="StationArray"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="11"/>
+      <sval type="string" val="The Station Type"/>
+    </sval>
+  </sval>
+  <sval type="array" size="15">
+    <sval type="array" size="2">
+      <sval type="int" val="0"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="1"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="3"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="4"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="9"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="9"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="9"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="9"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="9"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="10"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="11"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="11"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="14"/>
+      <sval type="int" val="4"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="14"/>
+      <sval type="int" val="2"/>
+    </sval>
+    <sval type="array" size="2">
+      <sval type="int" val="14"/>
+      <sval type="int" val="2"/>
+    </sval>
+  </sval>
+  <sval type="int" val="0"/>
+</sval>
+
+</codearray>
+</script>
